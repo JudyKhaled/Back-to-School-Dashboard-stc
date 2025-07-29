@@ -10,14 +10,53 @@
 </head>
 <body>
     <div class="dashboard">
+        <!-- Chart container -->
         <div class="chart-container">
             <div class="chart-wrapper">
                 <canvas id="trendChart"></canvas>
             </div>
             <div class="ai-insights">
-                <i class="fas fa-brain"></i>
+                <i class="fas fa-user-robot"></i>
                 <div class="insights-text">
                     <strong>AI Insights</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics container -->
+        <div class="metrics-main-container">
+            <div class="metrics-box">
+                <div class="metric reactive" id="Reactive_TTs">
+                    <span class="label">Reactive TTs</span>
+                    <span class="value">0</span>
+                </div>
+
+                <div class="row">
+                    <div class="metric ftth" id="FTTH">
+                        <span class="label">FTTH</span>
+                        <span class="value">0</span>
+                    </div>
+                    <div class="right-col">
+                        <div class="metric olo" id="OLO">
+                            <span class="label">OLO</span>
+                            <span class="value">0</span>
+                        </div>
+                        <div class="metric copper" id="Copper">
+                            <span class="label">Copper</span>
+                            <span class="value">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row bottom">
+                    <div class="metric logical" id="Logical">
+                        <span class="label">Logical</span>
+                        <span class="value">0</span>
+                    </div>
+                    <div class="metric physical" id="Physical">
+                        <span class="label">Physical</span>
+                        <span class="value">0</span>
+                    </div>
                 </div>
             </div>
         </div>

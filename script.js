@@ -1,3 +1,4 @@
+// Existing Chart 1 Script (unchanged)
 fetch('chart1.json')
   .then(response => response.json())
   .then(data => {
@@ -10,7 +11,6 @@ fetch('chart1.json')
     const source = [];
     const weekAvg = [];
 
-    // Flatten JSON
     data.forEach(week => {
       week.days.forEach((day, idx) => {
         labels.push(`${week.week} - Day ${idx + 1}`);
@@ -26,27 +26,20 @@ fetch('chart1.json')
 
     const avgValue = weekAvg.length ? weekAvg[0] : 0;
     const avgLine = Array(labels.length).fill(avgValue);
-
-    // Find last actual index
     const lastActualIndex = source.lastIndexOf('actual');
 
-    // Build 2025 Actual dataset
     const year2025Actual = year2025.map((v, i) => source[i] === 'actual' ? v : null);
-
-    // Build 2025 Prediction dataset starting from last actual point
     const year2025Prediction = year2025.map((v, i) => {
       if (i < lastActualIndex) return null;
       if (i === lastActualIndex) return year2025[lastActualIndex];
       return source[i] === 'prediction' ? v : null;
     });
 
-    // Determine zoom (Y-axis starts at 0)
     const allValues = [...year2022, ...year2023, ...year2024, ...year2025].filter(v => v != null);
     const maxVal = Math.max(...allValues);
-    const zoomMin = 0; // always start at zero
-    const zoomMax = maxVal * 1.1; // 10% padding on top
+    const zoomMin = 0;
+    const zoomMax = maxVal * 1.1;
 
-    // Bars
     const bars = labels.map((label) => {
       if (label.includes("School Start Week") && label.includes("Day 1")) {
         return avgValue * 1.4;
@@ -57,7 +50,6 @@ fetch('chart1.json')
       }
     });
 
-    // Week abbreviations
     const abbreviateWeek = (week) => week
       .replace("Seven Weeks Before", "7W B")
       .replace("Six Weeks Before", "6W B")
@@ -71,13 +63,12 @@ fetch('chart1.json')
       .replace("Two Weeks After", "2W A")
       .replace("Three Weeks After", "3W A");
 
-    // Plugin for gray background
     const chartBackground = {
       id: 'chartBackground',
       beforeDraw: (chart) => {
         const { ctx, chartArea } = chart;
         ctx.save();
-        ctx.fillStyle = '#f2f2f2'; // light gray
+        ctx.fillStyle = '#f2f2f2';
         ctx.fillRect(chartArea.left, chartArea.top, chartArea.width, chartArea.height);
         ctx.restore();
       }
@@ -88,92 +79,20 @@ fetch('chart1.json')
       data: {
         labels: labels,
         datasets: [
-          { 
-            label: 'Start', 
-            type: 'bar', 
-            data: bars, 
-            backgroundColor: 'rgba(1, 3, 69, 0.64)', 
-            barThickness: 4 
-          },
-          { 
-            label: '2022', 
-            type: 'line', 
-            data: year2022, 
-            borderColor: '#dcb48c', 
-            fill: false, 
-            borderWidth: 1, 
-            pointRadius: 0, 
-            pointHoverRadius: 5, 
-            tension: 0.3 
-          },
-          { 
-            label: '2023', 
-            type: 'line', 
-            data: year2023, 
-            borderColor: '#5bb0ff', 
-            fill: false, 
-            borderWidth: 1, 
-            pointRadius: 0, 
-            pointHoverRadius: 5, 
-            tension: 0.3 
-          },
-          { 
-            label: '2024', 
-            type: 'line', 
-            data: year2024, 
-            borderColor: '#9834b1ff', 
-            fill: false, 
-            borderWidth: 1, 
-            pointRadius: 0, 
-            pointHoverRadius: 5, 
-            tension: 0.3 
-          },
-          { 
-            label: '2025 Actual', 
-            type: 'line', 
-            data: year2025Actual, 
-            borderColor: '#7bbf4d', 
-            borderWidth: 1, 
-            pointRadius: 0, 
-            pointHoverRadius: 5, 
-            fill: false, 
-            tension: 0.3 
-          },
-          { 
-            label: '2025 Prediction', 
-            type: 'line', 
-            data: year2025Prediction, 
-            borderColor: '#ff0000', 
-            borderWidth: 1, 
-            pointRadius: 0, 
-            pointHoverRadius: 5, 
-            fill: false, 
-            borderDash: [5, 5], 
-            tension: 0.3 
-          },
-          { 
-            label: '2025 Average', 
-            type: 'line', 
-            data: avgLine, 
-            borderColor: '#555', 
-            borderDash: [3, 3], 
-            fill: false, 
-            borderWidth: 1, 
-            pointRadius: 0, 
-            pointHoverRadius: 5, 
-            tension: 0.3 
-          }
+          { label: 'Start', type: 'bar', data: bars, backgroundColor: 'rgba(1, 3, 69, 0.64)', barThickness: 4 },
+          { label: '2022', type: 'line', data: year2022, borderColor: '#dcb48c', fill: false, borderWidth: 1, pointRadius: 0, pointHoverRadius: 5, tension: 0.3 },
+          { label: '2023', type: 'line', data: year2023, borderColor: '#5bb0ff', fill: false, borderWidth: 1, pointRadius: 0, pointHoverRadius: 5, tension: 0.3 },
+          { label: '2024', type: 'line', data: year2024, borderColor: '#9834b1ff', fill: false, borderWidth: 1, pointRadius: 0, pointHoverRadius: 5, tension: 0.3 },
+          { label: '2025 Actual', type: 'line', data: year2025Actual, borderColor: '#7bbf4d', borderWidth: 1, pointRadius: 0, pointHoverRadius: 5, fill: false, tension: 0.3 },
+          { label: '2025 Prediction', type: 'line', data: year2025Prediction, borderColor: '#ff0000', borderWidth: 1, pointRadius: 0, pointHoverRadius: 5, fill: false, borderDash: [5, 5], tension: 0.3 },
+          { label: '2025 Average', type: 'line', data: avgLine, borderColor: '#555', borderDash: [3, 3], fill: false, borderWidth: 1, pointRadius: 0, pointHoverRadius: 5, tension: 0.3 }
         ]
       },
       options: {
         responsive: true,
         layout: { padding: 20 },
         plugins: {
-          legend: {
-            display: true,
-            position: 'bottom',
-            labels: { font: { size: 8 } }
-          },
+          legend: { display: true, position: 'bottom', labels: { font: { size: 8 } } },
           title: { display: false },
           tooltip: { mode: 'index', intersect: false }
         },
@@ -183,22 +102,60 @@ fetch('chart1.json')
             grid: { drawOnChartArea: false },
             ticks: {
               font: { size: 8 },
-              callback: (value, index) =>
-                labels[index].includes("Day 1") ? abbreviateWeek(weekLabels[index]) : '',
+              callback: (value, index) => labels[index].includes("Day 1") ? abbreviateWeek(weekLabels[index]) : '',
               maxRotation: 45,
               minRotation: 45,
               autoSkip: false
             }
           },
-          y: {
-            grid: { drawOnChartArea: false },
-            min: zoomMin,
-            max: zoomMax,
-            ticks: { font: { size: 8 } }
-          }
+          y: { grid: { drawOnChartArea: false }, min: zoomMin, max: zoomMax, ticks: { font: { size: 8 } } }
         }
       },
       plugins: [chartBackground]
     });
   })
   .catch(err => console.error('Error loading data', err));
+
+
+// ======= New Script for Hourly Metrics =======
+async function updateMetrics() {
+    try {
+        const response = await fetch('chart2_dynamic.json?ts=' + Date.now());
+        const data = await response.json();
+
+        // Current Egypt time
+        const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Africa/Cairo" }));
+
+        // Find latest record <= current time
+        let latestRecord = data.records[0];
+        for (let record of data.records) {
+            const recordTime = new Date(record.datetime);
+            if (recordTime <= now) {
+                latestRecord = record;
+            }
+        }
+
+        // Update metric boxes
+        for (const key in latestRecord) {
+            if (key === "datetime") continue;
+            const box = document.getElementById(key);
+            if (!box) continue;
+
+            const metric = latestRecord[key];
+            const value = metric.value;
+
+            // Display value (no unnecessary decimals)
+            box.querySelector('.value').textContent = Number.isInteger(value) ? value : value.toFixed(2);
+
+            // Apply color based on status
+            box.classList.remove('normal', 'warning', 'critical');
+            box.classList.add(metric.status.toLowerCase());
+        }
+    } catch (error) {
+        console.error("Error fetching metrics:", error);
+    }
+}
+
+// Auto-refresh every minute
+setInterval(updateMetrics, 60000);
+updateMetrics();

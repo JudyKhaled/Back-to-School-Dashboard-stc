@@ -1,704 +1,704 @@
 {
-  "hours": [
+  "records": [
     {
-      "hour": "00:00",
+      "datetime": "2025-07-28 00:00",
       "Reactive_TTs": {
-        "value": 1949.0,
+        "value": 1949,
         "status": "Critical"
       },
       "OLO": {
-        "value": 584.6999999999999,
+        "value": 584,
         "status": "Critical"
       },
       "Copper": {
-        "value": 194.9,
+        "value": 194,
         "status": "Critical"
       },
       "FTTH": {
-        "value": 1169.4,
+        "value": 1169,
         "status": "Critical"
       },
       "Logical": {
-        "value": 409.29,
+        "value": 409,
         "status": "Critical"
       },
       "Physical": {
-        "value": 760.1100000000001,
+        "value": 760,
         "status": "Critical"
       }
     },
     {
-      "hour": "01:00",
+      "datetime": "2025-07-28 01:00",
       "Reactive_TTs": {
-        "value": 1852.0,
+        "value": 1852,
         "status": "Warning"
       },
       "OLO": {
-        "value": 555.6,
+        "value": 555,
         "status": "Warning"
       },
       "Copper": {
-        "value": 185.20000000000002,
+        "value": 185,
         "status": "Warning"
       },
       "FTTH": {
-        "value": 1111.1999999999998,
+        "value": 1111,
         "status": "Warning"
       },
       "Logical": {
-        "value": 388.9199999999999,
+        "value": 388,
         "status": "Warning"
       },
       "Physical": {
-        "value": 722.2799999999999,
-        "status": "Warning"
-      }
-    },
-    {
-      "hour": "02:00",
-      "Reactive_TTs": {
-        "value": 1625.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 487.5,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 162.5,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 975.0,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 341.25,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 633.75,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "03:00",
-      "Reactive_TTs": {
-        "value": 1753.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 525.9,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 175.3,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 1051.8,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 368.12999999999994,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 683.67,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "04:00",
-      "Reactive_TTs": {
-        "value": 1666.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 499.79999999999995,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 166.60000000000002,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 999.6,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 349.86,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 649.74,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "05:00",
-      "Reactive_TTs": {
-        "value": 1796.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 538.8,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 179.60000000000002,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 1077.6,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 377.15999999999997,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 700.4399999999999,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "06:00",
-      "Reactive_TTs": {
-        "value": 1508.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 452.4,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 150.8,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 904.8,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 316.67999999999995,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 588.12,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "07:00",
-      "Reactive_TTs": {
-        "value": 1861.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 558.3,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 186.10000000000002,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 1116.6,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 390.80999999999995,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 725.79,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "08:00",
-      "Reactive_TTs": {
-        "value": 1584.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 475.2,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 158.4,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 950.4,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 332.64,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 617.76,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "09:00",
-      "Reactive_TTs": {
-        "value": 1741.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 522.3,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 174.10000000000002,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 1044.6,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 365.60999999999996,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 678.99,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "10:00",
-      "Reactive_TTs": {
-        "value": 1864.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 559.1999999999999,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 186.4,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 1118.4,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 391.44,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 726.96,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "11:00",
-      "Reactive_TTs": {
-        "value": 1503.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 450.9,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 150.3,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 901.8,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 315.62999999999994,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 586.17,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "12:00",
-      "Reactive_TTs": {
-        "value": 1569.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 470.7,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 156.9,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 941.4,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 329.48999999999995,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 611.91,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "13:00",
-      "Reactive_TTs": {
-        "value": 1594.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 478.2,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 159.4,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 956.4,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 334.73999999999995,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 621.66,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "14:00",
-      "Reactive_TTs": {
-        "value": 1544.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 463.2,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 154.4,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 926.4,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 324.23999999999995,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 602.16,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "15:00",
-      "Reactive_TTs": {
-        "value": 1693.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 507.9,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 169.3,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 1015.8,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 355.53,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 660.27,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "16:00",
-      "Reactive_TTs": {
-        "value": 1638.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 491.4,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 163.8,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 982.8,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 343.97999999999996,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 638.8199999999999,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "17:00",
-      "Reactive_TTs": {
-        "value": 1576.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 472.79999999999995,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 157.60000000000002,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 945.6,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 330.96,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 614.64,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "18:00",
-      "Reactive_TTs": {
-        "value": 1681.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 504.29999999999995,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 168.10000000000002,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 1008.6,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 353.01,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 655.59,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "19:00",
-      "Reactive_TTs": {
-        "value": 1679.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 503.7,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 167.9,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 1007.4,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 352.59,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 654.8100000000001,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "20:00",
-      "Reactive_TTs": {
-        "value": 1570.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 471.0,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 157.0,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 942.0,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 329.7,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 612.3000000000001,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "21:00",
-      "Reactive_TTs": {
-        "value": 1674.0,
-        "status": "Normal"
-      },
-      "OLO": {
-        "value": 502.2,
-        "status": "Normal"
-      },
-      "Copper": {
-        "value": 167.4,
-        "status": "Normal"
-      },
-      "FTTH": {
-        "value": 1004.4,
-        "status": "Normal"
-      },
-      "Logical": {
-        "value": 351.53999999999996,
-        "status": "Normal"
-      },
-      "Physical": {
-        "value": 652.86,
-        "status": "Normal"
-      }
-    },
-    {
-      "hour": "22:00",
-      "Reactive_TTs": {
-        "value": 1807.0,
-        "status": "Warning"
-      },
-      "OLO": {
-        "value": 542.1,
-        "status": "Warning"
-      },
-      "Copper": {
-        "value": 180.70000000000002,
-        "status": "Warning"
-      },
-      "FTTH": {
-        "value": 1084.1999999999998,
-        "status": "Warning"
-      },
-      "Logical": {
-        "value": 379.4699999999999,
-        "status": "Warning"
-      },
-      "Physical": {
-        "value": 704.7299999999999,
+        "value": 722,
         "status": "Warning"
       }
     },
     {
-      "hour": "23:00",
+      "datetime": "2025-07-28 01:59",
       "Reactive_TTs": {
-        "value": 1671.0,
+        "value": 1625,
         "status": "Normal"
       },
       "OLO": {
-        "value": 501.29999999999995,
+        "value": 487,
         "status": "Normal"
       },
       "Copper": {
-        "value": 167.10000000000002,
+        "value": 162,
         "status": "Normal"
       },
       "FTTH": {
-        "value": 1002.6,
+        "value": 975,
         "status": "Normal"
       },
       "Logical": {
-        "value": 350.90999999999997,
+        "value": 341,
         "status": "Normal"
       },
       "Physical": {
-        "value": 651.69,
+        "value": 633,
         "status": "Normal"
       }
     },
     {
-      "hour": "24:00",
+      "datetime": "2025-07-28 02:59",
       "Reactive_TTs": {
-        "value": 1517.0,
+        "value": 1753,
         "status": "Normal"
       },
       "OLO": {
-        "value": 455.09999999999997,
+        "value": 525,
         "status": "Normal"
       },
       "Copper": {
-        "value": 151.70000000000002,
+        "value": 175,
         "status": "Normal"
       },
       "FTTH": {
-        "value": 910.2,
+        "value": 1051,
         "status": "Normal"
       },
       "Logical": {
-        "value": 318.57,
+        "value": 368,
         "status": "Normal"
       },
       "Physical": {
-        "value": 591.63,
+        "value": 683,
         "status": "Normal"
       }
     },
     {
-      "hour": "25:00",
+      "datetime": "2025-07-28 03:59",
       "Reactive_TTs": {
-        "value": 1984.0,
+        "value": 1666,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 499,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 166,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 999,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 349,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 649,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 04:59",
+      "Reactive_TTs": {
+        "value": 1796,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 538,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 179,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 1077,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 377,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 700,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 05:59",
+      "Reactive_TTs": {
+        "value": 1508,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 452,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 150,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 904,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 316,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 588,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 06:59",
+      "Reactive_TTs": {
+        "value": 1861,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 558,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 186,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 1116,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 390,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 725,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 07:59",
+      "Reactive_TTs": {
+        "value": 1584,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 475,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 158,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 950,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 332,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 617,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 08:59",
+      "Reactive_TTs": {
+        "value": 1741,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 522,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 174,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 1044,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 365,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 678,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 09:59",
+      "Reactive_TTs": {
+        "value": 1864,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 559,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 186,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 1118,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 391,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 726,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 10:59",
+      "Reactive_TTs": {
+        "value": 1503,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 450,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 150,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 901,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 315,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 586,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 11:59",
+      "Reactive_TTs": {
+        "value": 1569,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 470,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 156,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 941,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 329,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 611,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 12:59",
+      "Reactive_TTs": {
+        "value": 1594,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 478,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 159,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 956,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 334,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 621,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 13:59",
+      "Reactive_TTs": {
+        "value": 1544,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 463,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 154,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 926,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 324,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 602,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 14:59",
+      "Reactive_TTs": {
+        "value": 1693,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 507,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 169,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 1015,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 355,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 660,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 15:59",
+      "Reactive_TTs": {
+        "value": 1638,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 491,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 163,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 982,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 343,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 638,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 16:59",
+      "Reactive_TTs": {
+        "value": 1576,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 472,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 157,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 945,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 330,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 614,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 17:59",
+      "Reactive_TTs": {
+        "value": 1681,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 504,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 168,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 1008,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 353,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 655,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 18:59",
+      "Reactive_TTs": {
+        "value": 1679,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 503,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 167,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 1007,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 352,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 654,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 19:59",
+      "Reactive_TTs": {
+        "value": 1570,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 471,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 157,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 942,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 329,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 612,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 20:59",
+      "Reactive_TTs": {
+        "value": 1674,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 502,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 167,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 1004,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 351,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 652,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 21:59",
+      "Reactive_TTs": {
+        "value": 1807,
+        "status": "Warning"
+      },
+      "OLO": {
+        "value": 542,
+        "status": "Warning"
+      },
+      "Copper": {
+        "value": 180,
+        "status": "Warning"
+      },
+      "FTTH": {
+        "value": 1084,
+        "status": "Warning"
+      },
+      "Logical": {
+        "value": 379,
+        "status": "Warning"
+      },
+      "Physical": {
+        "value": 704,
+        "status": "Warning"
+      }
+    },
+    {
+      "datetime": "2025-07-28 22:59",
+      "Reactive_TTs": {
+        "value": 1671,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 501,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 167,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 1002,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 350,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 651,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-28 23:59",
+      "Reactive_TTs": {
+        "value": 1517,
+        "status": "Normal"
+      },
+      "OLO": {
+        "value": 455,
+        "status": "Normal"
+      },
+      "Copper": {
+        "value": 151,
+        "status": "Normal"
+      },
+      "FTTH": {
+        "value": 910,
+        "status": "Normal"
+      },
+      "Logical": {
+        "value": 318,
+        "status": "Normal"
+      },
+      "Physical": {
+        "value": 591,
+        "status": "Normal"
+      }
+    },
+    {
+      "datetime": "2025-07-29 00:59",
+      "Reactive_TTs": {
+        "value": 1984,
         "status": "Critical"
       },
       "OLO": {
-        "value": 595.1999999999999,
+        "value": 595,
         "status": "Critical"
       },
       "Copper": {
-        "value": 198.4,
+        "value": 198,
         "status": "Critical"
       },
       "FTTH": {
-        "value": 1190.4,
+        "value": 1190,
         "status": "Critical"
       },
       "Logical": {
-        "value": 416.64,
+        "value": 416,
         "status": "Critical"
       },
       "Physical": {
-        "value": 773.7600000000001,
+        "value": 773,
         "status": "Critical"
       }
     }

@@ -7,17 +7,18 @@ body {
 
 .dashboard {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 20px;
 }
 
+/* Chart container */
 .chart-container {
     position: relative;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    width: 850px;      /* fixed width */
-    height: 320px;     /* fixed height */
+    width: 850px;
+    height: 320px;
     background: #f2f2f2;
     padding: 10px;
     border-radius: 20px;
@@ -32,7 +33,7 @@ body {
 }
 
 .chart-wrapper canvas {
-    height: 100% !important; 
+    height: 100% !important;
     width: 100% !important;
 }
 
@@ -46,15 +47,13 @@ body {
     display: flex;
     flex-direction: row;
     gap: 8px;
-    align-items: flex-start;  
+    align-items: flex-start;
     justify-content: flex-start;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    height: 80%;  
+    height: 80%;
     box-sizing: border-box;
     margin-top: 25px;
 }
-
-
 
 .ai-insights i {
     font-size: 25px;
@@ -67,3 +66,39 @@ body {
     font-size: 18px;
     color: #3a2d58;
 }
+
+/* Metrics container */
+.metrics-main-container {
+    width: 320px;
+    background: #f2f2f2;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.metrics-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.metric.reactive, .metric.ftth, .metric.olo, .metric.copper, .metric.logical, .metric.physical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.row { display: flex; gap: 10px; }
+.right-col { display: flex; flex-direction: column; gap: 10px; }
+.row.bottom { justify-content: space-between; }
+
+/* Colors by status */
+.metric.normal { border-color: green; }
+.metric.warning { border-color: yellow; }
+.metric.critical { border-color: red; }
+
+.metric .label { font-size: 12px; font-weight: bold; }
+.metric .value { font-size: 16px; }
