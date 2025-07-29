@@ -9,9 +9,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <div class="navbar-container">
+        <nav class="navbar">
+            <div class="navbar-title">Back to School Dashboard</div>
+        </nav>
+    </div>
+
     <div class="dashboard">
         <!-- Chart container -->
         <div class="chart-container">
+            <!-- <div id="info-box">
+        <img src="img.png" alt="Info Image">
+    </div> -->
             <div class="chart-wrapper">
                 <canvas id="trendChart"></canvas>
             </div>
@@ -23,64 +33,134 @@
             </div>
         </div>
 
-        <!-- Metrics container -->
-<div class="metrics-main-container">
-<div class="metrics-layout">
-  <!-- Reactive TTs -->
-  <div class="metric-wrapper">
-    <span class="metric-label">Reactive TTs</span>
-    <div class="metric reactive" id="Reactive_TTs">
-      <span class="value">0</span>
+        <!-- Metrics + Apps Row -->
+        <div class="metrics-apps-row">
+            <!-- Metrics container -->
+            <div class="metrics-main-container">
+                <div class="metrics-layout">
+                    <!-- Reactive TTs -->
+                    <div class="metric-wrapper">
+                        <span class="metric-label">Reactive TTs</span>
+                        <div class="metric reactive" id="Reactive_TTs">
+                            <span class="value">0</span>
+                        </div>
+                    </div>
+
+                    <div class="metrics-body">
+                        <!-- Left column -->
+                        <div class="left-col">
+                            <div class="metric-wrapper">
+                                <span class="metric-label">FTTH</span>
+                                <div class="metric ftth" id="FTTH">
+                                    <span class="value">0</span>
+                                </div>
+                            </div>
+                            <div class="sub-row">
+                                <div class="metric-wrapper">
+                                    <span class="metric-label">Logical</span>
+                                    <div class="metric logical" id="Logical">
+                                        <span class="value">0</span>
+                                    </div>
+                                </div>
+                                <div class="metric-wrapper">
+                                    <span class="metric-label">Physical</span>
+                                    <div class="metric physical" id="Physical">
+                                        <span class="value">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- White vertical line -->
+                        <div class="vertical-line"></div>
+
+                        <!-- Right column -->
+                        <div class="right-col">
+                            <div class="metric-wrapper">
+                                <span class="metric-label">OLO</span>
+                                <div class="metric olo" id="OLO">
+                                    <span class="value">0</span>
+                                </div>
+                            </div>
+                            <div class="metric-wrapper">
+                                <span class="metric-label">Copper</span>
+                                <div class="metric copper" id="Copper">
+                                    <span class="value">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apps Status Container -->
+            <div class="apps-status-container" id="appsContainer"></div>
+        </div>
+
+        <!-- E2E Events Path (moved above proactive chart) -->
+        <div class="e2e-path-container" id="e2ePath">
+            <div class="e2e-node" id="IGW">
+                <i class="fas fa-cloud"></i>
+                <span>IGW</span>
+            </div>
+            <div class="e2e-node" id="BRAS">
+                <i class="fas fa-network-wired"></i>
+                <span>BRAS</span>
+            </div>
+            <div class="e2e-node" id="MPLS">
+                <i class="fas fa-project-diagram"></i>
+                <span>MPLS</span>
+            </div>
+            <div class="e2e-node" id="OLT">
+                <i class="fas fa-server"></i>
+                <span>OLT</span>
+            </div>
+            <div class="e2e-node" id="NNI">
+                <i class="fas fa-exchange-alt"></i>
+                <span>NNI</span>
+            </div>
+        </div>
+
+        <!-- Proactive Monitoring Container -->
+        <div class="row-container">
+            <div class="proactive-container">
+                <div class="proactive-chart">
+                    <canvas id="proactiveChart"></canvas>
+                </div>
+                <div class="proactive-summary">
+                    <div class="summary-box total">
+                        <span class="summary-label">Total Impacted Customers</span>
+                        <span class="summary-value default" id="totalImpacted">0</span>
+                    </div>
+                    <div class="summary-box impacted">
+                        <span class="summary-label">Impacted before 10 August</span>
+                        <span class="summary-value red" id="impactedBefore">0</span>
+                    </div>
+                    <div class="summary-box restored">
+                        <span class="summary-label">Restored before 10 August</span>
+                        <span class="summary-value green" id="restoredBefore">0</span>
+                    </div>
+                    <div class="summary-box impacted">
+                        <span class="summary-label">Impacted after 10 August</span>
+                        <span class="summary-value red" id="impactedAfter">0</span>
+                    </div>
+                    <div class="summary-box restored">
+                        <span class="summary-label">Restored after 10 August</span>
+                        <span class="summary-value green" id="restoredAfter">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Heatmap Container -->
+<!-- Heatmap Container -->
+<!-- Floating container on top-right -->
+
+
+
+
+
     </div>
-  </div>
-
-  <div class="metrics-body">
-    <!-- Left column -->
-    <div class="left-col">
-      <div class="metric-wrapper">
-        <span class="metric-label">FTTH</span>
-        <div class="metric ftth" id="FTTH">
-          <span class="value">0</span>
-        </div>
-      </div>
-      <div class="sub-row">
-        <div class="metric-wrapper">
-          <span class="metric-label">Logical</span>
-          <div class="metric logical" id="Logical">
-            <span class="value">0</span>
-          </div>
-        </div>
-        <div class="metric-wrapper">
-          <span class="metric-label">Physical</span>
-          <div class="metric physical" id="Physical">
-            <span class="value">0</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- White vertical line -->
-    <div class="vertical-line"></div>
-
-    <!-- Right column -->
-    <div class="right-col">
-      <div class="metric-wrapper">
-        <span class="metric-label">OLO</span>
-        <div class="metric olo" id="OLO">
-          <span class="value">0</span>
-        </div>
-      </div>
-      <div class="metric-wrapper">
-        <span class="metric-label">Copper</span>
-        <div class="metric copper" id="Copper">
-          <span class="value">0</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
 
     <script src="script.js"></script>
 </body>

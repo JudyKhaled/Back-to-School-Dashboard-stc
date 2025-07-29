@@ -1,0 +1,29 @@
+{
+  "heat_map": [
+    {
+      "district": "Riyadh",
+      "count_of_complaints": 503,
+      "comparison_flag": "Warning"
+    },
+    {
+      "district": "Mekkah",
+      "count_of_complaints": 300,
+      "comparison_flag": "Critical"
+    },
+    {
+      "district": "Jeddah",
+      "count_of_complaints": 200,
+      "comparison_flag": "Normal"
+    },
+    {
+      "district": "Dammam",
+      "count_of_complaints": 150,
+      "comparison_flag": "Normal"
+    },
+    {
+      "district": "Hayl",
+      "count_of_complaints": 25,
+      "comparison_flag": "Normal"
+    }
+  ]
+}

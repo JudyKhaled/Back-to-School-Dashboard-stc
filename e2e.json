@@ -1,0 +1,34 @@
+{
+  "network_events": [
+    {
+      "name": "IGW",
+      "warning": 0,
+      "critical": 1,
+      "status": "critical"
+    },
+    {
+      "name": "BRAS",
+      "warning": 0,
+      "critical": 2,
+      "status": "critical"
+    },
+    {
+      "name": "MPLS",
+      "warning": 5,
+      "critical": 0,
+      "status": "warning"
+    },
+    {
+      "name": "OLT",
+      "warning": 0,
+      "critical": 1,
+      "status": "critical"
+    },
+    {
+      "name": "NNI",
+      "warning": 1,
+      "critical": 0,
+      "status": "warning"
+    }
+  ]
+}

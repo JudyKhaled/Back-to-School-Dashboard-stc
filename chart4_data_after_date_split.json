@@ -79,9 +79,9 @@
   ],
   "summary": {
     "total_impacted_customers": 5686,
-    "impacted_before_10": 0,
+    "impacted_before_10": 4381,
     "restored_before_10": 0,
-    "impacted_after_10": 0,
+    "impacted_after_10": 1305,
     "restored_after_10": 0
   }
 }

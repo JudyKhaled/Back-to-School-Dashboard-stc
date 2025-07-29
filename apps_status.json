@@ -1,0 +1,34 @@
+{
+  "applications": [
+    {
+      "name": "Twitter",
+      "status": "Normal",
+      "icon": "fab fa-twitter"
+    },
+    {
+      "name": "Facebook",
+      "status": "Normal",
+      "icon": "fab fa-facebook"
+    },
+    {
+      "name": "Netflix",
+      "status": "Abnormal",
+      "icon": "fas fa-film"
+    },
+    {
+      "name": "Snapchat",
+      "status": "Normal",
+      "icon": "fab fa-snapchat"
+    },
+    {
+      "name": "PS",
+      "status": "Abnormal",
+      "icon": "fas fa-gamepad"
+    },
+    {
+      "name": "Shahid",
+      "status": "Abnormal",
+      "icon": "fas fa-tv"
+    }
+  ]
+}
