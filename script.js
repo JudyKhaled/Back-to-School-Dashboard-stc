@@ -277,35 +277,4 @@ fetch('e2e.json')
   })
   .catch(err => console.error('Error loading e2e data', err));
 
-  
-
-//   fetch('heatmap.json?ts=' + Date.now())
-//   .then(res => res.json())
-//   .then(data => {
-//     const tooltip = document.getElementById('mapTooltip');
-
-//     data.heat_map.forEach(region => {
-//       const el = document.getElementById(region.district);
-//       if (!el) return;
-
-//       // remove old classes
-//       el.classList.remove('region-normal', 'region-warning', 'region-critical');
-
-//       switch (region.comparison_flag.toLowerCase()) {
-//         case 'critical': el.classList.add('region-critical'); break;
-//         case 'warning': el.classList.add('region-warning'); break;
-//         default: el.classList.add('region-normal');
-//       }
-
-//       // tooltip events
-//       el.addEventListener('mousemove', (e) => {
-//         tooltip.style.left = e.pageX + 15 + 'px';
-//         tooltip.style.top = e.pageY + 15 + 'px';
-//         tooltip.style.display = 'block';
-//         tooltip.innerHTML = `<b>${region.district}</b><br>${region.count_of_complaints} complaints`;
-//       });
-//       el.addEventListener('mouseleave', () => tooltip.style.display = 'none');
-//     });
-//   })
-//   .catch(err => console.error('Error loading heatmap data', err));
-
+ 
