@@ -1,0 +1,601 @@
+// === Dropdown toggle ===
+document.querySelector('.dropbtn').addEventListener('click', function (e) {
+    e.stopPropagation();
+    document.querySelector('.dropdown').classList.toggle('show');
+});
+document.addEventListener('click', function (e) {
+    if (!e.target.closest('.dropdown')) {
+        document.querySelector('.dropdown').classList.remove('show');
+    }
+});
+
+fetch('chart1.json')
+  .then(response => response.json())
+  .then(data => {
+    const labels = [];
+    const weekLabels = [];
+    const year2022 = [];
+    const year2023 = [];
+    const year2024 = [];
+    const year2025 = [];
+    const source = [];
+    const weekAvg = [];
+
+    data.forEach(week => {
+      week.days.forEach((day, idx) => {
+        labels.push(`${week.week} - Day ${idx + 1}`);
+        weekLabels.push(week.week);
+        year2022.push(day.year_2022);
+        year2023.push(day.year_2023);
+        year2024.push(day.year_2024);
+        year2025.push(day.year_2025);
+        source.push(day.source);
+        weekAvg.push(day["2025 Average"]);
+      });
+    });
+
+    const avgValue = weekAvg.length ? weekAvg[0] : 0;
+    const avgLine = Array(labels.length).fill(avgValue);
+    const lastActualIndex = source.lastIndexOf('actual');
+
+    const year2025Actual = year2025.map((v, i) => source[i] === 'actual' ? v : null);
+    const year2025Prediction = year2025.map((v, i) => {
+      if (i < lastActualIndex) return null;
+      if (i === lastActualIndex) return year2025[lastActualIndex];
+      return source[i] === 'prediction' ? v : null;
+    });
+
+    const allValues = [...year2022, ...year2023, ...year2024, ...year2025].filter(v => v != null);
+    const maxVal = Math.max(...allValues);
+    const zoomMin = 0;
+    const zoomMax = maxVal * 1.1;
+
+    const bars = labels.map((label) => {
+      if (label.includes("School Start Week") && label.includes("Day 1")) {
+        return avgValue * 1.4;
+      } else if (label.includes("Day 1")) {
+        return avgValue * 0.8;
+      } else {
+        return 0;
+      }
+    });
+
+    const abbreviateWeek = (week) => week
+      .replace("Seven Weeks Before", "7W B")
+      .replace("Six Weeks Before", "6W B")
+      .replace("Five Weeks Before", "5W B")
+      .replace("Four Weeks Before", "4W B")
+      .replace("Three Weeks Before", "3W B")
+      .replace("Two Weeks Before", "2W B")
+      .replace("One Week Before", "1W B")
+      .replace("School Start Week", "Start")
+      .replace("One Week After", "1W A")
+      .replace("Two Weeks After", "2W A")
+      .replace("Three Weeks After", "3W A");
+
+    const chartBackground = {
+      id: 'chartBackground',
+      beforeDraw: (chart) => {
+        const { ctx, chartArea } = chart;
+        ctx.save();
+        ctx.fillStyle = '#162043';
+        ctx.fillRect(chartArea.left, chartArea.top, chartArea.width, chartArea.height);
+        ctx.restore();
+      }
+    };
+
+    const ctx = document.getElementById('trendChart').getContext('2d');
+    const chartInstance = new Chart(ctx, {
+      data: {
+        labels: labels,
+        datasets: [
+          { label: 'Start', type: 'bar', data: bars, backgroundColor: 'rgba(220,220,220,0.8)', barThickness: 4 },
+          { label: '2022', type: 'line', data: year2022, borderColor: '#f1c40f', fill: false, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5, tension: 0.3 },
+          { label: '2023', type: 'line', data: year2023, borderColor: '#3498db', fill: false, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5, tension: 0.3 },
+          { label: '2024', type: 'line', data: year2024, borderColor: '#9b59b6', fill: false, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5, tension: 0.3 },
+          { label: '2025 Actual', type: 'line', data: year2025Actual, borderColor: '#2ecc71', borderWidth: 2, pointRadius: 0, pointHoverRadius: 5, fill: false, tension: 0.3 },
+          { label: '2025 Prediction', type: 'line', data: year2025Prediction, borderColor: '#e74c3c', borderWidth: 2, pointRadius: 0, pointHoverRadius: 5, fill: false, tension: 0.3, borderDash: [5, 5] },
+          { label: '2025 Average', type: 'line', data: avgLine, borderColor: '#ecf0f1', borderWidth: 1, pointRadius: 0, pointHoverRadius: 5, fill: false, tension: 0.3, borderDash: [5, 5] }
+        ]
+      },
+      options: {
+        responsive: true,
+        layout: { padding: 20 },
+        plugins: {
+          legend: { display: true, position: 'bottom', labels: { font: { size: 8 }, color: '#ffffff' } },
+          tooltip: { mode: 'index', intersect: false }
+        },
+        interaction: { mode: 'index', intersect: false },
+        scales: {
+          x: {
+            grid: { drawOnChartArea: false, color: '#555' },
+            ticks: {
+              color: '#ffffff',
+              font: { size: 8 },
+              callback: (value, index) => labels[index].includes("Day 1") ? abbreviateWeek(weekLabels[index]) : '',
+              maxRotation: 45,
+              minRotation: 45,
+              autoSkip: false
+            }
+          },
+          y: {
+            grid: { drawOnChartArea: false, color: '#555' },
+            ticks: { color: '#ffffff', font: { size: 8 } },
+            min: zoomMin,
+            max: zoomMax
+          }
+        }
+      },
+      plugins: [chartBackground]
+    });
+
+    // === Dataset Indexes ===
+    const datasets = chartInstance.data.datasets;
+    const actualIndex = datasets.findIndex(d => d.label === '2025 Actual');
+    const predictionIndex = datasets.findIndex(d => d.label === '2025 Prediction');
+    const averageIndex = datasets.findIndex(d => d.label === '2025 Average');
+
+    const rotationOrder = [1, 2, 3, 'actual'];
+    let orderIndex = 0;
+    let rotationPaused = false;
+    let resumeTimeout;
+
+    function cycleDatasets() {
+      if (!rotationPaused) {
+        datasets.forEach((_, i) => {
+          if (i !== 0) chartInstance.setDatasetVisibility(i, false);
+        });
+        chartInstance.setDatasetVisibility(averageIndex, true);
+
+        const current = rotationOrder[orderIndex];
+        if (current === 'actual') {
+          chartInstance.setDatasetVisibility(actualIndex, true);
+          chartInstance.setDatasetVisibility(predictionIndex, true);
+        } else {
+          chartInstance.setDatasetVisibility(current, true);
+        }
+
+        chartInstance.update();
+        orderIndex = (orderIndex + 1) % rotationOrder.length;
+      }
+      setTimeout(cycleDatasets, 2000);
+    }
+
+    // Start animation initially (checkboxes unchecked)
+    datasets.forEach((_, i) => {
+      if (i !== 0 && i !== averageIndex) chartInstance.setDatasetVisibility(i, false);
+    });
+    chartInstance.setDatasetVisibility(averageIndex, true);
+    chartInstance.update();
+    cycleDatasets();
+
+    // === Checkbox logic (all initially unchecked) ===
+    document.querySelectorAll('.dataset-toggle').forEach(input => {
+      input.checked = false; // make sure all checkboxes are unchecked initially
+      input.addEventListener('change', () => {
+        clearTimeout(resumeTimeout);
+        rotationPaused = true;
+
+        // Hide all datasets except Start (index 0)
+        datasets.forEach((ds, i) => {
+          if (i === 0) return; // bars always visible
+          if (ds.label === '2025 Average') {
+            chartInstance.setDatasetVisibility(i, true); // avg always visible
+          } else if (input.value === '2025 Actual' && input.checked) {
+            // Show both actual + prediction together
+            if (ds.label === '2025 Actual' || ds.label === '2025 Prediction') {
+              chartInstance.setDatasetVisibility(i, true);
+            }
+          } else if (ds.label === input.value) {
+            chartInstance.setDatasetVisibility(i, input.checked);
+          } else if (!document.querySelector(`.dataset-toggle[value="${ds.label}"]`).checked) {
+            chartInstance.setDatasetVisibility(i, false);
+          }
+        });
+
+        chartInstance.update();
+
+        // Resume after 5 seconds
+        resumeTimeout = setTimeout(() => {
+          rotationPaused = false;
+        }, 5000);
+      });
+    });
+
+  })
+  .catch(err => console.error('Error loading data', err));
+
+
+async function updateMetrics() {
+  try {
+    const response = await fetch('chart2_dynamic.json?ts=' + Date.now());
+    const data = await response.json();
+
+    const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Africa/Cairo" }));
+
+    let latestRecord = data.records[0];
+    for (let record of data.records) {
+      const recordTime = new Date(record.datetime);
+      if (recordTime <= now) {
+        latestRecord = record;
+      }
+    }
+
+    for (const key in latestRecord) {
+      if (key === "datetime") continue;
+
+      const box = document.getElementById(key);
+      if (!box) continue;
+
+      const metric = latestRecord[key];
+      const valueElement = box.querySelector(".metric-value");
+
+      // Update text
+      valueElement.textContent = metric.value;
+
+      // Update color class
+      valueElement.classList.remove("normal", "warning", "critical");
+      valueElement.classList.add(metric.status.toLowerCase());
+    }
+  } catch (error) {
+    console.error("Error fetching metrics:", error);
+  }
+}
+
+setInterval(updateMetrics, 60000);
+updateMetrics();
+
+
+
+
+//===========================================================
+// ======= New Chart 4 Script =======
+fetch('chart4_data_after_date_split.json')
+  .then(res => res.json())
+  .then(data => {
+    // Trend Chart Data
+    const labels = data.trend.map(item => item.date);
+    const values = data.trend.map(item => item.impacted_customers);
+
+    const ctx = document.getElementById('proactiveChart').getContext('2d');
+
+    // Gradient fill (pink glow effect)
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, 'rgba(248, 16, 248, 0.4)'); // top - pinkish
+    gradient.addColorStop(1, 'rgba(0,0,0,0)');       // bottom - transparent
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Impacted Customers',
+          data: values,
+          fill: true,
+          backgroundColor: gradient,
+          borderColor: '#ab32abff',  // neon pink line
+          borderWidth: 3,
+          pointRadius: 0,          // keep points hidden
+          tension: 0.4             // smooth curve
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: { mode: 'index', intersect: false }
+        },
+        interaction: { mode: 'index', intersect: false },
+        scales: {
+          x: {
+            grid: { drawOnChartArea: false },
+            ticks: {
+              color: '#cccccc',
+              callback: function(value, index) {
+                return index % 5 === 0 ? this.getLabelForValue(value) : '';
+              }
+            }
+          },
+          y: {
+            beginAtZero: true,
+            grid: { drawOnChartArea: false },
+            ticks: { color: '#cccccc' }
+          }
+        }
+      }
+    });
+
+    // Summary values
+    const totalImpactedBox = document.getElementById('totalImpacted').parentElement;
+    const impactedBeforeBox = document.getElementById('impactedBefore').parentElement;
+    const restoredBeforeBox = document.getElementById('restoredBefore').parentElement;
+    const impactedAfterBox = document.getElementById('impactedAfter').parentElement;
+    const restoredAfterBox = document.getElementById('restoredAfter').parentElement;
+
+    // Set values
+    document.getElementById('totalImpacted').textContent = data.summary.total_impacted_customers.toLocaleString();
+    document.getElementById('impactedBefore').textContent = data.summary.impacted_before_10;
+    document.getElementById('restoredBefore').textContent = data.summary.restored_before_10;
+    document.getElementById('impactedAfter').textContent = data.summary.impacted_after_10;
+    document.getElementById('restoredAfter').textContent = data.summary.restored_after_10;
+
+    // Remove old classes
+    [totalImpactedBox, impactedBeforeBox, restoredBeforeBox, impactedAfterBox, restoredAfterBox]
+        .forEach(box => box.classList.remove('normal','warning','critical'));
+
+    // Example logic for assigning classes (adjust as needed)
+    if (data.summary.total_impacted_customers > 1000) {
+        totalImpactedBox.classList.add('critical');
+    } else if (data.summary.total_impacted_customers > 500) {
+        totalImpactedBox.classList.add('warning');
+    } else {
+        totalImpactedBox.classList.add('normal');
+    }
+
+    // Example for impactedBefore
+    if (data.summary.impacted_before_10 > 500) {
+        impactedBeforeBox.classList.add('critical');
+    } else {
+        impactedBeforeBox.classList.add('normal');
+    }
+
+    // Example for restoredBefore
+    restoredBeforeBox.classList.add('normal');
+
+    // Example for impactedAfter
+    if (data.summary.impacted_after_10 > 500) {
+        impactedAfterBox.classList.add('critical');
+    } else {
+        impactedAfterBox.classList.add('normal');
+    }
+
+    // Example for restoredAfter
+    restoredAfterBox.classList.add('normal');
+  });
+
+
+  // ===== Apps Traffic Status =====
+fetch('apps_status.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('appsContainer');
+    container.innerHTML = '';
+
+    data.applications.forEach(app => {
+      const card = document.createElement('div');
+      card.className = `app-card ${app.status.toLowerCase()}`;
+
+      const icon = document.createElement('i');
+      icon.className = app.icon;
+
+      const name = document.createElement('div');
+      name.className = 'app-name';
+      name.textContent = app.name;
+
+      card.appendChild(icon);
+      card.appendChild(name);
+
+      container.appendChild(card);
+    });
+  })
+  .catch(err => console.error('Error loading app statuses', err));
+
+
+// ===== Journey Visualization =====
+fetch('task_referral_dashboard_data.json')
+  .then(res => res.json())
+  .then(data => {
+    const nodes = data.teams;
+    const links = data.referral_links;
+
+    const container = document.getElementById('journey-nodes');
+    const svg = document.getElementById('journey-svg');
+
+    // Toggle state
+    let showForward = true;
+
+    function render() {
+      container.innerHTML = '';
+      svg.innerHTML = '';
+
+      const width = svg.clientWidth;
+      const height = svg.clientHeight;
+
+      const cardWidth = Math.max(120, width * 0.15);
+      const cardHeight = cardWidth * 0.75;
+      const filtrationHeight = cardHeight * 3; // Filtration is taller
+      const colGap = cardWidth * 2.0;
+      const rowGap = 40;
+
+      // --- Determine columns ---
+      const col1 = ['Filtration'];  // root
+      const col2 = [];
+      const col3 = [];
+
+      links.forEach(link => {
+        if (col1.includes(link.source) && !col2.includes(link.target)) col2.push(link.target);
+      });
+      links.forEach(link => {
+        if (col2.includes(link.source) && !col3.includes(link.target) && !col1.includes(link.target)) {
+          col3.push(link.target);
+        }
+      });
+
+      const columns = [col1, col2, col3];
+      const nodePositions = {};
+
+      // --- Place nodes column by column ---
+      columns.forEach((col, colIndex) => {
+        const totalHeight = col.reduce((sum, nodeId) =>
+          sum + ((nodeId === 'Filtration') ? filtrationHeight : cardHeight) + rowGap, -rowGap
+        );
+        const startY = (height - totalHeight) / 2;
+        const x = colIndex * colGap + 50;
+
+        col.forEach((nodeId, rowIndex) => {
+          const node = nodes.find(n => n.id === nodeId);
+          if (!node) return;
+
+          const nodeHeight = (nodeId === 'Filtration') ? filtrationHeight : cardHeight;
+          const y = startY + rowIndex * (cardHeight + rowGap);
+
+          nodePositions[nodeId] = {
+            x: x + cardWidth / 2,
+            y: y + nodeHeight / 2
+          };
+
+          const card = document.createElement('div');
+          card.className = `journey-card ${node.efficiency_status_hour}`;
+          card.style.width = `${cardWidth}px`;
+          card.style.height = `${nodeHeight}px`;
+          card.style.left = `${x}px`;
+          card.style.top = `${y}px`;
+          card.innerHTML = `
+            <div class="title">${node.name}</div>
+            <div class="metrics">
+              <div class="circle-number">${node.referral_count}</div>
+              <div class="circle-number">${node.active_referrals}</div>
+            </div>
+          `;
+          card.dataset.id = nodeId;
+
+          // Hover highlight incoming links
+          card.addEventListener('mouseenter', () => {
+            document.querySelectorAll(".link-path[data-target='" + nodeId + "']")
+              .forEach(p => p.classList.add('highlight'));
+          });
+          card.addEventListener('mouseleave', () => {
+            document.querySelectorAll(".link-path[data-target='" + nodeId + "']")
+              .forEach(p => p.classList.remove('highlight'));
+          });
+
+          container.appendChild(card);
+        });
+      });
+
+      // --- Add gradient def ---
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+      grad.id = 'linkGradient';
+      grad.setAttribute('x1', '0%');
+      grad.setAttribute('y1', '0%');
+      grad.setAttribute('x2', '100%');
+      grad.setAttribute('y2', '0%');
+
+      const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop1.setAttribute('offset', '0%');
+      stop1.setAttribute('stop-color', '#66ccff');
+      const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop2.setAttribute('offset', '100%');
+      stop2.setAttribute('stop-color', '#3399ff');
+      grad.appendChild(stop1);
+      grad.appendChild(stop2);
+      defs.appendChild(grad);
+      svg.appendChild(defs);
+
+      // --- Separate forward and backward links ---
+      const forwardLinks = links.filter(
+        l => (col1.includes(l.source) && (col2.includes(l.target) || col3.includes(l.target))) ||
+             (col2.includes(l.source) && col3.includes(l.target))
+      );
+
+      const backwardLinks = links.filter(
+        l => (col3.includes(l.source) && (col2.includes(l.target) || col1.includes(l.target))) ||
+             (col2.includes(l.source) && col1.includes(l.target))
+      );
+
+      const activeLinks = showForward ? forwardLinks : backwardLinks;
+
+      // --- Draw wave links ---
+      activeLinks.forEach(link => {
+        const src = nodePositions[link.source];
+        const tgt = nodePositions[link.target];
+        if (!src || !tgt) return;
+
+        const dx = tgt.x - src.x;
+        const dy = tgt.y - src.y;
+        const controlX1 = src.x + dx / 3;
+        const controlY1 = src.y + dy / 3 - 30; // wave up
+        const controlX2 = src.x + 2 * dx / 3;
+        const controlY2 = src.y + 2 * dy / 3 + 30; // wave down
+
+        const thickness = Math.max(3, link.referrals / 10);
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d',
+          `M${src.x},${src.y} C${controlX1},${controlY1} ${controlX2},${controlY2} ${tgt.x},${tgt.y}`);
+        path.setAttribute('stroke', 'url(#linkGradient)');
+        path.setAttribute('stroke-width', thickness);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('class', 'link-path');
+        path.dataset.source = link.source;
+        path.dataset.target = link.target;
+
+        svg.appendChild(path);
+      });
+    }
+
+    // Toggle every 15 seconds
+    setInterval(() => {
+      showForward = !showForward;
+      render();
+    }, 15000);
+
+    window.addEventListener('resize', render);
+    render();
+  })
+  .catch(err => console.error('Error loading journey data', err));
+
+
+  // ===== E2E Path from JSON =====
+// ===== E2E Path Coloring from JSON =====
+fetch('e2e.json')
+  .then(res => res.json())
+  .then(data => {
+    data.network_events.forEach(node => {
+      const el = document.getElementById(node.name);
+      if (!el) return;
+
+      el.classList.remove('green', 'yellow', 'red');
+      switch (node.status) {
+        case 'critical': el.classList.add('red'); break;
+        case 'warning': el.classList.add('yellow'); break;
+        default: el.classList.add('green'); break;
+      }
+    });
+    drawLinks();
+  })
+  .catch(err => console.error('Error loading e2e data', err));
+
+function drawLinks() {
+  const svg = document.getElementById('e2eLinks');
+  svg.innerHTML = ''; // clear old links
+
+  const containerRect = document.getElementById('e2ePath').getBoundingClientRect();
+  const getPos = id => {
+    const el = document.getElementById(id).getBoundingClientRect();
+    return { x: el.left - containerRect.left + el.width / 2,
+             y: el.top - containerRect.top + el.height / 2 };
+  };
+
+  const links = [
+    ['IGW','BRAS'],
+    ['BRAS','MPLS'],
+    ['MPLS','OLT'],
+    ['MPLS','NNI']
+  ];
+
+  links.forEach(([srcId, tgtId]) => {
+    const p1 = getPos(srcId);
+    const p2 = getPos(tgtId);
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M${p1.x},${p1.y} C${(p1.x+p2.x)/2},${p1.y} ${(p1.x+p2.x)/2},${p2.y} ${p2.x},${p2.y}`);
+    path.setAttribute('stroke', '#44c1f7');
+    path.setAttribute('stroke-width', 3);
+    path.setAttribute('fill', 'none');
+    svg.appendChild(path);
+  });
+}
+
+// Redraw on window resize
+window.addEventListener('resize', drawLinks);

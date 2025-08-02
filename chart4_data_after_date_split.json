@@ -1,0 +1,87 @@
+{
+  "trend": [
+    {
+      "date": "2025-07-28",
+      "impacted_customers": 332
+    },
+    {
+      "date": "2025-07-29",
+      "impacted_customers": 457
+    },
+    {
+      "date": "2025-07-30",
+      "impacted_customers": 388
+    },
+    {
+      "date": "2025-07-31",
+      "impacted_customers": 198
+    },
+    {
+      "date": "2025-08-01",
+      "impacted_customers": 140
+    },
+    {
+      "date": "2025-08-02",
+      "impacted_customers": 339
+    },
+    {
+      "date": "2025-08-03",
+      "impacted_customers": 425
+    },
+    {
+      "date": "2025-08-04",
+      "impacted_customers": 483
+    },
+    {
+      "date": "2025-08-05",
+      "impacted_customers": 116
+    },
+    {
+      "date": "2025-08-06",
+      "impacted_customers": 100
+    },
+    {
+      "date": "2025-08-07",
+      "impacted_customers": 123
+    },
+    {
+      "date": "2025-08-08",
+      "impacted_customers": 426
+    },
+    {
+      "date": "2025-08-09",
+      "impacted_customers": 376
+    },
+    {
+      "date": "2025-08-10",
+      "impacted_customers": 478
+    },
+    {
+      "date": "2025-08-11",
+      "impacted_customers": 113
+    },
+    {
+      "date": "2025-08-12",
+      "impacted_customers": 188
+    },
+    {
+      "date": "2025-08-13",
+      "impacted_customers": 428
+    },
+    {
+      "date": "2025-08-14",
+      "impacted_customers": 264
+    },
+    {
+      "date": "2025-08-15",
+      "impacted_customers": 312
+    }
+  ],
+  "summary": {
+    "total_impacted_customers": 5686,
+    "impacted_before_10": 4381,
+    "restored_before_10": 0,
+    "impacted_after_10": 1305,
+    "restored_after_10": 0
+  }
+}

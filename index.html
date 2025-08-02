@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back to School Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar-container">
+        <nav class="navbar">
+            <div class="navbar-title">Back to School Dashboard</div>
+        </nav>
+    </div>
+
+    <div class="dashboard">
+        <!-- Chart container -->
+        <div class="chart-container">
+            <div class="chart-wrapper">
+                <!-- Dropdown control -->
+                <div class="dropdown">
+                    <button class="dropbtn">Select Datasets ▾</button>
+                    <div class="dropdown-content">
+                        <label><input type="checkbox" class="dataset-toggle" value="2022" checked> 2022</label>
+                        <label><input type="checkbox" class="dataset-toggle" value="2023" checked> 2023</label>
+                        <label><input type="checkbox" class="dataset-toggle" value="2024" checked> 2024</label>
+                        <label><input type="checkbox" class="dataset-toggle" value="2025 Actual" checked> 2025 Actual</label>
+                        <label><input type="checkbox" class="dataset-toggle" value="2025 Prediction" checked> 2025 Prediction</label>
+                        <label><input type="checkbox" class="dataset-toggle" value="2025 Average" checked> 2025 Average</label>
+                    </div>
+                </div>
+                <canvas id="trendChart"></canvas>
+            </div>
+            <div class="ai-insights">
+                <i class="fas fa-user-robot"></i>
+                <div class="insights-text">
+                    <strong>AI Insights</strong>
+                </div>
+            </div>
+        </div>
+
+<div class="metrics-journey-box">
+  <!-- Metrics on the left -->
+<div class="metrics-main-container">
+  <div class="metrics-layout">
+    <!-- Top row -->
+    <div class="metric-box reactive" id="Reactive_TTs">
+      <div class="metric-title">Reactive TTs</div>
+      <div class="metric-value">0</div>
+    </div>
+
+    <!-- Second row -->
+    <div class="ftth-group">
+      <div class="metric-box ftth" id="FTTH">
+        <div class="metric-title">FTTH</div>
+        <div class="metric-value">0</div>
+      </div>
+      <div class="logical-physical-row">
+        <div class="metric-box" id="Logical">
+          <div class="metric-title">Logical</div>
+          <div class="metric-value">0</div>
+        </div>
+        <div class="metric-box" id="Physical">
+          <div class="metric-title">Physical</div>
+          <div class="metric-value">0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Keep OLO and Copper as they are -->
+    <div class="metric-box small" id="OLO">
+      <div class="metric-title">OLO</div>
+      <div class="metric-value">0</div>
+    </div>
+    <div class="metric-box small" id="Copper">
+      <div class="metric-title">Copper</div>
+      <div class="metric-value">0</div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Journey visualization on the right -->
+  <div class="journey-container">
+    <svg id="journey-svg"></svg>
+    <div id="journey-nodes"></div>
+  </div>
+</div>
+
+
+
+
+        <!-- Proactive Monitoring Container -->
+        <div class="proactive-container">
+            <div class="proactive-chart">
+                <canvas id="proactiveChart"></canvas>
+            </div>
+            <div class="proactive-summary">
+                <div class="summary-box total">
+                    <span class="summary-label">Total Impacted Customers</span>
+                    <span class="summary-value default" id="totalImpacted">0</span>
+                </div>
+                <div class="summary-box impacted">
+                    <span class="summary-label">Impacted before 10 August</span>
+                    <span class="summary-value red" id="impactedBefore">0</span>
+                </div>
+                <div class="summary-box restored">
+                    <span class="summary-label">Restored before 10 August</span>
+                    <span class="summary-value green" id="restoredBefore">0</span>
+                </div>
+                <div class="summary-box impacted">
+                    <span class="summary-label">Impacted after 10 August</span>
+                    <span class="summary-value red" id="impactedAfter">0</span>
+                </div>
+                <div class="summary-box restored">
+                    <span class="summary-label">Restored after 10 August</span>
+                    <span class="summary-value green" id="restoredAfter">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Apps Chart under proactive -->
+        <div class="apps-status-container" id="appsContainer"></div>
+
+  <div class="e2e-path-wrapper">
+    <svg id="e2eLinks"></svg>
+
+    <div class="e2e-path-container" id="e2ePath">
+        <div class="e2e-node" id="IGW">
+            <i class="fas fa-cloud"></i>
+            <span>IGW</span>
+        </div>
+        <div class="e2e-node" id="BRAS">
+            <i class="fas fa-network-wired"></i>
+            <span>BRAS</span>
+        </div>
+        <div class="e2e-node" id="MPLS">
+            <i class="fas fa-project-diagram"></i>
+            <span>MPLS</span>
+        </div>
+        <div class="e2e-node" id="OLT">
+            <i class="fas fa-server"></i>
+            <span>OLT</span>
+        </div>
+        <div class="e2e-node" id="NNI">
+            <i class="fas fa-exchange-alt"></i>
+            <span>NNI</span>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,732 @@
+[
+    {
+        "week": "Seven Weeks Before",
+        "days": [
+            {
+                "Week": "Seven Weeks Before",
+                "year_2022": 1149,
+                "year_2023": 2063,
+                "year_2024": 2085,
+                "year_2025": 1792.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Seven Weeks Before",
+                "year_2022": 1224,
+                "year_2023": 1894,
+                "year_2024": 1827,
+                "year_2025": 1734.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Seven Weeks Before",
+                "year_2022": 1320,
+                "year_2023": 1908,
+                "year_2024": 1748,
+                "year_2025": 1589.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Seven Weeks Before",
+                "year_2022": 1061,
+                "year_2023": 1556,
+                "year_2024": 1325,
+                "year_2025": 1283.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Seven Weeks Before",
+                "year_2022": 1411,
+                "year_2023": 1764,
+                "year_2024": 1838,
+                "year_2025": 1516.0,
+                "source": "actual",
+                "2025 Average": 1642
+            }
+        ]
+    },
+    {
+        "week": "Six Weeks Before",
+        "days": [
+            {
+                "Week": "Six Weeks Before",
+                "year_2022": 1613,
+                "year_2023": 2148,
+                "year_2024": 1976,
+                "year_2025": 1911.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Six Weeks Before",
+                "year_2022": 1660,
+                "year_2023": 2329,
+                "year_2024": 1903,
+                "year_2025": 1845.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Six Weeks Before",
+                "year_2022": 1554,
+                "year_2023": 1827,
+                "year_2024": 1860,
+                "year_2025": 1792.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Six Weeks Before",
+                "year_2022": 1570,
+                "year_2023": 1889,
+                "year_2024": 1946,
+                "year_2025": 1701.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Six Weeks Before",
+                "year_2022": 1385,
+                "year_2023": 1935,
+                "year_2024": 1580,
+                "year_2025": 1602.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Six Weeks Before",
+                "year_2022": 1126,
+                "year_2023": 1400,
+                "year_2024": 1268,
+                "year_2025": 1221.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Six Weeks Before",
+                "year_2022": 1620,
+                "year_2023": 1934,
+                "year_2024": 1585,
+                "year_2025": 1570.0,
+                "source": "actual",
+                "2025 Average": 1642
+            }
+        ]
+    },
+    {
+        "week": "Five Weeks Before",
+        "days": [
+            {
+                "Week": "Five Weeks Before",
+                "year_2022": 1898,
+                "year_2023": 1900,
+                "year_2024": 1816,
+                "year_2025": 1764.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Five Weeks Before",
+                "year_2022": 1640,
+                "year_2023": 1900,
+                "year_2024": 1570,
+                "year_2025": 2287.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Five Weeks Before",
+                "year_2022": 1612,
+                "year_2023": 2258,
+                "year_2024": 1659,
+                "year_2025": 1822.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Five Weeks Before",
+                "year_2022": 1599,
+                "year_2023": 2407,
+                "year_2024": 1648,
+                "year_2025": 1721.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Five Weeks Before",
+                "year_2022": 1427,
+                "year_2023": 1712,
+                "year_2024": 1511,
+                "year_2025": 1810.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Five Weeks Before",
+                "year_2022": 1171,
+                "year_2023": 1305,
+                "year_2024": 1069,
+                "year_2025": 1227.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Five Weeks Before",
+                "year_2022": 1637,
+                "year_2023": 1691,
+                "year_2024": 1465,
+                "year_2025": 1728.0,
+                "source": "actual",
+                "2025 Average": 1642
+            }
+        ]
+    },
+    {
+        "week": "Four Weeks Before",
+        "days": [
+            {
+                "Week": "Four Weeks Before",
+                "year_2022": 1693,
+                "year_2023": 2180,
+                "year_2024": 1770,
+                "year_2025": 1790.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Four Weeks Before",
+                "year_2022": 1988,
+                "year_2023": 1828,
+                "year_2024": 1711,
+                "year_2025": 1507.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Four Weeks Before",
+                "year_2022": 1988,
+                "year_2023": 1985,
+                "year_2024": 1849,
+                "year_2025": 1539.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Four Weeks Before",
+                "year_2022": 1926,
+                "year_2023": 2143,
+                "year_2024": 1714,
+                "year_2025": 1624.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Four Weeks Before",
+                "year_2022": 1828,
+                "year_2023": 2036,
+                "year_2024": 1913,
+                "year_2025": 1634.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Four Weeks Before",
+                "year_2022": 1740,
+                "year_2023": 1506,
+                "year_2024": 1275,
+                "year_2025": 1140.0,
+                "source": "actual",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Four Weeks Before",
+                "year_2022": 2010,
+                "year_2023": 1799,
+                "year_2024": 1725,
+                "year_2025": 1540.0,
+                "source": "actual",
+                "2025 Average": 1642
+            }
+        ]
+    },
+    {
+        "week": "Three Weeks Before",
+        "days": [
+            {
+                "Week": "Three Weeks Before",
+                "year_2022": 1925,
+                "year_2023": 2179,
+                "year_2024": 1881,
+                "year_2025": 1941.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Three Weeks Before",
+                "year_2022": 1939,
+                "year_2023": 2132,
+                "year_2024": 1821,
+                "year_2025": 1950.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Three Weeks Before",
+                "year_2022": 1954,
+                "year_2023": 2186,
+                "year_2024": 1537,
+                "year_2025": 2137.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Three Weeks Before",
+                "year_2022": 1877,
+                "year_2023": 2445,
+                "year_2024": 1579,
+                "year_2025": 1956.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Three Weeks Before",
+                "year_2022": 1776,
+                "year_2023": 2088,
+                "year_2024": 1476,
+                "year_2025": 1896.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Three Weeks Before",
+                "year_2022": 1422,
+                "year_2023": 1606,
+                "year_2024": 974,
+                "year_2025": 1542.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Three Weeks Before",
+                "year_2022": 1824,
+                "year_2023": 2262,
+                "year_2024": 1514,
+                "year_2025": 1922.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            }
+        ]
+    },
+    {
+        "week": "Two Weeks Before",
+        "days": [
+            {
+                "Week": "Two Weeks Before",
+                "year_2022": 2082,
+                "year_2023": 3004,
+                "year_2024": 1760,
+                "year_2025": 2078.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Two Weeks Before",
+                "year_2022": 1946,
+                "year_2023": 2377,
+                "year_2024": 1847,
+                "year_2025": 2288.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Two Weeks Before",
+                "year_2022": 1917,
+                "year_2023": 2022,
+                "year_2024": 2096,
+                "year_2025": 2097.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Two Weeks Before",
+                "year_2022": 1894,
+                "year_2023": 2179,
+                "year_2024": 2138,
+                "year_2025": 2024.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Two Weeks Before",
+                "year_2022": 1815,
+                "year_2023": 1934,
+                "year_2024": 1810,
+                "year_2025": 1949.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Two Weeks Before",
+                "year_2022": 1466,
+                "year_2023": 1605,
+                "year_2024": 1558,
+                "year_2025": 1584.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Two Weeks Before",
+                "year_2022": 2029,
+                "year_2023": 2372,
+                "year_2024": 2319,
+                "year_2025": 1966.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            }
+        ]
+    },
+    {
+        "week": "One Week Before",
+        "days": [
+            {
+                "Week": "One Week Before",
+                "year_2022": 2166,
+                "year_2023": 2841,
+                "year_2024": 1901,
+                "year_2025": 2138.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "One Week Before",
+                "year_2022": 2123,
+                "year_2023": 2801,
+                "year_2024": 2003,
+                "year_2025": 2111.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "One Week Before",
+                "year_2022": 2145,
+                "year_2023": 2745,
+                "year_2024": 2468,
+                "year_2025": 2251.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "One Week Before",
+                "year_2022": 1875,
+                "year_2023": 2896,
+                "year_2024": 2126,
+                "year_2025": 2103.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "One Week Before",
+                "year_2022": 2053,
+                "year_2023": 2921,
+                "year_2024": 1934,
+                "year_2025": 1997.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "One Week Before",
+                "year_2022": 1675,
+                "year_2023": 2039,
+                "year_2024": 1557,
+                "year_2025": 1576.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "One Week Before",
+                "year_2022": 2069,
+                "year_2023": 2451,
+                "year_2024": 1939,
+                "year_2025": 1960.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            }
+        ]
+    },
+    {
+        "week": "School Start Week",
+        "days": [
+            {
+                "Week": "School Start Week",
+                "year_2022": 2092,
+                "year_2023": 2880,
+                "year_2024": 2216,
+                "year_2025": 2140.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "School Start Week",
+                "year_2022": 1924,
+                "year_2023": 2719,
+                "year_2024": 2069,
+                "year_2025": 2142.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "School Start Week",
+                "year_2022": 1766,
+                "year_2023": 2946,
+                "year_2024": 2014,
+                "year_2025": 2074.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "School Start Week",
+                "year_2022": 2074,
+                "year_2023": 2934,
+                "year_2024": 1889,
+                "year_2025": 2221.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "School Start Week",
+                "year_2022": 2123,
+                "year_2023": 2758,
+                "year_2024": 2245,
+                "year_2025": 2142.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "School Start Week",
+                "year_2022": 1748,
+                "year_2023": 2042,
+                "year_2024": 1796,
+                "year_2025": 1636.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "School Start Week",
+                "year_2022": 1896,
+                "year_2023": 2665,
+                "year_2024": 2352,
+                "year_2025": 2316.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            }
+        ]
+    },
+    {
+        "week": "One Week After",
+        "days": [
+            {
+                "Week": "One Week After",
+                "year_2022": 2377,
+                "year_2023": 2771,
+                "year_2024": 2277,
+                "year_2025": 2509.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "One Week After",
+                "year_2022": 2225,
+                "year_2023": 2546,
+                "year_2024": 2074,
+                "year_2025": 2211.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "One Week After",
+                "year_2022": 2703,
+                "year_2023": 2617,
+                "year_2024": 2241,
+                "year_2025": 2215.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "One Week After",
+                "year_2022": 2475,
+                "year_2023": 2785,
+                "year_2024": 2565,
+                "year_2025": 2137.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "One Week After",
+                "year_2022": 2241,
+                "year_2023": 2824,
+                "year_2024": 2296,
+                "year_2025": 2012.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "One Week After",
+                "year_2022": 1716,
+                "year_2023": 1703,
+                "year_2024": 1796,
+                "year_2025": 1637.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "One Week After",
+                "year_2022": 2558,
+                "year_2023": 2428,
+                "year_2024": 2210,
+                "year_2025": 1985.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            }
+        ]
+    },
+    {
+        "week": "Two Weeks After",
+        "days": [
+            {
+                "Week": "Two Weeks After",
+                "year_2022": 2392,
+                "year_2023": 2353,
+                "year_2024": 2521,
+                "year_2025": 2224.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Two Weeks After",
+                "year_2022": 2130,
+                "year_2023": 2468,
+                "year_2024": 2211,
+                "year_2025": 2145.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Two Weeks After",
+                "year_2022": 2423,
+                "year_2023": 2608,
+                "year_2024": 2967,
+                "year_2025": 2277.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Two Weeks After",
+                "year_2022": 2342,
+                "year_2023": 2234,
+                "year_2024": 2180,
+                "year_2025": 2184.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Two Weeks After",
+                "year_2022": 2052,
+                "year_2023": 2089,
+                "year_2024": 2074,
+                "year_2025": 2170.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Two Weeks After",
+                "year_2022": 1634,
+                "year_2023": 1681,
+                "year_2024": 1578,
+                "year_2025": 1723.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Two Weeks After",
+                "year_2022": 2183,
+                "year_2023": 2360,
+                "year_2024": 2240,
+                "year_2025": 2337.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            }
+        ]
+    },
+    {
+        "week": "Three Weeks After",
+        "days": [
+            {
+                "Week": "Three Weeks After",
+                "year_2022": 2302,
+                "year_2023": 2588,
+                "year_2024": 2145,
+                "year_2025": 2389.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Three Weeks After",
+                "year_2022": 2086,
+                "year_2023": 2408,
+                "year_2024": 2063,
+                "year_2025": 2213.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Three Weeks After",
+                "year_2022": 2074,
+                "year_2023": 2217,
+                "year_2024": 2102,
+                "year_2025": 2208.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Three Weeks After",
+                "year_2022": 2106,
+                "year_2023": 2145,
+                "year_2024": 2017,
+                "year_2025": 2091.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Three Weeks After",
+                "year_2022": 1738,
+                "year_2023": 2071,
+                "year_2024": 1637,
+                "year_2025": 1996.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Three Weeks After",
+                "year_2022": 1128,
+                "year_2023": 1674,
+                "year_2024": 912,
+                "year_2025": 1590.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            },
+            {
+                "Week": "Three Weeks After",
+                "year_2022": 1963,
+                "year_2023": 2086,
+                "year_2024": 2353,
+                "year_2025": 1964.0,
+                "source": "prediction",
+                "2025 Average": 1642
+            }
+        ]
+    }
+]

@@ -1,0 +1,144 @@
+{
+  "teams": [
+    {
+      "id": "DC",
+      "name": "DC",
+      "unique_tts": 400,
+      "referral_count": 600,
+      "active_referrals": 200,
+      "handled_referrals": 400,
+      "today_handled_tasks": 334,
+      "tasks_handled_this_hour": 22,
+      "avg_handled_per_hour": 37.25,
+      "avg_handled_per_day": 445.77,
+      "efficiency_status_day": "average",
+      "efficiency_status_hour": "bad"
+    },
+    {
+      "id": "Filtration",
+      "name": "Filtration",
+      "unique_tts": 1000,
+      "referral_count": 1500,
+      "active_referrals": 500,
+      "handled_referrals": 1000,
+      "today_handled_tasks": 306,
+      "tasks_handled_this_hour": 31,
+      "avg_handled_per_hour": 38.89,
+      "avg_handled_per_day": 403.71,
+      "efficiency_status_day": "average",
+      "efficiency_status_hour": "average"
+    },
+    {
+      "id": "IVRF",
+      "name": "IVRF",
+      "unique_tts": 100,
+      "referral_count": 200,
+      "active_referrals": 50,
+      "handled_referrals": 40,
+      "today_handled_tasks": 40,
+      "tasks_handled_this_hour": 32,
+      "avg_handled_per_hour": 38.15,
+      "avg_handled_per_day": 364.41,
+      "efficiency_status_day": "average",
+      "efficiency_status_hour": "average"
+    },
+    {
+      "id": "OSP",
+      "name": "OSP",
+      "unique_tts": 100,
+      "referral_count": 300,
+      "active_referrals": 70,
+      "handled_referrals": 230,
+      "today_handled_tasks": 424,
+      "tasks_handled_this_hour": 11,
+      "avg_handled_per_hour": 29.7,
+      "avg_handled_per_day": 392.45,
+      "efficiency_status_day": "good",
+      "efficiency_status_hour": "bad"
+    },
+    {
+      "id": "Quality",
+      "name": "Quality",
+      "unique_tts": 100,
+      "referral_count": 120,
+      "active_referrals": 80,
+      "handled_referrals": 40,
+      "today_handled_tasks": 70,
+      "tasks_handled_this_hour": 16,
+      "avg_handled_per_hour": 32.22,
+      "avg_handled_per_day": 352.72,
+      "efficiency_status_day": "good",
+      "efficiency_status_hour": "bad"
+    },
+    {
+      "id": "SOC -T2",
+      "name": "SOC -T2",
+      "unique_tts": 200,
+      "referral_count": 400,
+      "active_referrals": 102,
+      "handled_referrals": 298,
+      "today_handled_tasks": 250,
+      "tasks_handled_this_hour": 40,
+      "avg_handled_per_hour": 33.02,
+      "avg_handled_per_day": 376.94,
+      "efficiency_status_day": "good",
+      "efficiency_status_hour": "good"
+    },
+    {
+      "id": "Filtration-onhold",
+      "name": "Filtration-onhold",
+      "unique_tts": 100,
+      "referral_count": 110,
+      "active_referrals": 80,
+      "handled_referrals": 30,
+      "today_handled_tasks": 20,
+      "tasks_handled_this_hour": 47,
+      "avg_handled_per_hour": 26.83,
+      "avg_handled_per_day": 50.08,
+      "efficiency_status_day": "average",
+      "efficiency_status_hour": "good"
+    }
+  ],
+  "referral_links": [
+  {
+    "source": "DC",
+    "target": "IVRF",
+    "referrals": 27
+  },
+  {
+    "source": "Filtration",
+    "target": "OSP",
+    "referrals": 200
+  },
+  {
+    "source": "Filtration",
+    "target": "DC",
+    "referrals": 500
+  },
+  {
+    "source": "Filtration",
+    "target": "SOC -T2",
+    "referrals": 100
+  },
+  {
+    "source": "Filtration",
+    "target": "Quality",
+    "referrals": 50
+  },
+  {
+    "source": "Filtration",
+    "target": "Filtration-onhold",
+    "referrals": 70
+  },
+  {
+    "source": "Quality",
+    "target": "IVRF",
+    "referrals": 30
+  },
+  {
+    "source": "OSP",
+    "target": "IVRF",
+    "referrals": 10
+  }
+]
+}

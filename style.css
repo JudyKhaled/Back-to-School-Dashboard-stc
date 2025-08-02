@@ -1,0 +1,496 @@
+body {
+  font-family: Arial, sans-serif;
+  background:#101731;
+  margin: 0;
+}
+
+/* Container ensures all content starts 20px from left and right */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+/* Navbar */
+.navbar-container {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.navbar {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  background: linear-gradient(90deg, #061224, #2d154b);
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* Chart container */
+.chart-container {
+  display: flex;
+  align-items: stretch;        /* Equal height for chart & AI Insights */
+  gap: 1%;
+  width: 67%;                  /* Take 55% of screen width */
+  min-width: 320px;
+  background: #162043;
+  padding: 1%;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+  margin: 0;                   /* Stay aligned to the left */
+  box-sizing: border-box;
+}
+
+/* Chart wrapper (flexible) */
+.chart-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Canvas fills available space */
+.chart-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Dropdown styling */
+.dropdown {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 20;
+}
+.dropbtn {
+  background-color: #0e1735;
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.dropbtn:hover {
+  background-color: #1e2f66;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #0e1735;
+  min-width: 180px;
+  border-radius: 5px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  padding: 10px;
+  color: white;
+}
+.dropdown-content label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+.dropdown.show .dropdown-content {
+  display: block;
+}
+
+/* AI Insights Box */
+.ai-insights {
+  width: 200px;                /* Fixed width on desktop */
+  height: auto;                /* Will stretch with parent container */
+  background: #162043;
+  border: 1px solid #ddd;
+  border-radius: 17px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+  align-items: flex-start;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.ai-insights i {
+  font-size: 25px;
+  color: #5a0697da;
+}
+
+.ai-insights .insights-text strong {
+  font-size: 18px;
+  color: #e3e0ec;
+}
+
+/* Mobile-friendly adjustments */
+@media (max-width: 768px) {
+  .chart-container {
+    width: 95%;                /* Use full width on small screens */
+    flex-direction: column;    /* Stack chart and insights vertically */
+  }
+  .ai-insights {
+    width: 100%;               /* Take full width when stacked */
+    height: auto;              /* No forced height */
+    margin-top: 10px;
+  }
+}
+
+/* === Single Box for Metrics + Journey === */
+.metrics-journey-box {
+  display: flex;
+  width: 67%;
+  height: 100vh;
+  gap: 2%;
+  background: #162043;                 /* one background */
+  border-radius: 2vh;                  /* one rounded box */
+  box-shadow: 0 0.5vh 1vh rgba(0,0,0,0.6);
+  padding: 2vh;
+  box-sizing: border-box;
+}
+
+/* === Metrics (Left) === */
+.metrics-main-container {
+  flex: 0 0 25%;
+  max-width: 25%;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* Vertically center metrics */
+  margin-left: 35px;
+}
+
+.metrics-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr; /* FTTH wider */
+  grid-template-areas:
+    "reactive reactive reactive"
+    "ftth olo copper";
+  gap: 2vh;
+  width: 100%;
+}
+
+/* Grid Areas */
+#Reactive_TTs { grid-area: reactive; }
+.ftth-group   { grid-area: ftth; display: flex; flex-direction: column; gap: 1vh; }
+#OLO          { grid-area: olo; }
+#Copper       { grid-area: copper; }
+
+/* Logical + Physical Row inside FTTH */
+.logical-physical-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1vh;
+}
+
+/* Box Style */
+.metric-box {
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background:
+    linear-gradient(#0e142b, #162043) padding-box,
+    linear-gradient(90deg, #6D5DFC, #F08CF0) border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80px; /* Increased height */
+  transition: transform 0.2s ease-in-out;
+}
+.metric-box:hover { transform: scale(1.05); }
+
+.metric-box.reactive { grid-column: span 3; height: 100px; } /* bigger Reactive */
+.metric-box.ftth     { height: 90px; }
+
+/* Text */
+.metric-title { font-size: 1.6vh; color: #bebcbc; margin-bottom: 0.5vh; }
+.metric-value { font-size: 2.7vh; font-weight: bold; }
+.metric-value.normal   { color: #1e3b24; }
+.metric-value.warning  { color: #f1c40f; }
+.metric-value.critical { color: #751915; }
+
+/* === Journey (Right) === */
+.journey-container {
+  flex: 1; /* fills remaining space */
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* SVG and Nodes inside Journey */
+#journey-svg,
+#journey-nodes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+/* === Journey Cards === */
+.journey-card {
+  position: absolute;
+  aspect-ratio: 3/2;
+  background: #d2d3d4;
+  border-radius: 1.5vh;
+  border: 2px solid transparent;
+  box-shadow: 0 0.4vh 0.8vh rgba(0,0,0,0.5);
+  color: #1a1b32;
+  text-align: center;
+  padding: 1vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.2s ease-in-out;
+}
+.journey-card:hover { transform: scale(1.05); }
+.journey-card.good    { border: 2px solid #1da526; box-shadow: 0 0 6px rgba(15,16,15,0.5); }
+.journey-card.average { border: 4px solid rgb(234,201,135); box-shadow: 0 0 40px rgba(10,10,7,0.5); }
+.journey-card.bad     { border: 3px solid #c71111; box-shadow: 0 0 6px #0909096c; }
+
+.journey-card .title { font-size: 2vh; font-weight: bold; margin-bottom: 0.5vh; }
+.journey-card .value { font-size: 1.2vh; color: #ccc; }
+.journey-card .metrics { display: flex; justify-content: center; gap: 1.5vh; margin-top: 1vh; }
+
+/* === Metric Circles Inside Journey Cards === */
+.metric-circle-wrapper { display: flex; flex-direction: column; align-items: center; gap: 0.2vh; }
+.journey-card .circle-number {
+  width: 7vh;
+  height: 7vh;
+  border-radius: 50%;
+  background: #001d51;
+  border: 0.4vh solid #001d51;
+  color: white;
+  font-size: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  box-shadow: none;
+}
+.metric-label { font-size: 1.4vh; font-weight: 600; color: #2c2f54; text-align: center; }
+
+/* === Journey Links === */
+.link-path { opacity: 0.8; transition: opacity 0.3s, stroke-width 0.3s; }
+.link-path.highlight { stroke: #39569e !important; opacity: 1; }
+#journey-svg defs linearGradient stop:first-child { stop-color: #c0e8ff; }
+#journey-svg defs linearGradient stop:last-child  { stop-color: #547eb2; }
+
+/* === Mobile Responsiveness === */
+@media (max-width: 768px) {
+  .metrics-journey-box { flex-direction: column; height: auto; }
+  .metrics-main-container, .journey-container {
+    flex: 1 1 100%;
+    max-width: 100%;
+    height: 40vh;
+  }
+  .metrics-layout { height: auto; }
+  .metric-box { height: 80px; }
+  .metric-value { font-size: 22px; }
+}
+
+
+
+
+/* Proactive container */
+.proactive-container {
+  display: flex;
+  width: 850px;
+  height: 320px;
+  background: #162043;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+  gap: 10px;
+    margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.proactive-chart {
+  flex: 1;
+}
+
+.proactive-summary {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-box {
+  flex: 1; /* makes them expand evenly */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  padding: 5px;
+  color: white; /* text stays white */
+}
+
+/* Dynamic colors based on status (from JS) */
+.summary-box.normal {
+  background-color: #2e7d3270;
+  border: 2px solid #06ce14;
+}
+
+.summary-box.warning {
+  background-color: rgba(230, 168, 10, 0.6); /* yellow */
+  border: 2px solid #f57f17;
+}
+
+.summary-box.critical {
+  background-color: #ba0c0c6c;
+  border: 2px solid #f50404;
+}
+
+.summary-label {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.summary-value {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
+
+
+/* Apps status container */
+.apps-status-container {
+  display: grid;
+  grid-auto-flow: column;       /* force single row */
+  grid-auto-columns: 1fr;       /* evenly sized columns */
+  gap: 10px;
+  width: 850px;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  background: #162043;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  overflow-x: auto;             /* scroll if too many apps */
+}
+
+/* Keep app cards flexible */
+.app-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 4px solid #ddd;
+  border-radius: 12px;
+  background: #0f1e38;
+  transition: transform 0.2s ease;
+  min-width: 100px;             /* minimum width so they don't shrink too much */
+}
+.app-card:hover {
+  transform: scale(1.05);
+}
+
+.app-card i {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: white;
+}
+.app-name {
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
+
+.app-card.normal {
+  background-color: #2e7d3270;
+  border: 2px solid #06ce14;
+}
+.app-card.abnormal {
+  background-color: #ba0c0c6c;
+  border: 2px solid #f50404;
+}
+
+/* E2E path */
+.e2e-path-wrapper {
+  position: relative;
+  width: 900px;
+  height: 300px;
+  background: #162043;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.6);
+  margin-bottom: 4vh;
+}
+
+#e2eLinks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.e2e-node {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #011c3f; /* Fixed blue background */
+  border: 3px solid #00ff00; /* default (will be overridden) */
+  color: #fff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+  transition: transform 0.2s ease-in-out;
+}
+.e2e-node:hover { transform: scale(1.1); }
+
+/* Status border colors only */
+.e2e-node.green  { border-color: #06ce14; }
+.e2e-node.yellow { border-color: #ffa407; }
+.e2e-node.red    { border-color: #f50404; }
+
+/* Node positions */
+#IGW  { left: 40px;  top: 110px; }
+#BRAS { left: 180px; top: 110px; }
+#MPLS { left: 320px; top: 110px; }
+#OLT  { left: 500px; top: 40px; }
+#NNI  { left: 500px; top: 180px; }
+
+/* Status colors */
+
+
+/* Optional info box */
+#info-box {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 180px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 5;
+}
+#info-box img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 5px;
+}
