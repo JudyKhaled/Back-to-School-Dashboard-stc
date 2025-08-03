@@ -381,6 +381,7 @@ fetch('apps_status.json')
   .catch(err => console.error('Error loading app statuses', err));
 
 
+  // ===== Journey Visualization =====
 // ===== Journey Visualization =====
 fetch('task_referral_dashboard_data.json')
   .then(res => res.json())
@@ -391,8 +392,19 @@ fetch('task_referral_dashboard_data.json')
     const container = document.getElementById('journey-nodes');
     const svg = document.getElementById('journey-svg');
 
-    // Toggle state
-    let showForward = true;
+    // --- Smooth S-curve path ---
+    function drawSmoothCurve(src, tgt) {
+      const dx = tgt.x - src.x;
+      const dy = tgt.y - src.y;
+      const offset = dx * 0.4; // horizontal curve strength
+
+      const controlX1 = src.x + offset;
+      const controlY1 = src.y;
+      const controlX2 = tgt.x - offset;
+      const controlY2 = tgt.y;
+
+      return `M${src.x},${src.y} C${controlX1},${controlY1} ${controlX2},${controlY2} ${tgt.x},${tgt.y}`;
+    }
 
     function render() {
       container.innerHTML = '';
@@ -401,14 +413,13 @@ fetch('task_referral_dashboard_data.json')
       const width = svg.clientWidth;
       const height = svg.clientHeight;
 
-      const cardWidth = Math.max(120, width * 0.15);
-      const cardHeight = cardWidth * 0.75;
-      const filtrationHeight = cardHeight * 3; // Filtration is taller
-      const colGap = cardWidth * 2.0;
-      const rowGap = 40;
+      const cardWidth = 150;
+      const cardHeight = 100;
+      const filtrationHeight = cardHeight * 3;
+      const colGap = cardWidth * 1.6;
+      const rowGap = 60;
 
-      // --- Determine columns ---
-      const col1 = ['Filtration'];  // root
+      const col1 = ['Filtration'];
       const col2 = [];
       const col3 = [];
 
@@ -424,12 +435,20 @@ fetch('task_referral_dashboard_data.json')
       const columns = [col1, col2, col3];
       const nodePositions = {};
 
-      // --- Place nodes column by column ---
-      columns.forEach((col, colIndex) => {
-        const totalHeight = col.reduce((sum, nodeId) =>
+      let allHeights = 0;
+      columns.forEach(col => {
+        const colHeight = col.reduce((sum, nodeId) =>
           sum + ((nodeId === 'Filtration') ? filtrationHeight : cardHeight) + rowGap, -rowGap
         );
-        const startY = (height - totalHeight) / 2;
+        allHeights = Math.max(allHeights, colHeight);
+      });
+      const globalStartY = (height - allHeights) / 2;
+
+      columns.forEach((col, colIndex) => {
+        const colHeight = col.reduce((sum, nodeId) =>
+          sum + ((nodeId === 'Filtration') ? filtrationHeight : cardHeight) + rowGap, -rowGap
+        );
+        const startY = globalStartY + (allHeights - colHeight) / 2;
         const x = colIndex * colGap + 50;
 
         col.forEach((nodeId, rowIndex) => {
@@ -439,10 +458,7 @@ fetch('task_referral_dashboard_data.json')
           const nodeHeight = (nodeId === 'Filtration') ? filtrationHeight : cardHeight;
           const y = startY + rowIndex * (cardHeight + rowGap);
 
-          nodePositions[nodeId] = {
-            x: x + cardWidth / 2,
-            y: y + nodeHeight / 2
-          };
+          nodePositions[nodeId] = { x: x + cardWidth / 2, y: y + nodeHeight / 2 };
 
           const card = document.createElement('div');
           card.className = `journey-card ${node.efficiency_status_hour}`;
@@ -459,7 +475,6 @@ fetch('task_referral_dashboard_data.json')
           `;
           card.dataset.id = nodeId;
 
-          // Hover highlight incoming links
           card.addEventListener('mouseenter', () => {
             document.querySelectorAll(".link-path[data-target='" + nodeId + "']")
               .forEach(p => p.classList.add('highlight'));
@@ -473,7 +488,6 @@ fetch('task_referral_dashboard_data.json')
         });
       });
 
-      // --- Add gradient def ---
       const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
       const grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
       grad.id = 'linkGradient';
@@ -493,58 +507,33 @@ fetch('task_referral_dashboard_data.json')
       defs.appendChild(grad);
       svg.appendChild(defs);
 
-      // --- Separate forward and backward links ---
       const forwardLinks = links.filter(
         l => (col1.includes(l.source) && (col2.includes(l.target) || col3.includes(l.target))) ||
              (col2.includes(l.source) && col3.includes(l.target))
       );
 
-      const backwardLinks = links.filter(
-        l => (col3.includes(l.source) && (col2.includes(l.target) || col1.includes(l.target))) ||
-             (col2.includes(l.source) && col1.includes(l.target))
-      );
-
-      const activeLinks = showForward ? forwardLinks : backwardLinks;
-
-      // --- Draw wave links ---
-      activeLinks.forEach(link => {
+      forwardLinks.forEach(link => {
         const src = nodePositions[link.source];
         const tgt = nodePositions[link.target];
         if (!src || !tgt) return;
 
-        const dx = tgt.x - src.x;
-        const dy = tgt.y - src.y;
-        const controlX1 = src.x + dx / 3;
-        const controlY1 = src.y + dy / 3 - 30; // wave up
-        const controlX2 = src.x + 2 * dx / 3;
-        const controlY2 = src.y + 2 * dy / 3 + 30; // wave down
-
-        const thickness = Math.max(3, link.referrals / 10);
-
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d',
-          `M${src.x},${src.y} C${controlX1},${controlY1} ${controlX2},${controlY2} ${tgt.x},${tgt.y}`);
+        path.setAttribute('d', drawSmoothCurve(src, tgt));
         path.setAttribute('stroke', 'url(#linkGradient)');
-        path.setAttribute('stroke-width', thickness);
+        path.setAttribute('stroke-width', Math.max(3, link.referrals / 10));
         path.setAttribute('fill', 'none');
         path.setAttribute('class', 'link-path');
         path.dataset.source = link.source;
         path.dataset.target = link.target;
-
         svg.appendChild(path);
       });
     }
-
-    // Toggle every 15 seconds
-    setInterval(() => {
-      showForward = !showForward;
-      render();
-    }, 15000);
 
     window.addEventListener('resize', render);
     render();
   })
   .catch(err => console.error('Error loading journey data', err));
+
 
 
   // ===== E2E Path from JSON =====

@@ -1,0 +1,667 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #e0e0e0;
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  /* dark blue layer */
+  z-index: -1;
+}
+
+
+
+header {
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 10px #00000066;
+  height: 50px;
+  background: linear-gradient(135deg,
+      #07182a 0%,
+      #07182a 70%,
+      #3e205c 85%,
+      #472770 100%);
+}
+
+
+
+.logo {
+  height: 50px;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: -100px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-shadow: 0 0 10px #222;
+}
+
+#news-ticker {
+  width: 100%;
+  background: #121B3D;
+  color: #fff;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 30px;
+  line-height: 30px;
+  padding: 4px 20px;
+  flex-shrink: 0;
+
+  box-shadow: inset -25px 0 12px 0px #00BCEB, 0 0 6px #00BCEB, 0 0 2px #FFFFFF;
+}
+
+/* #news-ticker span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: tickerScroll 60s linear infinite;
+}
+
+/* Animation */
+/* @keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}  */
+
+/* Flex container for viewer and right panel */
+#main-content {
+  display: flex;
+  flex: 1;
+  height: 100%;
+}
+
+/* Viewer remains same */
+#viewer {
+  flex: 1;
+  width: calc(100vw - 550px);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Right panel starts at same level as viewer */
+#right-panel {
+  width: 550px;
+  height: 100%;
+  padding: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  z-index: 100;
+  background: linear-gradient(180deg, #0d172a 0%, #111b3b 50%, #182448 100%);
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 10px rgba(35, 169, 255, 0.3);
+}
+
+
+
+.zone {
+  /* background: #00BCEB; */
+  color: white;
+  padding: 0px 10px;
+  border-radius: 4px;
+  margin-right: 10px;
+  margin-left: 100px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.subtitle {
+  margin-bottom: 100px;
+  width: 60%;
+}
+
+.card-container {
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card-button {
+  width: 400px;
+  height: 150px;
+  /* 50% of width */
+  background: rgba(36, 44, 59, 0.85);
+  /* same color, now slightly transparent */
+  border-radius: 20px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(3px);
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.6),
+    0 0 30px rgba(80, 0, 180, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-button:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(100, 50, 200, 0.4);
+}
+
+.card-button::before {
+  content: '';
+  position: absolute;
+  top: -75%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent 70%);
+  animation: waveMove 6s linear infinite;
+}
+
+@keyframes waveMove {
+  from {
+    transform: rotate(0deg) translateX(0);
+  }
+
+  to {
+    transform: rotate(360deg) translateX(0);
+  }
+}
+
+.card-content {
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 500;
+  z-index: 2;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+}
+
+
+
+
+/* --------------------------------------------------- */
+/* Dashboard Part ------------------------------------ */
+/* --------------------------------------------------- */
+/* Section Title */
+.panel-title {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0 0 10px 0;
+}
+
+/* Each row like OLT / MSAN group */
+.status-row {
+  margin-bottom: 30px;
+}
+
+/* OLT / MSAN section label */
+.status-subtitle {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #00bceb;
+}
+
+/* Card wrapper per row */
+.status-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: flex-start;
+}
+
+/* Card styling */
+/* .status-card { */
+/* background: rgba(255, 255, 255, 0.05); */
+/* border: 1px solid rgba(0, 188, 235, 0.2); */
+/* border-radius: 10px; */
+/* padding: 8px; */
+/* width: 84px; /* 🟢 exact card width */
+*/
+/* box-shadow: 0 0 8px rgba(0, 188, 235, 0.3); */
+/* color: white; */
+/* text-align: center; */
+/* flex-shrink: 0; */
+/* } */
+
+
+
+.status-card h3 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #00bceb;
+  padding: 0px !important;
+  margin: 0px !important;
+  font-size: 14px;
+}
+
+.status-metric {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.status-subtext {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.status-line {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.status-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 188, 235, 0.2);
+  border-radius: 10px;
+  padding: 12px;
+  /* width: calc(33.333% - 10px); */
+  min-width: 135px;
+  max-width: 135px;
+  box-shadow: 0 0 8px rgba(0, 188, 235, 0.3);
+  color: white;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.status-card .title {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: #00bceb;
+}
+
+.status-card .line {
+  margin-bottom: 4px;
+}
+
+.status-card .label {
+  font-weight: 500;
+}
+
+.status-card .value {
+  float: right;
+}
+
+
+/* Chart box styling */
+/* .status-chart {
+  background: rgba(0, 188, 235, 0.05);
+  box-shadow: 0 0 8px rgba(0, 188, 235, 0.3);
+  border-radius: 12px;
+  padding: 10px;
+  width: 135px;
+  flex-shrink: 0;
+  text-align: center;
+  color: white;
+} */
+
+
+.status-chart {
+  background: rgba(0, 188, 235, 0.05);
+  box-shadow: 0 0 8px rgba(0, 188, 235, 0.3);
+  border-radius: 12px;
+  padding: 10px;
+  width: 135px;
+  flex-shrink: 0;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.status-card .line.up {
+  color: #00ff99;
+  /* green */
+  font-weight: 500;
+}
+
+.status-card .line.down {
+  color: #ff4d4d;
+  /* red */
+  font-weight: 500;
+}
+
+
+.status-chart canvas {
+  margin-top: 8px;
+}
+
+.chart-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.sectitle {
+  padding-top: 10px !important;
+}
+
+.line-chart-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.traffic-chart-box {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 188, 235, 0.2);
+}
+
+.rotating-chart-box {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 188, 235, 0.2);
+  transition: opacity 0.5s ease;
+}
+
+.traffic-chart-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #00bceb;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+
+
+/* ---------------------------------------------------------------- */
+/* ---------------------------------------------------------------- */
+/* ---------------------------------------------------------------- */
+
+
+
+
+/* .ticker-container {
+  width: 100%;
+  overflow: hidden;
+  background: #f8f8f8;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  height: 30px;
+  line-height: 30px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.ticker-content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll-full 80s linear infinite;
+}
+
+.ticker-content span {
+  display: inline-block;
+  padding: 0 40px;
+  white-space: nowrap;
+}
+
+@keyframes scroll-full {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+} */
+
+
+.ticker-container {
+  width: 100%;
+  overflow: hidden;
+  background: #f0f0f0;
+  white-space: nowrap;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  height: 30px;
+  line-height: 30px;
+  position: relative;
+}
+
+.ticker-content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll-loop 60s linear infinite;
+}
+
+.ticker-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+@keyframes scroll-loop {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+
+
+
+.table-container {
+  max-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 8px;
+  background: rgba(0, 188, 235, 0.05);
+  box-shadow: 0 0 8px rgba(0, 188, 235, 0.3);
+  transition: opacity 0.5s ease;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: transparent;
+}
+
+th,
+td {
+  padding: 10px 14px;
+  text-align: left;
+  background-color: transparent;
+  /* Transparent header and cell */
+  color: inherit;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  font-size: 12px;
+}
+
+td {
+  font-size: 12px;
+}
+
+tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  /* optional light hover effect */
+}
+
+.card_yellow {
+  border: 2px solid yellow !important;
+}
+
+
+.table-container::-webkit-scrollbar {
+  width: 15px;
+  /* or 0px to fully hide the scrollbar track */
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: transparent;
+  /* scrollbar background is transparent */
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 82, 235, 0.342);
+  /*rgba(0, 188, 235, 0.05);*/
+  border-radius: 5px;
+  border: 0px solid transparent;
+  /* makes it blend better */
+}
+
+/* Optional: smooth fade on hover */
+.table-container:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 188, 235, 0.5);
+}
+
+
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0.5em;
+}
+
+.info-table th,
+.info-table td {
+  padding: 8px 12px;
+  text-align: left;
+}
+
+
+
+.ai-summary {
+  padding: 0px 15px;
+  border-left: 4px solid #2196F3;
+  margin-bottom: 1.5em;
+}
+
+
+.circle-mask {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  margin-top: 20px;
+  /* top: 0; */
+}
+
+.circle-mask img {
+  position: absolute;
+  height: 125px;
+  left: -75px;
+  /* This moves the image 200px to the left inside the circle */
+  top: -20px;
+}
+
+
+.cont {
+			position:static;
+			padding-left: calc(50vw - 400px);
+		}
+		.title-circle-mask {
+		  width: 60px;
+		  height: 60px;
+		  border-radius: 50%;
+		  overflow: hidden;
+		  position: absolute;
+		}
+
+		.title-circle-mask img {
+		  position: absolute;
+		  height: 95px;
+		  left: -55px; /* This moves the image 200px to the left inside the circle */
+		  top:-15px;
+		}
+
+/* .ai-entry {
+    margin-bottom: 5px;
+  } */
+#ai-container {
+  /* max-height: 135px; */
+  height: 300px;
+  width: 400px;
+  margin-left: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 8px;
+  background: rgba(0, 188, 235, 0.05);
+  box-shadow: 0 0 8px rgba(0, 188, 235, 0.3);
+  transition: opacity 0.5s ease;
+  scroll-behavior: smooth;
+}
+
+#ai-container::-webkit-scrollbar {
+  width: 15px;
+  /* or 0px to fully hide the scrollbar track */
+}
+
+#ai-container::-webkit-scrollbar-track {
+  background: transparent;
+  /* scrollbar background is transparent */
+}
+
+#ai-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 82, 235, 0.342);
+  /*rgba(0, 188, 235, 0.05);*/
+  border-radius: 5px;
+  border: 0px solid transparent;
+  /* makes it blend better */
+}
+
+/* Optional: smooth fade on hover */
+#ai-container:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 188, 235, 0.5);
+}
+
+.ai-summary p {
+  display: -webkit-box;
+  /* -webkit-line-clamp: 4; */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+}
