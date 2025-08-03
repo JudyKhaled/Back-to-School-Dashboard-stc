@@ -150,37 +150,44 @@ body {
 }
 
 /* === Single Box for Metrics + Journey === */
+
+/* === Single Box for Metrics + Journey === */
 .metrics-journey-box {
   display: flex;
+  flex-direction: column;    /* stack metrics on top, journey below */
   width: 67%;
-  height: 100vh;
-  gap: 2%;
-  background: #162043;                 /* one background */
-  border-radius: 2vh;                  /* one rounded box */
+  gap: 4vh;                  /* spacing between metrics and journey */
+  background: #162043;
+  border-radius: 2vh;
   box-shadow: 0 0.5vh 1vh rgba(0,0,0,0.6);
   padding: 2vh;
   box-sizing: border-box;
+
+  /* NEW → allow height to expand dynamically */
+  height: auto;
+  min-height: 100vh; /* still fill screen if journey small */
 }
 
-/* === Metrics (Left) === */
+/* === Metrics (Top-Left) === */
 .metrics-main-container {
-  flex: 0 0 25%;
-  max-width: 25%;
-  min-width: 400px;
+  width: 100%;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;  /* Vertically center metrics */
-  margin-left: 35px;
+  justify-content: flex-start;
+  align-items: flex-start;   /* keep metrics left-aligned */
+  margin: 0;
 }
 
 .metrics-layout {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr; /* FTTH wider */
+  grid-template-columns: 2fr 1fr 1fr;
   grid-template-areas:
     "reactive reactive reactive"
     "ftth olo copper";
   gap: 2vh;
   width: 100%;
+  max-width: 700px;
 }
 
 /* Grid Areas */
@@ -196,23 +203,25 @@ body {
   gap: 1vh;
 }
 
-/* Box Style */
+/* Box Style (turquoise border + glow) */
 .metric-box {
-  border: 2px solid transparent;
+  border: 1px solid rgba(0, 188, 235, 0.2);
   border-radius: 12px;
-  background:
-    linear-gradient(#0e142b, #162043) padding-box,
-    linear-gradient(90deg, #6D5DFC, #F08CF0) border-box;
+  background: linear-gradient(#0e142b, #162043) padding-box;
+  box-shadow: 0 0 8px rgba(0, 188, 235, 0.3);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80px; /* Increased height */
-  transition: transform 0.2s ease-in-out;
+  height: 80px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
 }
-.metric-box:hover { transform: scale(1.05); }
+.metric-box:hover { 
+  transform: scale(1.05); 
+  box-shadow: 0 0 12px rgba(0, 188, 235, 0.5); 
+}
 
-.metric-box.reactive { grid-column: span 3; height: 100px; } /* bigger Reactive */
+.metric-box.reactive { grid-column: span 3; height: 100px; }
 .metric-box.ftth     { height: 90px; }
 
 /* Text */
@@ -222,13 +231,20 @@ body {
 .metric-value.warning  { color: #f1c40f; }
 .metric-value.critical { color: #b02d26; }
 
-/* === Journey (Right) === */
+/* === Journey (Bottom, Centered) === */
 .journey-container {
-  flex: 1;
+  position: relative;
+  width: 100%;
+  max-width: 900px;          /* control max width */
+  height: auto;              /* NEW → allow dynamic height */
+  min-height: 500px;         /* fallback height */
+  margin: 0 auto;            /* center horizontally */
   background: transparent;
   border-radius: 0;
   box-shadow: none;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   overflow: hidden;
 }
 
@@ -246,37 +262,30 @@ body {
 .journey-card {
   position: absolute;
   width: 160px;
-  height: 240px; /* Increased card height */
-  background: linear-gradient(#0e142b, #162043) padding-box,
-              linear-gradient(90deg, #6D5DFC, #F08CF0) border-box;
+  height: 240px;
+  background: linear-gradient(#0e142b, #162043) padding-box;
   border-radius: 1.5vh;
-  border: 2px solid transparent;
-  box-shadow: 0 0.4vh 0.8vh rgba(0,0,0,0.5);
+  border: 1px solid rgba(0, 188, 235, 0.2);
+  box-shadow: 0 0 8px rgba(0, 188, 235, 0.3);
   color: #bebcbc;
   text-align: center;
-
   display: flex;
   flex-direction: column;
-  justify-content: center; /* center vertically */
+  justify-content: center;
   align-items: center;
-
   padding: 2vh 1.5vh;
-  gap: 2vh; /* spacing between title and circles */
-  transition: transform 0.2s ease-in-out;
+  gap: 2vh;
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
 }
-.journey-card:hover { transform: scale(1.05); }
-
+.journey-card:hover { 
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(0, 188, 235, 0.5);
+}
 
 /* Title color based on state */
-.journey-card.good .title {
-  color: #3c824a;    /* green */
-}
-.journey-card.average .title {
-  color: #ae9b4d;    /* yellow/gold */
-}
-.journey-card.bad .title {
-  color: #9d2f29;    /* red */
-}
+.journey-card.good .title    { color: #3c824a; }
+.journey-card.average .title { color: #ae9b4d; }
+.journey-card.bad .title     { color: #9d2f29; }
 
 .journey-card .title {
   font-size: 2.2vh;
@@ -290,27 +299,22 @@ body {
   gap: 2vh;
 }
 
-/* Circle scales with card height */
+/* Circle turquoise */
 .journey-card .circle-number {
   width: 50px;           
   height: 50px;          
   border-radius: 50%;
   aspect-ratio: 1 / 1;   
-  background-color: rgb(164, 162, 162);
-  border: 0.2vh solid rgb(164, 162, 162);
-  color: navy;
+  background: rgba(0, 188, 235, 0.1);
+  border: 2px solid #00BCEB;
+  color: #00BCEB;
   font-size: 2.2vh;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
+  box-shadow: 0 0 5px rgba(0, 188, 235, 0.4);
 }
-  /* Reduced Glow
-  box-shadow: 0 0 5px rgba(70, 148, 219, 0.7),
-              0 0 10px rgba(70, 148, 219, 0.5);
-  transition: box-shadow 0.3s ease-in-out;
-} */
-
 
 .metric-label {
   font-size: 1.4vh;
@@ -319,11 +323,16 @@ body {
   text-align: center;
 }
 
-/* === Journey Links === */
-.link-path { opacity: 0.8; transition: opacity 0.3s, stroke-width 0.3s; }
-.link-path.highlight { stroke: #39569e !important; opacity: 1; }
-#journey-svg defs linearGradient stop:first-child { stop-color: #c0e8ff; }
-#journey-svg defs linearGradient stop:last-child  { stop-color: #547eb2; }
+/* === Journey Links (keep highlight) === */
+.link-path { 
+  opacity: 0.8; 
+  transition: opacity 0.3s, stroke-width 0.3s;
+  stroke: url(#linkGradient);
+}
+.link-path.highlight { stroke: #00BCEB !important; opacity: 1; }
+
+#journey-svg defs linearGradient stop:first-child { stop-color: #00BCEB; }
+#journey-svg defs linearGradient stop:last-child  { stop-color: #3dd6e4; }
 
 /* === Mobile Responsiveness === */
 @media (max-width: 768px) {
@@ -331,12 +340,13 @@ body {
   .metrics-main-container, .journey-container {
     flex: 1 1 100%;
     max-width: 100%;
-    height: 40vh;
+    height: auto;
   }
   .metrics-layout { height: auto; }
-  .journey-card { width: 120px; height: 180px; } /* taller for mobile too */
+  .journey-card { width: 120px; height: 180px; }
   .journey-card .circle-number { width: 50%; } 
 }
+
 
 
 
