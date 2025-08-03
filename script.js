@@ -253,7 +253,7 @@ updateMetrics();
 fetch('chart4_data_after_date_split.json')
   .then(res => res.json())
   .then(data => {
-    // Trend Chart Data
+    // === Trend Chart Data ===
     const labels = data.trend.map(item => item.date);
     const values = data.trend.map(item => item.impacted_customers);
 
@@ -262,7 +262,7 @@ fetch('chart4_data_after_date_split.json')
     // Gradient fill (pink glow effect)
     const gradient = ctx.createLinearGradient(0, 0, 0, 300);
     gradient.addColorStop(0, 'rgba(248, 16, 248, 0.4)'); // top - pinkish
-    gradient.addColorStop(1, 'rgba(0,0,0,0)');       // bottom - transparent
+    gradient.addColorStop(1, 'rgba(0,0,0,0)');           // bottom - transparent
 
     new Chart(ctx, {
       type: 'line',
@@ -275,8 +275,8 @@ fetch('chart4_data_after_date_split.json')
           backgroundColor: gradient,
           borderColor: '#ab32abff',  // neon pink line
           borderWidth: 3,
-          pointRadius: 0,          // keep points hidden
-          tension: 0.4             // smooth curve
+          pointRadius: 0,           // keep points hidden
+          tension: 0.4              // smooth curve
         }]
       },
       options: {
@@ -305,53 +305,51 @@ fetch('chart4_data_after_date_split.json')
       }
     });
 
-    // Summary values
-    const totalImpactedBox = document.getElementById('totalImpacted').parentElement;
-    const impactedBeforeBox = document.getElementById('impactedBefore').parentElement;
-    const restoredBeforeBox = document.getElementById('restoredBefore').parentElement;
-    const impactedAfterBox = document.getElementById('impactedAfter').parentElement;
-    const restoredAfterBox = document.getElementById('restoredAfter').parentElement;
+    // === Summary Values ===
+    const totalImpactedValue = document.getElementById('totalImpacted');
+    const impactedBeforeValue = document.getElementById('impactedBefore');
+    const restoredBeforeValue = document.getElementById('restoredBefore');
+    const impactedAfterValue = document.getElementById('impactedAfter');
+    const restoredAfterValue = document.getElementById('restoredAfter');
 
-    // Set values
-    document.getElementById('totalImpacted').textContent = data.summary.total_impacted_customers.toLocaleString();
-    document.getElementById('impactedBefore').textContent = data.summary.impacted_before_10;
-    document.getElementById('restoredBefore').textContent = data.summary.restored_before_10;
-    document.getElementById('impactedAfter').textContent = data.summary.impacted_after_10;
-    document.getElementById('restoredAfter').textContent = data.summary.restored_after_10;
+    // Set values from data
+    totalImpactedValue.textContent = data.summary.total_impacted_customers.toLocaleString();
+    impactedBeforeValue.textContent = data.summary.impacted_before_10;
+    restoredBeforeValue.textContent = data.summary.restored_before_10;
+    impactedAfterValue.textContent = data.summary.impacted_after_10;
+    restoredAfterValue.textContent = data.summary.restored_after_10;
 
-    // Remove old classes
-    [totalImpactedBox, impactedBeforeBox, restoredBeforeBox, impactedAfterBox, restoredAfterBox]
-        .forEach(box => box.classList.remove('normal','warning','critical'));
+    // Remove old classes (from values only)
+    [totalImpactedValue, impactedBeforeValue, restoredBeforeValue, impactedAfterValue, restoredAfterValue]
+        .forEach(val => val.classList.remove('normal','warning','critical'));
 
-    // Example logic for assigning classes (adjust as needed)
+    // Apply new color classes based on thresholds
     if (data.summary.total_impacted_customers > 1000) {
-        totalImpactedBox.classList.add('critical');
+        totalImpactedValue.classList.add('critical');
     } else if (data.summary.total_impacted_customers > 500) {
-        totalImpactedBox.classList.add('warning');
+        totalImpactedValue.classList.add('warning');
     } else {
-        totalImpactedBox.classList.add('normal');
+        totalImpactedValue.classList.add('normal');
     }
 
-    // Example for impactedBefore
     if (data.summary.impacted_before_10 > 500) {
-        impactedBeforeBox.classList.add('critical');
+        impactedBeforeValue.classList.add('critical');
     } else {
-        impactedBeforeBox.classList.add('normal');
+        impactedBeforeValue.classList.add('normal');
     }
 
-    // Example for restoredBefore
-    restoredBeforeBox.classList.add('normal');
+    restoredBeforeValue.classList.add('normal');
 
-    // Example for impactedAfter
     if (data.summary.impacted_after_10 > 500) {
-        impactedAfterBox.classList.add('critical');
+        impactedAfterValue.classList.add('critical');
     } else {
-        impactedAfterBox.classList.add('normal');
+        impactedAfterValue.classList.add('normal');
     }
 
-    // Example for restoredAfter
-    restoredAfterBox.classList.add('normal');
-  });
+    restoredAfterValue.classList.add('normal');
+  })
+  .catch(err => console.error('Error loading proactive chart data', err));
+
 
 
   // ===== Apps Traffic Status =====

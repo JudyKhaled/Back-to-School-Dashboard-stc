@@ -12,13 +12,30 @@ body {
   margin: 0;
 }
 
-/* Container ensures all content starts 20px from left and right */
 .dashboard {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  width: 100%; /* space between left and right */
   padding: 0 20px;
+  gap: 20px;
+  box-sizing: border-box;
 }
+
+.dashboard-left {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;  /* space between stacked containers */
+}
+
+.right-container {
+  width: 35%;
+  background: #162043;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  box-sizing: border-box;
+  margin-bottom: 33px;}
+
 
 /* Navbar */
 .navbar-container {
@@ -47,7 +64,7 @@ body {
   display: flex;
   align-items: stretch;        /* Equal height for chart & AI Insights */
   gap: 1%;
-  width: 67%;                  /* Take 55% of screen width */
+  margin-right:10px;              /* Take 55% of screen width */
   min-width: 320px;
   background: #162043;
   border-radius: 20px;
@@ -180,7 +197,6 @@ body {
 .metrics-journey-box {
   display: flex;
   flex-direction: column;   /* stack metrics then journey */
-  width: 67%;
   gap: 4vh;
   background: #162043;
   border-radius: 2vh;
@@ -230,7 +246,7 @@ body {
   border: 1px solid rgba(0, 188, 235, 0.2);
   border-radius: 12px;
   background: linear-gradient(#0e142b, #162043) padding-box;
-  box-shadow: 0 0 12px rgba(0, 188, 235, 0.3);
+  box-shadow: 0 0 8px rgba(0, 188, 235, 0.3);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -261,7 +277,7 @@ body {
 
 .ai-insights {
   position: relative;
-  width: 60vh;
+  width: 50vh;
   min-height: 270px;
   background: linear-gradient(180deg, #0d172a 0%, #111b3b 50%, #182448 100%);
   border-radius: 12px;
@@ -482,7 +498,7 @@ body {
 
 .proactive-container {
   display: flex;
-  width: 64%;
+  width: 100;
   height: 38vh;
   background: #162043;
   border-radius: 20px;
@@ -522,22 +538,23 @@ body {
   text-align: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   padding: 5px;
-  color: white;
+  color: white;  /* default text */
+  background-color: rgba(22, 32, 67, 0.8); /* neutral look */
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Dynamic colors based on status */
-.summary-box.normal {
-  background-color: #2e7d3270;
-  border: 2px solid #06ce14;
-}
-.summary-box.warning {
-  background-color: rgba(230, 168, 10, 0.6);
-  border: 2px solid #f57f17;
-}
+/* Remove dynamic background and border on box */
+.summary-box.normal,
+.summary-box.warning,
 .summary-box.critical {
-  background-color: #ba0c0c6c;
-  border: 2px solid #f50404;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* Instead color only the numbers */
+.summary-value.normal   { color: #06ce14; }
+.summary-value.warning  { color: #f57f17; }
+.summary-value.critical { color: #f50404; }
 
 .summary-label {
   font-size: 12px;
@@ -581,7 +598,7 @@ body {
   grid-auto-flow: column;       /* force single row */
   grid-auto-columns: 1fr;       /* evenly sized columns */
   gap: 10px;
-  width: 850px;
+  width: 100;
   padding: 10px;
   border-radius: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
@@ -632,7 +649,7 @@ body {
 /* E2E path */
 .e2e-path-wrapper {
   position: relative;
-  width: 900px;
+  width: 100;
   height: 300px;
   background: #162043;
   border-radius: 20px;
