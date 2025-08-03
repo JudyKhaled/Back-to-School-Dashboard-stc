@@ -70,20 +70,7 @@
       "efficiency_status_day": "good",
       "efficiency_status_hour": "bad"
     },
-    {
-      "id": "SOC -T2",
-      "name": "SOC -T2",
-      "unique_tts": 200,
-      "referral_count": 400,
-      "active_referrals": 102,
-      "handled_referrals": 298,
-      "today_handled_tasks": 250,
-      "tasks_handled_this_hour": 40,
-      "avg_handled_per_hour": 33.02,
-      "avg_handled_per_day": 376.94,
-      "efficiency_status_day": "good",
-      "efficiency_status_hour": "good"
-    },
+
     {
       "id": "Filtration-onhold",
       "name": "Filtration-onhold",
@@ -115,11 +102,7 @@
     "target": "DC",
     "referrals": 500
   },
-  {
-    "source": "Filtration",
-    "target": "SOC -T2",
-    "referrals": 100
-  },
+
   {
     "source": "Filtration",
     "target": "Quality",

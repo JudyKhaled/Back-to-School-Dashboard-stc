@@ -380,28 +380,37 @@ fetch('apps_status.json')
   })
   .catch(err => console.error('Error loading app statuses', err));
 
-// ===== Journey Visualization =====
-// ===== Journey Visualization =====
+
+  //journey
 fetch('task_referral_dashboard_data.json')
   .then(res => res.json())
   .then(data => {
-    const nodes = data.teams;
-    const links = data.referral_links;
+    const normalizeId = id => id.replace(/\s*-\s*/g, '-').replace(/\s+/g, ' ').trim();
+
+    // Normalize team IDs
+    const nodes = data.teams.map(team => ({
+      ...team,
+      id: normalizeId(team.id)
+    }));
+
+    // Normalize link endpoints
+    const links = data.referral_links.map(link => ({
+      ...link,
+      source: normalizeId(link.source),
+      target: normalizeId(link.target)
+    }));
 
     const container = document.getElementById('journey-nodes');
     const svg = document.getElementById('journey-svg');
 
-    // Smooth curve path
     function drawSmoothCurve(src, tgt) {
       const dx = tgt.x - src.x;
       const dy = tgt.y - src.y;
       const offset = dx * 0.4;
-
       const controlX1 = src.x + offset;
       const controlY1 = src.y;
       const controlX2 = tgt.x - offset;
       const controlY2 = tgt.y;
-
       return `M${src.x},${src.y} C${controlX1},${controlY1} ${controlX2},${controlY2} ${tgt.x},${tgt.y}`;
     }
 
@@ -412,31 +421,43 @@ fetch('task_referral_dashboard_data.json')
       const cardWidth = 150;
       const cardHeight = 100;
       const filtrationHeight = cardHeight * 3;
-      const colGap = cardWidth * 1.6;
+      const colGap = cardWidth * 2.2;
       const rowGap = 60;
 
-      // Build columns
-      const col1 = ['Filtration'];
+      // Columns: dynamically generated
+      const col1 = [normalizeId('Filtration')];
       const col2 = [];
       const col3 = [];
 
+      // Find all direct Filtration targets
       links.forEach(link => {
-        if (col1.includes(link.source) && !col2.includes(link.target)) col2.push(link.target);
+        if (link.source === normalizeId('Filtration') && !col2.includes(link.target)) {
+          col2.push(link.target);
+        }
       });
+
+      // Targets of col2 nodes
       links.forEach(link => {
         if (col2.includes(link.source) && !col3.includes(link.target) && !col1.includes(link.target)) {
           col3.push(link.target);
         }
       });
 
+      // Any remaining nodes go to col3
+      nodes.forEach(node => {
+        if (![...col1, ...col2, ...col3].includes(node.id)) {
+          col3.push(node.id);
+        }
+      });
+
       const columns = [col1, col2, col3];
       const nodePositions = {};
 
-      // Layout height calculation
+      // Calculate overall height
       let allHeights = 0;
       columns.forEach(col => {
         const colHeight = col.reduce((sum, nodeId) =>
-          sum + ((nodeId === 'Filtration') ? filtrationHeight : cardHeight) + rowGap, -rowGap
+          sum + ((nodeId === normalizeId('Filtration')) ? filtrationHeight : cardHeight) + rowGap, -rowGap
         );
         allHeights = Math.max(allHeights, colHeight);
       });
@@ -446,10 +467,10 @@ fetch('task_referral_dashboard_data.json')
       const xOffset = (containerWidth - totalWidth) / 2;
       const globalStartY = 50;
 
-      // Position nodes
+      // Render cards
       columns.forEach((col, colIndex) => {
         const colHeight = col.reduce((sum, nodeId) =>
-          sum + ((nodeId === 'Filtration') ? filtrationHeight : cardHeight) + rowGap, -rowGap
+          sum + ((nodeId === normalizeId('Filtration')) ? filtrationHeight : cardHeight) + rowGap, -rowGap
         );
         const startY = globalStartY + (allHeights - colHeight) / 2;
         const x = colIndex * colGap + xOffset;
@@ -458,7 +479,7 @@ fetch('task_referral_dashboard_data.json')
           const node = nodes.find(n => n.id === nodeId);
           if (!node) return;
 
-          const nodeHeight = (nodeId === 'Filtration') ? filtrationHeight : cardHeight;
+          const nodeHeight = (nodeId === normalizeId('Filtration')) ? filtrationHeight : cardHeight;
           const y = startY + rowIndex * (cardHeight + rowGap);
 
           nodePositions[nodeId] = { x: x + cardWidth / 2, y: y + nodeHeight / 2 };
@@ -480,7 +501,7 @@ fetch('task_referral_dashboard_data.json')
         });
       });
 
-      // Gradient for link paths
+      // Gradient for links
       const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
       const grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
       grad.id = 'linkGradient';
@@ -491,16 +512,17 @@ fetch('task_referral_dashboard_data.json')
 
       const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
       stop1.setAttribute('offset', '0%');
-      stop1.setAttribute('stop-color', '#66ccff');
+      stop1.setAttribute('stop-color', '#00BCEB');
       const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
       stop2.setAttribute('offset', '100%');
-      stop2.setAttribute('stop-color', '#3399ff');
+      stop2.setAttribute('stop-color', '#3dd6e4');
+
       grad.appendChild(stop1);
       grad.appendChild(stop2);
       defs.appendChild(grad);
       svg.appendChild(defs);
 
-      // Draw ALL links (always visible)
+      // Draw all links
       links.forEach(link => {
         const src = nodePositions[link.source];
         const tgt = nodePositions[link.target];
@@ -511,7 +533,7 @@ fetch('task_referral_dashboard_data.json')
         path.setAttribute('stroke', 'url(#linkGradient)');
         path.setAttribute('stroke-width', Math.max(3, link.referrals / 10));
         path.setAttribute('fill', 'none');
-        path.setAttribute('class', 'link-path');
+        path.classList.add('link-path');
         svg.appendChild(path);
       });
 
@@ -529,8 +551,7 @@ fetch('task_referral_dashboard_data.json')
         if (bottom > maxBottom) maxBottom = bottom;
       });
 
-      const padding = 50;
-      journeyContainer.style.height = (maxBottom + padding) + 'px';
+      journeyContainer.style.height = (maxBottom + 50) + 'px';
     }
 
     window.addEventListener('resize', render);
