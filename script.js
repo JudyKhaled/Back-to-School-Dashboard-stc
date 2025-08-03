@@ -78,7 +78,7 @@ fetch('chart1.json')
       beforeDraw: (chart) => {
         const { ctx, chartArea } = chart;
         ctx.save();
-        ctx.fillStyle = '#162043';
+        ctx.fillStyle = '#16204314';
         ctx.fillRect(chartArea.left, chartArea.top, chartArea.width, chartArea.height);
         ctx.restore();
       }
@@ -361,22 +361,32 @@ fetch('apps_status.json')
 
     data.applications.forEach(app => {
       const card = document.createElement('div');
-      card.className = `app-card ${app.status.toLowerCase()}`;
+      card.className = 'app-card';
 
       const icon = document.createElement('i');
       icon.className = app.icon;
 
-      const name = document.createElement('div');
-      name.className = 'app-name';
-      name.textContent = app.name;
+      // App name with status circle
+      const nameWrapper = document.createElement('div');
+      nameWrapper.className = 'app-name';
+
+      const statusCircle = document.createElement('span');
+      statusCircle.className = `status-circle ${app.status.toLowerCase()}`;
+
+      const nameText = document.createElement('span');
+      nameText.textContent = app.name;
+
+      nameWrapper.appendChild(nameText);
+      nameWrapper.appendChild(statusCircle);
 
       card.appendChild(icon);
-      card.appendChild(name);
+      card.appendChild(nameWrapper);
 
       container.appendChild(card);
     });
   })
   .catch(err => console.error('Error loading app statuses', err));
+
 
 
   //journey

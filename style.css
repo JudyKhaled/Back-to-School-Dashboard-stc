@@ -8,7 +8,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background:#101731;
+  background: linear-gradient(180deg, #0d172a 0%, #111b3b 50%, #182448 100%);
   margin: 0;
 }
 
@@ -40,40 +40,105 @@ body {
 
 
 /* Navbar */
-.navbar-container {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
 .navbar {
   height: 70px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* space between left icons & title */
   padding: 0 20px;
-  background: linear-gradient(90deg, #061224, #2d154b);
+  /* background: linear-gradient(90deg, #061224, #2d154b); */
   color: white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1%;
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 10px #00000066;
+  background: linear-gradient(135deg,
+      #07182a 0%,
+      #07182a 70%,
+      #3e205c 85%,
+      #472770 100%);
+    
+  
+}
+
+/* Left icons container */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-stc,
+.navbar-logo {
+  height: 40px; /* adjust to fit header */
+}
+
+.navbar-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  margin: 0 auto;   /* keeps it centered */
+}
+
+.navbar-robot {
+  height: 40px;
 }
 
 .navbar-title {
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
 }
 
 /* Chart container */
+/* Chart container with stronger gradient and highlight */
 .chart-container {
   display: flex;
-  align-items: stretch;        /* Equal height for chart & AI Insights */
+  align-items: stretch;
   gap: 1%;
-  margin-right:10px;              /* Take 55% of screen width */
+  margin-right: 10px;
   min-width: 320px;
-  background: #162043;
+
+  /* Gradient like your test4.htm */
+  background: linear-gradient(
+    /* 135deg,
+    rgba(255, 255, 255, 0.06) 0%, */
+    #182448 100%
+  );
+  backdrop-filter: blur(10px);
+
   border-radius: 20px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
-  margin: 0;                   /* Stay aligned to the left */
-  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
   padding: 5vh;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+}
+
+.chart-container::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border-radius: 22px;
+  z-index: 0;
+
+  /* Highlight similar to test4.htm */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0) 30%
+  );
+  mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 40%, transparent 80%);
+  pointer-events: none;
+}
+
+
+.chart-container > * {
+  position: relative;
+  z-index: 2;
 }
 
 /* Chart wrapper (flexible) */
@@ -554,9 +619,9 @@ body {
 }
 
 /* Instead color only the numbers */
-.summary-value.normal   { color: #06ce14; }
+.summary-value.normal   { color: #3c824a; }
 .summary-value.warning  { color: #f57f17; }
-.summary-value.critical { color: #f50404; }
+.summary-value.critical { color: rgba(157, 47, 41, 1); }
 
 .summary-label {
   font-size: 12px;
@@ -595,34 +660,35 @@ body {
 
 
 /* Apps status container */
+/* Apps status container */
 .apps-status-container {
   display: grid;
-  grid-auto-flow: column;       /* force single row */
-  grid-auto-columns: 1fr;       /* evenly sized columns */
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   gap: 10px;
   width: 100;
   padding: 10px;
   border-radius: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
   background: #162043;
-  margin-left: 20px;
-  margin-bottom: 20px;
-  overflow-x: auto;             /* scroll if too many apps */
+  overflow-x: auto;
 }
 
-/* Keep app cards flexible */
+/* App card with fixed border and shadow */
 .app-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 10px;
-  border: 4px solid #ddd;
+  border: 2px solid rgba(0, 188, 235, 0.4);  /* fixed color */
   border-radius: 12px;
   background: #0f1e38;
   transition: transform 0.2s ease;
-  min-width: 100px;             /* minimum width so they don't shrink too much */
+  min-width: 120px;
+  box-shadow: 0 0 8px rgba(0, 188, 235, 0.4); /* fixed glow */
 }
+
 .app-card:hover {
   transform: scale(1.05);
 }
@@ -632,21 +698,35 @@ body {
   margin-bottom: 10px;
   color: white;
 }
+
 .app-name {
   font-size: 13px;
   font-weight: bold;
   text-align: center;
   color: white;
+  display: flex;
+  align-items: center;
+  gap: 5px; /* space for status circle */
 }
 
-.app-card.normal {
-  background-color: #2e7d3270;
-  border: 2px solid #06ce14;
+/* Status indicator circle */
+.status-circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
 }
-.app-card.abnormal {
-  background-color: #ba0c0c6c;
-  border: 2px solid #f50404;
+
+.status-circle.normal {
+  background-color: #06ce14;
 }
+.status-circle.abnormal {
+  background-color: #f50404;
+}
+.status-circle.warning {
+  background-color: #f1c40f;
+}
+
 
 /* E2E path */
 .e2e-path-wrapper {
