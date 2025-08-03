@@ -110,31 +110,56 @@ body {
 }
 
 /* AI Insights Box */
-.ai-insights {
-  width: 200px;                /* Fixed width on desktop */
-  height: auto;                /* Will stretch with parent container */
-  background: #162043;
-  border: 1px solid #ddd;
-  border-radius: 17px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 8px;
-  align-items: flex-start;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
+
+.ai-trend-box {
+  position: relative;
+  width: 30vh; /* less width */
+  min-height: 120px;
+  background: linear-gradient(180deg, #0d172a 0%, #111b3b 50%, #182448 100%);
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 188, 235, 0.4);
+  padding: 15px 12px 12px 12px;
+  color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.ai-insights i {
-  font-size: 25px;
-  color: #5a0697da;
+/* Robot Icon outside the box */
+.bot-icon-trend {
+   position: absolute;
+  top: 2px;
+  left: -80px;
+  width: 50px;
+  height: 50px;
+  background: #0d172a;
+  border-radius: 50%;
+  padding: 5px;
 }
 
-.ai-insights .insights-text strong {
-  font-size: 18px;
-  color: #e3e0ec;
+/* Title and content */
+.trend-header {
+  margin-bottom: 8px;
 }
+
+.trend-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #00BCEB;
+}
+
+.trend-body {
+  background: rgba(17, 27, 59, 0.4);
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 12px;
+}
+
+.trend-text {
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0;
+  color: #ccc;
+}
+
 
 /* Mobile-friendly adjustments */
 @media (max-width: 768px) {
@@ -149,34 +174,30 @@ body {
   }
 }
 
-/* === Single Box for Metrics + Journey === */
 
 /* === Single Box for Metrics + Journey === */
 .metrics-journey-box {
   display: flex;
-  flex-direction: column;    /* stack metrics on top, journey below */
+  flex-direction: column;   /* stack metrics then journey */
   width: 67%;
-  gap: 4vh;                  /* spacing between metrics and journey */
+  gap: 4vh;
   background: #162043;
   border-radius: 2vh;
   box-shadow: 0 0.5vh 1vh rgba(0,0,0,0.6);
   padding: 2vh;
   box-sizing: border-box;
-
-  /* NEW → allow height to expand dynamically */
-  height: auto;
-  min-height: 100vh; /* still fill screen if journey small */
+  height: auto;            /* dynamic height */
+  min-height: 100vh;       /* fallback */
 }
 
 /* === Metrics (Top-Left) === */
 .metrics-main-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;  /* left aligned */
   justify-content: flex-start;
-  align-items: flex-start;   /* keep metrics left-aligned */
-  margin: 0;
 }
 
 .metrics-layout {
@@ -196,14 +217,13 @@ body {
 #OLO          { grid-area: olo; }
 #Copper       { grid-area: copper; }
 
-/* Logical + Physical Row inside FTTH */
 .logical-physical-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1vh;
 }
 
-/* Box Style (turquoise border + glow) */
+/* Metric Box */
 .metric-box {
   border: 1px solid rgba(0, 188, 235, 0.2);
   border-radius: 12px;
@@ -220,45 +240,98 @@ body {
   transform: scale(1.05); 
   box-shadow: 0 0 12px rgba(0, 188, 235, 0.5); 
 }
-
 .metric-box.reactive { grid-column: span 3; height: 100px; }
 .metric-box.ftth     { height: 90px; }
 
-/* Text */
 .metric-title { font-size: 1.6vh; color: #bebcbc; margin-bottom: 0.5vh; }
 .metric-value { font-size: 2.7vh; font-weight: bold; }
 .metric-value.normal   { color: #3c824a; }
 .metric-value.warning  { color: #f1c40f; }
 .metric-value.critical { color: #b02d26; }
 
-/* === Journey (Bottom, Centered) === */
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  gap: 20px;
+}
+
+.ai-insights {
+  position: relative;
+  width: 60vh;
+  min-height: 270px;
+  background: linear-gradient(180deg, #0d172a 0%, #111b3b 50%, #182448 100%);
+  border-radius: 12px;
+  box-shadow:0 0 12px rgba(0, 188, 235, 0.4);
+  padding: 20px 15px 15px 15px;
+  color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Robot Icon outside the box */
+.bot-icon {
+  position: absolute;
+  top: 2px;
+  left: -80px;
+  width: 50px;
+  height: 50px;
+  background: #0d172a;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+/* Title and content */
+.ai-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ai-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #00BCEB;
+}
+
+.ai-body {
+  background: rgba(17, 27, 59, 0.4);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 13px;
+
+}
+
+.ai-subtitle {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  color: #ccc;
+}
+
+
+
 .journey-container {
   position: relative;
   width: 100%;
-  max-width: 900px;          /* control max width */
-  height: auto;              /* NEW → allow dynamic height */
-  min-height: 500px;         /* fallback height */
-  margin: 0 auto;            /* center horizontally */
+  max-width: 900px;
+  margin: 0 auto;           /* center horizontally */
   background: transparent;
   border-radius: 0;
   box-shadow: none;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  overflow: hidden;
+  overflow: visible;
+  height: auto;             /* will expand dynamically */
+  min-height: 500px;
 }
 
-/* SVG and Nodes inside Journey */
 #journey-svg,
 #journey-nodes {
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
 }
 
-/* === Journey Cards === */
+/* Journey Cards */
 .journey-card {
   position: absolute;
   width: 160px;
@@ -277,12 +350,8 @@ body {
   gap: 2vh;
   transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
 }
-.journey-card:hover { 
-  transform: scale(1.05);
-  box-shadow: 0 0 12px rgba(0, 188, 235, 0.5);
-}
 
-/* Title color based on state */
+
 .journey-card.good .title    { color: #3c824a; }
 .journey-card.average .title { color: #ae9b4d; }
 .journey-card.bad .title     { color: #9d2f29; }
@@ -299,13 +368,14 @@ body {
   gap: 2vh;
 }
 
-/* Circle turquoise */
+/* Circles */
 .journey-card .circle-number {
   width: 50px;           
   height: 50px;          
   border-radius: 50%;
   aspect-ratio: 1 / 1;   
   background: rgba(0, 188, 235, 0.1);
+  box-shadow: 0 0 8px rgba(0, 188, 235, 0.3);
   border: 2px solid #00BCEB;
   color: #00BCEB;
   font-size: 2.2vh;
@@ -313,7 +383,7 @@ body {
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  box-shadow: 0 0 5px rgba(0, 188, 235, 0.4);
+  
 }
 
 .metric-label {
@@ -323,18 +393,22 @@ body {
   text-align: center;
 }
 
-/* === Journey Links (keep highlight) === */
+/* Links always visible */
 .link-path { 
-  opacity: 0.8; 
-  transition: opacity 0.3s, stroke-width 0.3s;
+  opacity: 1 !important;     /* Always visible */
   stroke: url(#linkGradient);
+  transition: stroke-width 0.3s ease-in-out;
 }
-.link-path.highlight { stroke: #00BCEB !important; opacity: 1; }
+
+/* No highlight difference on hover */
+.link-path.highlight { 
+  stroke: url(#linkGradient) !important;
+  opacity: 1 !important;
+}
 
 #journey-svg defs linearGradient stop:first-child { stop-color: #00BCEB; }
 #journey-svg defs linearGradient stop:last-child  { stop-color: #3dd6e4; }
 
-/* === Mobile Responsiveness === */
 @media (max-width: 768px) {
   .metrics-journey-box { flex-direction: column; height: auto; }
   .metrics-main-container, .journey-container {
@@ -346,7 +420,6 @@ body {
   .journey-card { width: 120px; height: 180px; }
   .journey-card .circle-number { width: 50%; } 
 }
-
 
 
 

@@ -380,8 +380,7 @@ fetch('apps_status.json')
   })
   .catch(err => console.error('Error loading app statuses', err));
 
-
-  // ===== Journey Visualization =====
+// ===== Journey Visualization =====
 // ===== Journey Visualization =====
 fetch('task_referral_dashboard_data.json')
   .then(res => res.json())
@@ -392,11 +391,11 @@ fetch('task_referral_dashboard_data.json')
     const container = document.getElementById('journey-nodes');
     const svg = document.getElementById('journey-svg');
 
-    // --- Smooth S-curve path ---
+    // Smooth curve path
     function drawSmoothCurve(src, tgt) {
       const dx = tgt.x - src.x;
       const dy = tgt.y - src.y;
-      const offset = dx * 0.4; // horizontal curve strength
+      const offset = dx * 0.4;
 
       const controlX1 = src.x + offset;
       const controlY1 = src.y;
@@ -410,15 +409,13 @@ fetch('task_referral_dashboard_data.json')
       container.innerHTML = '';
       svg.innerHTML = '';
 
-      const width = svg.clientWidth;
-      const height = svg.clientHeight;
-
       const cardWidth = 150;
       const cardHeight = 100;
       const filtrationHeight = cardHeight * 3;
       const colGap = cardWidth * 1.6;
       const rowGap = 60;
 
+      // Build columns
       const col1 = ['Filtration'];
       const col2 = [];
       const col3 = [];
@@ -435,6 +432,7 @@ fetch('task_referral_dashboard_data.json')
       const columns = [col1, col2, col3];
       const nodePositions = {};
 
+      // Layout height calculation
       let allHeights = 0;
       columns.forEach(col => {
         const colHeight = col.reduce((sum, nodeId) =>
@@ -442,14 +440,19 @@ fetch('task_referral_dashboard_data.json')
         );
         allHeights = Math.max(allHeights, colHeight);
       });
-      const globalStartY = (height - allHeights) / 2;
 
+      const totalWidth = (columns.length - 1) * colGap + cardWidth;
+      const containerWidth = document.querySelector('.journey-container').clientWidth;
+      const xOffset = (containerWidth - totalWidth) / 2;
+      const globalStartY = 50;
+
+      // Position nodes
       columns.forEach((col, colIndex) => {
         const colHeight = col.reduce((sum, nodeId) =>
           sum + ((nodeId === 'Filtration') ? filtrationHeight : cardHeight) + rowGap, -rowGap
         );
         const startY = globalStartY + (allHeights - colHeight) / 2;
-        const x = colIndex * colGap + 50;
+        const x = colIndex * colGap + xOffset;
 
         col.forEach((nodeId, rowIndex) => {
           const node = nodes.find(n => n.id === nodeId);
@@ -473,21 +476,11 @@ fetch('task_referral_dashboard_data.json')
               <div class="circle-number">${node.active_referrals}</div>
             </div>
           `;
-          card.dataset.id = nodeId;
-
-          card.addEventListener('mouseenter', () => {
-            document.querySelectorAll(".link-path[data-target='" + nodeId + "']")
-              .forEach(p => p.classList.add('highlight'));
-          });
-          card.addEventListener('mouseleave', () => {
-            document.querySelectorAll(".link-path[data-target='" + nodeId + "']")
-              .forEach(p => p.classList.remove('highlight'));
-          });
-
           container.appendChild(card);
         });
       });
 
+      // Gradient for link paths
       const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
       const grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
       grad.id = 'linkGradient';
@@ -507,12 +500,8 @@ fetch('task_referral_dashboard_data.json')
       defs.appendChild(grad);
       svg.appendChild(defs);
 
-      const forwardLinks = links.filter(
-        l => (col1.includes(l.source) && (col2.includes(l.target) || col3.includes(l.target))) ||
-             (col2.includes(l.source) && col3.includes(l.target))
-      );
-
-      forwardLinks.forEach(link => {
+      // Draw ALL links (always visible)
+      links.forEach(link => {
         const src = nodePositions[link.source];
         const tgt = nodePositions[link.target];
         if (!src || !tgt) return;
@@ -523,17 +512,31 @@ fetch('task_referral_dashboard_data.json')
         path.setAttribute('stroke-width', Math.max(3, link.referrals / 10));
         path.setAttribute('fill', 'none');
         path.setAttribute('class', 'link-path');
-        path.dataset.source = link.source;
-        path.dataset.target = link.target;
         svg.appendChild(path);
       });
+
+      adjustJourneyHeight();
+    }
+
+    function adjustJourneyHeight() {
+      const journeyContainer = document.querySelector('.journey-container');
+      const cards = document.querySelectorAll('#journey-nodes .journey-card');
+      if (cards.length === 0) return;
+
+      let maxBottom = 0;
+      cards.forEach(card => {
+        const bottom = card.offsetTop + card.offsetHeight;
+        if (bottom > maxBottom) maxBottom = bottom;
+      });
+
+      const padding = 50;
+      journeyContainer.style.height = (maxBottom + padding) + 'px';
     }
 
     window.addEventListener('resize', render);
     render();
   })
   .catch(err => console.error('Error loading journey data', err));
-
 
 
   // ===== E2E Path from JSON =====
