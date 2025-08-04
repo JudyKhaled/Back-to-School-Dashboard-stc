@@ -47,17 +47,19 @@ fetch('chart1.json')
 
     const allValues = [...year2022, ...year2023, ...year2024, ...year2025].filter(v => v != null);
     const maxVal = Math.max(...allValues);
-    const zoomMin = 0;
-    const zoomMax = maxVal * 1.1;
 
+    const zoomMin = 700;                // <-- baseline
+    const zoomMax = maxVal * 1.1;       // <-- dynamic max
+
+    // === Bars offset by baseline (700) ===
     const bars = labels.map((label) => {
+      let offset = 0;
       if (label.includes("School Start Week") && label.includes("Day 1")) {
-        return avgValue * 1.4;
+        offset = avgValue * 1.4 * 0.5; // scaled down
       } else if (label.includes("Day 1")) {
-        return avgValue * 0.8;
-      } else {
-        return 0;
+        offset = avgValue * 0.8 * 0.5;
       }
+      return zoomMin + offset;          // <-- start at 700 baseline
     });
 
     const abbreviateWeek = (week) => week
@@ -85,11 +87,19 @@ fetch('chart1.json')
     };
 
     const ctx = document.getElementById('trendChart').getContext('2d');
+    ctx.canvas.parentNode.style.height = '38vh';
+
     const chartInstance = new Chart(ctx, {
       data: {
         labels: labels,
         datasets: [
-          { label: 'Start', type: 'bar', data: bars, backgroundColor: 'rgba(220,220,220,0.8)', barThickness: 4 },
+          {
+            label: 'Start',
+            type: 'bar',
+            data: bars,
+            backgroundColor: 'rgba(220,220,220,0.8)',
+            barThickness: 2 // thinner bars
+          },
           { label: '2022', type: 'line', data: year2022, borderColor: '#f1c40f', fill: false, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5, tension: 0.3 },
           { label: '2023', type: 'line', data: year2023, borderColor: '#3498db', fill: false, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5, tension: 0.3 },
           { label: '2024', type: 'line', data: year2024, borderColor: '#9b59b6', fill: false, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5, tension: 0.3 },
@@ -100,6 +110,7 @@ fetch('chart1.json')
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         layout: { padding: 20 },
         plugins: {
           legend: { display: true, position: 'bottom', labels: { font: { size: 8 }, color: '#ffffff' } },
@@ -121,7 +132,7 @@ fetch('chart1.json')
           y: {
             grid: { drawOnChartArea: false, color: '#555' },
             ticks: { color: '#ffffff', font: { size: 8 } },
-            min: zoomMin,
+            min: zoomMin,  // <-- start Y axis at 700
             max: zoomMax
           }
         }
@@ -129,7 +140,7 @@ fetch('chart1.json')
       plugins: [chartBackground]
     });
 
-    // === Dataset Indexes ===
+    // === Rotation logic unchanged ===
     const datasets = chartInstance.data.datasets;
     const actualIndex = datasets.findIndex(d => d.label === '2025 Actual');
     const predictionIndex = datasets.findIndex(d => d.label === '2025 Prediction');
@@ -161,7 +172,6 @@ fetch('chart1.json')
       setTimeout(cycleDatasets, 2000);
     }
 
-    // Start animation initially (checkboxes unchecked)
     datasets.forEach((_, i) => {
       if (i !== 0 && i !== averageIndex) chartInstance.setDatasetVisibility(i, false);
     });
@@ -169,20 +179,17 @@ fetch('chart1.json')
     chartInstance.update();
     cycleDatasets();
 
-    // === Checkbox logic (all initially unchecked) ===
     document.querySelectorAll('.dataset-toggle').forEach(input => {
-      input.checked = false; // make sure all checkboxes are unchecked initially
+      input.checked = false;
       input.addEventListener('change', () => {
         clearTimeout(resumeTimeout);
         rotationPaused = true;
 
-        // Hide all datasets except Start (index 0)
         datasets.forEach((ds, i) => {
-          if (i === 0) return; // bars always visible
+          if (i === 0) return;
           if (ds.label === '2025 Average') {
-            chartInstance.setDatasetVisibility(i, true); // avg always visible
+            chartInstance.setDatasetVisibility(i, true);
           } else if (input.value === '2025 Actual' && input.checked) {
-            // Show both actual + prediction together
             if (ds.label === '2025 Actual' || ds.label === '2025 Prediction') {
               chartInstance.setDatasetVisibility(i, true);
             }
@@ -195,15 +202,14 @@ fetch('chart1.json')
 
         chartInstance.update();
 
-        // Resume after 5 seconds
         resumeTimeout = setTimeout(() => {
           rotationPaused = false;
         }, 5000);
       });
     });
-
   })
   .catch(err => console.error('Error loading data', err));
+
 
 
 async function updateMetrics() {

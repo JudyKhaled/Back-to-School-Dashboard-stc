@@ -8,7 +8,12 @@
 
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(180deg, #0d172a 0%, #111b3b 50%, #182448 100%);
+  /* background: linear-gradient(180deg, #0d172a 0%, #111b3b 50%, #182448 100%); */
+  background-image: url('bg2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
   margin: 0;
 }
 
@@ -99,10 +104,11 @@ body {
   margin-right: 10px;
   min-width: 320px;
 
-  /* Gradient like your test4.htm */
+  /* Keep your gradient + glass effect */
   background: linear-gradient(
-    /* 135deg,
-    rgba(255, 255, 255, 0.06) 0%, */
+    180deg,
+    #0d172a 0%,
+    #111b3b 50%,
     #182448 100%
   );
   backdrop-filter: blur(10px);
@@ -110,9 +116,12 @@ body {
   border-radius: 20px;
   position: relative;
   overflow: hidden;
-  padding: 5vh;
+
+  /* reduced padding to hug chart */
+  padding: 1vh 1.5vh;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
 }
+
 
 .chart-container::before {
   content: "";
@@ -144,18 +153,18 @@ body {
 /* Chart wrapper (flexible) */
 .chart-wrapper {
   flex: 1;
-  position: relative;
   display: flex;
   flex-direction: column;
-  
+
+  /* shrink wrapper height */
+  height: auto;
 }
 
 /* Canvas fills available space */
 .chart-wrapper canvas {
   width: 100% !important;
-  height: 100% !important;
+  height: auto !important;   /* auto height for exact fit */
 }
-
 /* Dropdown styling */
 .dropdown {
   position: absolute;
@@ -181,7 +190,7 @@ body {
   background-color: #0e1735;
   min-width: 180px;
   border-radius: 5px;
-  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  box-shadow: 0px 6px 16px rgba(0,0,0,0.2);
   padding: 10px;
   color: white;
 }
@@ -199,10 +208,10 @@ body {
 .ai-trend-box {
   position: relative;
   width: 30vh; /* less width */
-  min-height: 120px;
+  min-height: 100px;
   background: linear-gradient(180deg, #0d172a 0%, #111b3b 50%, #182448 100%);
   border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 188, 235, 0.4);
+  box-shadow: 0 0 6px rgba(0, 188, 235, 0.4);
   padding: 15px 12px 12px 12px;
   color: #ffffff;
   font-family: 'Segoe UI', sans-serif;
@@ -212,9 +221,9 @@ body {
 .bot-icon-trend {
    position: absolute;
   top: 2px;
-  left: -80px;
-  width: 50px;
-  height: 50px;
+  left: -50px;
+  width: 30px;
+  height: 30px;
   background: #0d172a;
   border-radius: 50%;
   padding: 5px;
@@ -265,14 +274,52 @@ body {
   display: flex;
   flex-direction: column;   /* stack metrics then journey */
   gap: 4vh;
-  background: #162043;
+
+  /* Same gradient but with 80% transparency */
+  background: linear-gradient(
+    180deg,
+    rgba(13, 23, 42, 0.6) 0%,   /* #0d172a with alpha */
+    rgba(17, 27, 59, 0.6) 50%,  /* #111b3b with alpha */
+    rgba(24, 36, 72, 0.6) 100%  /* #182448 with alpha */
+  );
+  backdrop-filter: blur(10px);
+
   border-radius: 2vh;
-  box-shadow: 0 0.5vh 1vh rgba(0,0,0,0.6);
-  padding: 2vh;
-  box-sizing: border-box;
-  height: auto;            /* dynamic height */
-  min-height: 100vh; 
+  position: relative;
+  overflow: hidden;
+
+  box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.6);
   padding: 4vh;     
+  box-sizing: border-box;
+  height: auto;            
+  min-height: 100vh;
+}
+
+
+/* Highlight border (same style as chart-container) */
+.metrics-journey-box::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border-radius: 2.4vh; /* match parent rounding */
+  z-index: 0;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0) 30%
+  );
+  mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 40%, transparent 80%);
+  pointer-events: none;
+}
+
+.metrics-journey-box > * {
+  position: relative;
+  z-index: 2;
 }
 
 /* === Metrics (Top-Left) === */
@@ -312,7 +359,7 @@ body {
   border: 1px solid rgba(0, 188, 235, 0.2);
   border-radius: 12px;
   background: linear-gradient(#0e142b, #162043) padding-box;
-  box-shadow: 0 0 12px rgba(0, 188, 235, 0.3);
+  box-shadow: 0 0 6px rgba(0, 188, 235, 0.3);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -322,7 +369,7 @@ body {
 }
 .metric-box:hover { 
   transform: scale(1.05); 
-  box-shadow: 0 0 12px rgba(0, 188, 235, 0.5); 
+  box-shadow: 0 0 6px rgba(0, 188, 235, 0.5); 
 }
 .metric-box.reactive { grid-column: span 3; height: 100px; }
 .metric-box.ftth     { height: 90px; }
