@@ -10,20 +10,18 @@
 </head>
 <body>
     <!-- Navigation Bar -->
- <div class="navbar-container">
-  <nav class="navbar">
-    <div class="navbar-left">
-      <img src="stc.png" alt="STC" class="navbar-stc">
-      <img src="logo.png" alt="Logo" class="navbar-logo">
+    <div class="navbar-container">
+        <nav class="navbar">
+            <div class="navbar-left">
+                <img src="stc.png" alt="STC" class="navbar-stc">
+                <img src="logo.png" alt="Logo" class="navbar-logo">
+            </div>
+            <div class="navbar-center">
+                <img src="robot.png" alt="Robot" class="navbar-robot">
+                <div class="navbar-title">Back to School Dashboard</div>
+            </div>
+        </nav>
     </div>
-    <div class="navbar-center">
-      <img src="robot.png" alt="Robot" class="navbar-robot">
-      <div class="navbar-title">Back to School Dashboard</div>
-    </div>
-  </nav>
-</div>
-
-
 
     <div class="dashboard">
         <!-- LEFT SIDE (65%) -->
@@ -31,7 +29,6 @@
             <!-- Chart container -->
             <div class="chart-container">
                 <div class="chart-wrapper">
-                    <!-- Dropdown control -->
                     <div class="dropdown">
                         <button class="dropbtn">Select Datasets ▾</button>
                         <div class="dropdown-content">
@@ -45,61 +42,56 @@
                     </div>
                     <canvas id="trendChart"></canvas>
                 </div>
-                <div class="ai-trend-box">
-                    <img src="robot.png" alt="AI Bot" class="bot-icon-trend" />
-                    <div class="trend-header">
-                        <span class="trend-title">AI Insights</span>
-                    </div>
-                    <div class="trend-body">
-                        <p class="trend-text">Analyzing...</p>
-                    </div>
-                </div>
             </div>
 
             <div class="metrics-journey-box">
-                <div class="top-row">
+                <!-- LEFT COLUMN -->
+                <div class="left-column">
+                    <!-- Metrics -->
                     <div class="metrics-main-container">
                         <div class="metrics-layout">
                             <div class="metric-box reactive" id="Reactive_TTs">
                                 <div class="metric-title">Reactive TTs</div>
-                                <div class="metric-value">0</div>
-                            </div>
-                            <div class="ftth-group">
-                                <div class="metric-box ftth" id="FTTH">
-                                    <div class="metric-title">FTTH</div>
-                                    <div class="metric-value">0</div>
-                                </div>
-                                <div class="logical-physical-row">
-                                    <div class="metric-box" id="Logical">
-                                        <div class="metric-title">Logical</div>
-                                        <div class="metric-value">0</div>
+                                <div class="metric-value" id="reactive-tt-value">0</div>
+                                <div class="reactive-inner-row">
+                                    <div class="metric-box ftth" id="FTTH">
+                                        <div class="metric-title">FTTH</div>
+                                        <div class="metric-value" id="ftth-value">0</div>
+                                        <div class="logical-physical-row">
+                                            <div class="metric-box" id="Logical">
+                                                <div class="metric-title">Logical</div>
+                                                <div class="metric-value" id="logical-value">0</div>
+                                            </div>
+                                            <div class="metric-box" id="Physical">
+                                                <div class="metric-title">Physical</div>
+                                                <div class="metric-value" id="physical-value">0</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="metric-box" id="Physical">
-                                        <div class="metric-title">Physical</div>
-                                        <div class="metric-value">0</div>
+                                    <div class="metric-box small" id="Copper">
+                                        <div class="metric-title">Copper</div>
+                                        <div class="metric-value" id="copper-value">0</div>
+                                    </div>
+                                    <div class="metric-box small" id="OLO">
+                                        <div class="metric-title">OLO</div>
+                                        <div class="metric-value" id="olo-value">0</div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="metric-box small" id="OLO">
-                                <div class="metric-title">OLO</div>
-                                <div class="metric-value">0</div>
-                            </div>
-                            <div class="metric-box small" id="Copper">
-                                <div class="metric-title">Copper</div>
-                                <div class="metric-value">0</div>
                             </div>
                         </div>
                     </div>
-                    <div class="ai-insights">
+
+                    <!-- AI Insights -->
+                    <div class="ai-insights-wrapper">
                         <img src="robot.png" alt="AI Bot" class="bot-icon" />
-                        <div class="ai-header">
-                            <span class="ai-title">AI Insights</span>
-                        </div>
-                        <div class="ai-body">
-                            <p class="ai-subtitle">Analyzing...</p>
+                        <div class="ai-insights">
+                            <div class="ai-header"><span class="ai-title">AI Insights</span></div>
+                            <div class="ai-body"><p class="ai-subtitle">Analyzing...</p></div>
                         </div>
                     </div>
                 </div>
+
+                <!-- RIGHT COLUMN (Journey) -->
                 <div class="journey-container">
                     <svg id="journey-svg"></svg>
                     <div id="journey-nodes"></div>
@@ -123,7 +115,7 @@
                         <span class="summary-label">Restored before 10 August</span>
                         <span class="summary-value green" id="restoredBefore">0</span>
                     </div>
-                    <div class="summary-box impacted">
+                  <div class="summary-box impacted">
                         <span class="summary-label">Impacted after 10 August</span>
                         <span class="summary-value red" id="impactedAfter">0</span>
                     </div>
@@ -135,41 +127,40 @@
             </div>
 
             <div class="apps-status-container" id="appsContainer"></div>
-
-            <div class="e2e-path-wrapper">
-                <svg id="e2eLinks"></svg>
-                <div class="e2e-path-container" id="e2ePath">
-                    <div class="e2e-node" id="IGW">
-                        <i class="fas fa-cloud"></i>
-                        <span>IGW</span>
-                    </div>
-                    <div class="e2e-node" id="BRAS">
-                        <i class="fas fa-network-wired"></i>
-                        <span>BRAS</span>
-                    </div>
-                    <div class="e2e-node" id="MPLS">
-                        <i class="fas fa-project-diagram"></i>
-                        <span>MPLS</span>
-                    </div>
-                    <div class="e2e-node" id="OLT">
-                        <i class="fas fa-server"></i>
-                        <span>OLT</span>
-                    </div>
-                    <div class="e2e-node" id="NNI">
-                        <i class="fas fa-exchange-alt"></i>
-                        <span>NNI</span>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- RIGHT SIDE (35%) -->
+        <div class="right-column">
         <div class="right-container">
-            <h3></h3>
-            <p></p>
         </div>
-    </div>
 
+        <!-- E2E PATH BELOW RIGHT CONTAINER -->
+        <div class="e2e-path-wrapper">
+            <svg id="e2eLinks"></svg>
+            <div class="e2e-path-container" id="e2ePath">
+                <div class="e2e-node" id="IGW">
+                    <i class="fas fa-cloud"></i>
+                    <span>IGW</span>
+                </div>
+                <div class="e2e-node" id="BRAS">
+                    <i class="fas fa-network-wired"></i>
+                    <span>BRAS</span>
+                </div>
+                <div class="e2e-node" id="MPLS">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>MPLS</span>
+                </div>
+                <div class="e2e-node" id="OLT">
+                    <i class="fas fa-server"></i>
+                    <span>OLT</span>
+                </div>
+                <div class="e2e-node" id="NNI">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>NNI</span>
+                </div>
+            </div>
+        </div>
+        </div></body>
     <script src="script.js"></script>
 </body>
 </html>

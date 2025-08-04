@@ -395,7 +395,7 @@ fetch('apps_status.json')
 
 
 
-  //journey
+// journey
 fetch('task_referral_dashboard_data.json')
   .then(res => res.json())
   .then(data => {
@@ -432,11 +432,15 @@ fetch('task_referral_dashboard_data.json')
       container.innerHTML = '';
       svg.innerHTML = '';
 
-      const cardWidth = 150;
-      const cardHeight = 100;
-      const filtrationHeight = cardHeight * 3;
-      const colGap = cardWidth * 2.2;
-      const rowGap = 60;
+      // --- Dynamic scaling based on container width ---
+      const containerWidth = document.querySelector('.journey-container').clientWidth;
+      const scale = Math.min(1, containerWidth / 800); // adjust "900" if needed
+
+      const cardWidth = 155 * scale;
+      const cardHeight = 120 * scale;
+      const specialHeight = cardHeight * 3; // Equal height for Filtration and IVRF
+      const colGap = cardWidth * 1.6;
+      const rowGap = 20 * scale;
 
       // Columns: dynamically generated
       const col1 = [normalizeId('Filtration')];
@@ -471,20 +475,19 @@ fetch('task_referral_dashboard_data.json')
       let allHeights = 0;
       columns.forEach(col => {
         const colHeight = col.reduce((sum, nodeId) =>
-          sum + ((nodeId === normalizeId('Filtration')) ? filtrationHeight : cardHeight) + rowGap, -rowGap
+          sum + ((nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) ? specialHeight : cardHeight) + rowGap, -rowGap
         );
         allHeights = Math.max(allHeights, colHeight);
       });
 
       const totalWidth = (columns.length - 1) * colGap + cardWidth;
-      const containerWidth = document.querySelector('.journey-container').clientWidth;
       const xOffset = (containerWidth - totalWidth) / 2;
       const globalStartY = 50;
 
       // Render cards
       columns.forEach((col, colIndex) => {
         const colHeight = col.reduce((sum, nodeId) =>
-          sum + ((nodeId === normalizeId('Filtration')) ? filtrationHeight : cardHeight) + rowGap, -rowGap
+          sum + ((nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) ? specialHeight : cardHeight) + rowGap, -rowGap
         );
         const startY = globalStartY + (allHeights - colHeight) / 2;
         const x = colIndex * colGap + xOffset;
@@ -493,7 +496,7 @@ fetch('task_referral_dashboard_data.json')
           const node = nodes.find(n => n.id === nodeId);
           if (!node) return;
 
-          const nodeHeight = (nodeId === normalizeId('Filtration')) ? filtrationHeight : cardHeight;
+          const nodeHeight = (nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) ? specialHeight : cardHeight;
           const y = startY + rowIndex * (cardHeight + rowGap);
 
           nodePositions[nodeId] = { x: x + cardWidth / 2, y: y + nodeHeight / 2 };
@@ -504,13 +507,21 @@ fetch('task_referral_dashboard_data.json')
           card.style.height = `${nodeHeight}px`;
           card.style.left = `${x}px`;
           card.style.top = `${y}px`;
+          card.style.transform = `scale(${scale})`;
+          card.style.transformOrigin = "top left";
           card.innerHTML = `
-            <div class="title">${node.name}</div>
-            <div class="metrics">
-              <div class="circle-number">${node.referral_count}</div>
-              <div class="circle-number">${node.active_referrals}</div>
+          <div class="title">${node.name}</div>
+          <div class="metrics">
+            <div class="circle-number">
+              <i class="fas fa-external-link-alt"></i>
+              ${node.referral_count}
             </div>
-          `;
+            <div class="circle-number">
+              <i class="fas fa-share-alt"></i>
+              ${node.active_referrals}
+            </div>
+          </div>
+        `;
           container.appendChild(card);
         });
       });
@@ -545,7 +556,7 @@ fetch('task_referral_dashboard_data.json')
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', drawSmoothCurve(src, tgt));
         path.setAttribute('stroke', 'url(#linkGradient)');
-        path.setAttribute('stroke-width', Math.max(3, link.referrals / 10));
+        path.setAttribute('stroke-width', Math.max(2, (link.referrals / 10) * scale));
         path.setAttribute('fill', 'none');
         path.classList.add('link-path');
         svg.appendChild(path);
@@ -575,7 +586,6 @@ fetch('task_referral_dashboard_data.json')
 
 
   // ===== E2E Path from JSON =====
-// ===== E2E Path Coloring from JSON =====
 fetch('e2e.json')
   .then(res => res.json())
   .then(data => {
@@ -596,27 +606,50 @@ fetch('e2e.json')
 
 function drawLinks() {
   const svg = document.getElementById('e2eLinks');
-  svg.innerHTML = ''; // clear old links
+  svg.innerHTML = '';
 
-  const containerRect = document.getElementById('e2ePath').getBoundingClientRect();
+  const container = document.getElementById('e2ePath');
+  const containerRect = container.getBoundingClientRect();
+
   const getPos = id => {
-    const el = document.getElementById(id).getBoundingClientRect();
-    return { x: el.left - containerRect.left + el.width / 2,
-             y: el.top - containerRect.top + el.height / 2 };
+    const el = document.getElementById(id);
+    if (!el) return { x: 0, y: 0 };
+    const rect = el.getBoundingClientRect();
+    return {
+      x: rect.left - containerRect.left + rect.width / 2,
+      y: rect.top - containerRect.top + rect.height / 2
+    };
   };
 
   const links = [
-    ['IGW','BRAS'],
-    ['BRAS','MPLS'],
-    ['MPLS','OLT'],
-    ['MPLS','NNI']
+    ['IGW', 'BRAS'],
+    ['BRAS', 'MPLS'],
+    ['MPLS', 'OLT'],
+    ['MPLS', 'NNI']
   ];
 
   links.forEach(([srcId, tgtId]) => {
     const p1 = getPos(srcId);
     const p2 = getPos(tgtId);
+
+    // Use different control points for branch links
+    const controlX = (p1.x + p2.x) / 2;
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', `M${p1.x},${p1.y} C${(p1.x+p2.x)/2},${p1.y} ${(p1.x+p2.x)/2},${p2.y} ${p2.x},${p2.y}`);
+
+    // If branching (MPLS → OLT or NNI), add curvature vertically
+    if (srcId === 'MPLS' && (tgtId === 'OLT' || tgtId === 'NNI')) {
+      path.setAttribute(
+        'd',
+        `M${p1.x},${p1.y} C${p1.x + 50},${p1.y} ${p2.x - 50},${p2.y} ${p2.x},${p2.y}`
+      );
+    } else {
+      // Straight line with slight curve
+      path.setAttribute(
+        'd',
+        `M${p1.x},${p1.y} C${controlX},${p1.y} ${controlX},${p2.y} ${p2.x},${p2.y}`
+      );
+    }
+
     path.setAttribute('stroke', '#44c1f7');
     path.setAttribute('stroke-width', 3);
     path.setAttribute('fill', 'none');
@@ -624,5 +657,4 @@ function drawLinks() {
   });
 }
 
-// Redraw on window resize
 window.addEventListener('resize', drawLinks);
