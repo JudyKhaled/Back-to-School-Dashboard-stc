@@ -95,15 +95,13 @@ body {
   font-weight: bold;
 }
 
-/* Chart container */
-/* Chart container with stronger gradient and highlight */
+
 .chart-container {
   display: flex;
   align-items: stretch;
   gap: 1%;
-  margin-right: 10px;
   min-width: 320px;
-
+  padding: 2vh; /* padding for chart */ 
   /* Same gradient but with 80% transparency */
   background: linear-gradient(
     180deg,
@@ -116,9 +114,6 @@ body {
   border-radius: 20px;
   position: relative;
   overflow: hidden;
-
-  /* reduced padding to hug chart */
-  padding: 1vh 1.5vh;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
 }
 
@@ -290,7 +285,7 @@ body {
   overflow: hidden;
 
   box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.6);
-  padding: 4vh;     
+  padding: 2vh;     
   box-sizing: border-box;
   height: auto;            
   min-height: 100vh;
@@ -395,7 +390,7 @@ body {
   min-height: 270px;
   background: linear-gradient(180deg, #0d172a 0%, #111b3b 50%, #182448 100%);
   border-radius: 12px;
-  box-shadow:0 0 12px rgba(0, 188, 235, 0.4);
+  box-shadow:0 0 6px rgba(0, 188, 235, 0.4);
   padding: 20px 15px 15px 15px;
   color: #ffffff;
   font-family: 'Segoe UI', sans-serif;
@@ -569,7 +564,7 @@ body {
   border-radius: 50%;
   aspect-ratio: 1 / 1;   
   background: rgba(0, 188, 235, 0.1);
-  box-shadow: 0 0 8px rgba(0, 188, 235, 0.3);
+  box-shadow: 0 0 6px rgba(0, 188, 235, 0.3);
   border: 2px solid #00BCEB;
   color: #00BCEB;
   font-size: 2.2vh;
@@ -609,18 +604,56 @@ body {
   .journey-card { width: 120px; height: 180px; }
   .journey-card .circle-number { width: 50%; } 
 }
-
+/*============================================================= */
+/*proactive container*/
 .proactive-container {
   display: flex;
-  width: 100;
   height: auto;
-  background: #162043;
+
+  /* Same gradient but with 60% transparency for glass look */
+  background: linear-gradient(
+    180deg,
+    rgba(13, 23, 42, 0.6) 0%,   /* #0d172a */
+    rgba(17, 27, 59, 0.6) 50%,  /* #111b3b */
+    rgba(24, 36, 72, 0.6) 100%  /* #182448 */
+  );
+  backdrop-filter: blur(10px);
+
   border-radius: 20px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
-  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  padding: 2vh;
   gap: 15px; /* small gap */
   justify-content: flex-start; /* keep chart at start */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
 }
+
+/* Same highlight border effect */
+.proactive-container::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border-radius: 22px;
+  z-index: 0;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0) 30%
+  );
+  mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 40%, transparent 80%);
+  pointer-events: none;
+}
+
+.proactive-container > * {
+  position: relative;
+  z-index: 2;
+}
+
 
 .proactive-chart {
   flex: 1;
@@ -654,7 +687,7 @@ body {
   padding: 5px;
   color: white;  /* default text */
   border: 1px solid rgba(0, 188, 235, 0.2);
-  box-shadow: 0 0 12px rgba(0, 188, 235, 0.3);
+  box-shadow: 0 0 6px rgba(0, 188, 235, 0.3);
   height: 15vh;
 }
 
@@ -710,17 +743,48 @@ body {
 /* Apps status container */
 /* Apps status container */
 .apps-status-container {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
+  display: flex;
+  flex-wrap: wrap; /* allow wrapping instead of scroll */
   gap: 10px;
-  width: 100;
-  padding: 10px;
+  padding: 2vh;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 23, 42, 0.6) 0%,
+    rgba(17, 27, 59, 0.6) 50%,
+    rgba(24, 36, 72, 0.6) 100%
+  );
+  backdrop-filter: blur(10px);
   border-radius: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
-  background: #162043;
-  overflow-x: auto;
 }
+
+
+/* Highlight border like chart-container */
+.apps-status-container::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border-radius: 22px;
+  z-index: 0;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0) 30%
+  );
+  mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 40%, transparent 80%);
+  pointer-events: none;
+}
+
+.apps-status-container > * {
+  position: relative;
+  z-index: 2;
+}
+
 
 /* App card with fixed border and shadow */
 .app-card {
@@ -734,7 +798,7 @@ body {
   background: #0f1e38;
   transition: transform 0.2s ease;
   min-width: 120px;
-  box-shadow: 0 0 8px rgba(0, 188, 235, 0.4); /* fixed glow */
+  box-shadow: 0 0 6px rgba(0, 188, 235, 0.4); /* fixed glow */
 }
 
 .app-card:hover {
@@ -779,13 +843,50 @@ body {
 /* E2E path */
 .e2e-path-wrapper {
   position: relative;
-  width: 100;
+  width: 100%;
   height: 300px;
-  background: #162043;
+
+  /* Same gradient with transparency */
+  background: linear-gradient(
+    180deg,
+    rgba(13, 23, 42, 0.6) 0%,    /* #0d172a */
+    rgba(17, 27, 59, 0.6) 50%,   /* #111b3b */
+    rgba(24, 36, 72, 0.6) 100%   /* #182448 */
+  );
+  backdrop-filter: blur(10px);
+
   border-radius: 20px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.6);
   margin-bottom: 4vh;
+  overflow: hidden;
 }
+
+/* Glass highlight effect */
+.e2e-path-wrapper::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border-radius: 22px;
+  z-index: 0;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0) 30%
+  );
+  mask-image: radial-gradient(circle at top left, rgba(0,0,0,1) 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at top left, rgba(0,0,0,1) 40%, transparent 80%);
+  pointer-events: none;
+}
+
+.e2e-path-wrapper > * {
+  position: relative;
+  z-index: 2;
+}
+
 
 #e2eLinks {
   position: absolute;
