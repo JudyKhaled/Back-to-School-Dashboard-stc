@@ -323,7 +323,7 @@ body {
   gap: 1vh;
   padding: 1vw;
   border-radius: 1vw;
-  background: linear-gradient(to bottom right, #0e142b, #162043);
+  background-color: rgba(22, 32, 67, 0.4);
   border: 1px solid rgba(0, 188, 235, 0.3);
   box-shadow: 0 0 1vw rgba(0, 188, 235, 0.4);
 }
@@ -478,6 +478,7 @@ body {
   align-items: flex-start;
   padding-left: 5vh;  /* space for the icon */
   box-sizing: border-box;
+  
 }
 
 /* Bot icon positioning unchanged */
@@ -494,7 +495,7 @@ body {
   flex: 1;
   width: calc(100% - 2vh); /* reduce width so icon fits */
   height: 100%;
-  background: linear-gradient(180deg, #0d172a 0%, #111b3b 50%, #182448 100%);
+  background-color: rgba(22, 32, 67, 0.4);
   border-radius: 12px;
   box-shadow: 0 0 6px rgba(0, 188, 235, 0.4);
   padding: 15px;
@@ -541,7 +542,8 @@ body {
   position: relative;
   border-radius: 12px;
   border: 1px solid rgba(0, 188, 235, 0.2);
-  background-color: #162043;
+  background-color: rgba(22, 32, 67, 0.4);
+
   box-shadow: 0 0 12px rgba(0, 188, 235, 0.3);
   overflow: visible;
 }
