@@ -104,12 +104,12 @@ body {
   margin-right: 10px;
   min-width: 320px;
 
-  /* Keep your gradient + glass effect */
+  /* Same gradient but with 80% transparency */
   background: linear-gradient(
     180deg,
-    #0d172a 0%,
-    #111b3b 50%,
-    #182448 100%
+    rgba(13, 23, 42, 0.6) 0%,   /* #0d172a */
+    rgba(17, 27, 59, 0.6) 50%,  /* #111b3b */
+    rgba(24, 36, 72, 0.6) 100%  /* #182448 */
   );
   backdrop-filter: blur(10px);
 
@@ -121,6 +121,7 @@ body {
   padding: 1vh 1.5vh;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
 }
+
 
 
 .chart-container::before {
