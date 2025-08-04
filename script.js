@@ -576,7 +576,7 @@ fetch('task_referral_dashboard_data.json')
         if (bottom > maxBottom) maxBottom = bottom;
       });
 
-      journeyContainer.style.height = (maxBottom + 50) + 'px';
+      journeyContainer.style.height = (maxBottom +20) + 'px';
     }
 
     window.addEventListener('resize', render);
