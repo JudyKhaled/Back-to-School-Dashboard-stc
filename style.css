@@ -34,11 +34,10 @@ body {
 }
 
 .card-title {
-  font-size: 16px;
-  font-weight: bold;
-  font-family: 'HelveticaOblique', sans-serif;
-  color: #00BCEB;
   margin-bottom: -5px;
+  font-size: 1.2vw;
+  font-weight: bold;
+  color: #00bceb;
  
 }
 
@@ -160,12 +159,13 @@ body {
 .chart-wrapper canvas {
   width: 100% !important;
   height: auto !important;   /* auto height for exact fit */
+  margin-top: 1.5vh;
 }
 /* Dropdown styling */
 .dropdown {
   position: absolute;
   top: 5px;
-  left: 5px;
+  right: 5px;
   z-index: 20;
 }
 .dropbtn {
@@ -176,6 +176,12 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.dropbtn i {
+  font-size: 10px;
 }
 .dropbtn:hover {
   background-color: #1e2f66;
@@ -280,7 +286,7 @@ body {
   position: relative;
   overflow: hidden;
   box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.6);
-  padding: 1.5vh;
+  padding: 2vh;
   box-sizing: border-box;
 }
 
@@ -330,8 +336,8 @@ body {
   padding: 1vw;
   border-radius: 1vw;
   background-color: rgba(22, 32, 67, 0.4);
-  border: 1px solid rgba(0, 188, 235, 0.3);
-  box-shadow: 0 0 1vw rgba(0, 188, 235, 0.4);
+  box-shadow: 0 0 6px rgba(0, 188, 235, 0.4);
+  height: auto;
 }
 
 .metric-box.reactive > .metric-title {
@@ -345,7 +351,7 @@ body {
   font-weight: bold;
   color: #f14c4c;
   align-self: flex-end;
-  margin-top: -2.5vh;
+  margin-top: -4vh;
 }
 
 /* FTTH + Copper + OLO layout */
@@ -413,6 +419,7 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 7%;
   width: 100%;
+  margin-top: 1.5vh;
 }
 
 .logical-physical-row .metric-box {
@@ -484,7 +491,7 @@ body {
   align-items: flex-start;
   padding-left: 5vh;  /* space for the icon */
   box-sizing: border-box;
-  
+
 }
 
 /* Bot icon positioning unchanged */
@@ -499,7 +506,7 @@ body {
 /* Full-height AI Insights box */
 .ai-insights {
   flex: 1;
-  width: calc(100% - 2vh); /* reduce width so icon fits */
+  width: 100%; /* reduce width so icon fits */
   height: 100%;
   background-color: rgba(22, 32, 67, 0.4);
   border-radius: 12px;
@@ -511,6 +518,7 @@ body {
   flex-direction: column;
   gap: 15px;
   box-sizing: border-box;
+  min-width: 249px;
 }
 
 .ai-header {

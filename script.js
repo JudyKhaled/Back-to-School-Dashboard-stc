@@ -437,9 +437,15 @@ fetch('task_referral_dashboard_data.json')
       const scale = Math.min(1, containerWidth / 800);
 
       const cardWidth = 155 * scale;
+      const specialWidth = cardWidth * 1.25; // Wider width for Filtration and IVRF
       const cardHeight = 80 * scale;
       const specialHeight = cardHeight * 6.66; // Equal height for Filtration and IVRF
-      const colGap = cardWidth * 1.6;
+      const baseColGap = cardWidth * 0.5;
+      // Adjust gaps based on whether special width cards are present
+      const colGaps = [
+        baseColGap + (specialWidth - cardWidth*1.3) , // Gap between col1 and col2 (accounts for Filtration's wider width)
+        baseColGap // Gap between col2 and col3 (standard gap)
+      ];
       const rowGap = 40 * scale;
 
       // Columns: dynamically generated
@@ -480,8 +486,18 @@ fetch('task_referral_dashboard_data.json')
         allHeights = Math.max(allHeights, colHeight);
       });
 
-      const totalWidth = (columns.length - 1) * colGap + cardWidth;
-      const xOffset = (containerWidth - totalWidth) / 2;
+      // Calculate width of each column considering special widths
+      const colWidths = columns.map(col => {
+        return col.some(id => id === normalizeId('Filtration') || id === normalizeId('IVRF')) 
+          ? specialWidth 
+          : cardWidth;
+      });
+      
+      // Calculate total width including gaps
+      const totalWidth = colWidths.reduce((sum, width) => sum + width, 0) + colGaps.reduce((sum, gap) => sum + gap, 0);
+      // Ensure equal spacing on both sides by adding extra space to account for special widths
+      const extraSpace = (specialWidth - cardWidth) / 2; // Add half of the difference to each side
+      const xOffset = ((containerWidth - totalWidth) / 2.2) + extraSpace;
       const globalStartY = 10; // reduced top space
 
       // Render cards
@@ -490,7 +506,12 @@ fetch('task_referral_dashboard_data.json')
           sum + ((nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) ? specialHeight : cardHeight) + rowGap, -rowGap
         );
         const startY = globalStartY + (allHeights - colHeight) / 2;
-        const x = colIndex * colGap + xOffset;
+        
+        // Calculate x position based on previous columns' widths and gaps
+        let x = xOffset;
+        for (let i = 0; i < colIndex; i++) {
+          x += colWidths[i] + colGaps[i];
+        }
 
         col.forEach((nodeId, rowIndex) => {
           const node = nodes.find(n => n.id === nodeId);
@@ -510,7 +531,7 @@ fetch('task_referral_dashboard_data.json')
 
           const card = document.createElement('div');
           card.className = `journey-card ${node.efficiency_status_hour}`;
-          card.style.width = `${cardWidth}px`;
+          card.style.width = `${(nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) ? specialWidth : cardWidth}px`;
           card.style.height = `${nodeHeight}px`;
           card.style.left = `${x}px`;
           card.style.top = `${y}px`;
