@@ -613,15 +613,13 @@ fetch('task_referral_dashboard_data.json')
   .catch(err => console.error('Error loading journey data', err));
 
 
-  // ===== E2E Path from JSON =====
 fetch('e2e.json')
   .then(res => res.json())
   .then(data => {
     data.network_events.forEach(node => {
       const el = document.getElementById(node.name);
       if (!el) return;
-
-      el.classList.remove('green', 'yellow', 'red');
+      el.classList.remove('green','yellow','red');
       switch (node.status) {
         case 'critical': el.classList.add('red'); break;
         case 'warning': el.classList.add('yellow'); break;
@@ -632,53 +630,51 @@ fetch('e2e.json')
   })
   .catch(err => console.error('Error loading e2e data', err));
 
-
 function drawLinks() {
   const svg = document.getElementById('e2eLinks');
   svg.innerHTML = '';
 
   const container = document.getElementById('e2ePath');
-  const containerRect = container.getBoundingClientRect();
+  const rect = container.getBoundingClientRect();
 
-  // Get all nodes
-  const nodeIds = ['IGW', 'BRAS', 'MPLS', 'OLT', 'NNI'];
-  const nodeCenters = {};
-  nodeIds.forEach(id => {
+  const nodes = ['IGW','BRAS','MPLS','OLT','NNI'];
+  const centers = {};
+  nodes.forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
-    const rect = el.getBoundingClientRect();
-    nodeCenters[id] = {
-      x: rect.left + rect.width / 2 - containerRect.left,
-      y: rect.top + rect.height / 2 - containerRect.top
+    const box = el.getBoundingClientRect();
+    centers[id] = {
+      x: box.left + box.width / 2 - rect.left,
+      y: box.top + box.height / 2 - rect.top
     };
   });
 
-  // Define the E2E links (adjust as needed)
   const links = [
-    ['IGW', 'BRAS'],
-    ['BRAS', 'MPLS'],
-    ['MPLS', 'OLT'],
-    ['MPLS', 'NNI']
+    ['IGW','BRAS'],
+    ['BRAS','MPLS'],
+    ['MPLS','OLT'],
+    ['MPLS','NNI']
   ];
 
-  // Set SVG size to match container
   svg.setAttribute('width', container.offsetWidth);
   svg.setAttribute('height', container.offsetHeight);
 
-  // Draw links
   links.forEach(([from, to]) => {
-    if (!nodeCenters[from] || !nodeCenters[to]) return;
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', nodeCenters[from].x);
-    line.setAttribute('y1', nodeCenters[from].y);
-    line.setAttribute('x2', nodeCenters[to].x);
-    line.setAttribute('y2', nodeCenters[to].y);
-    line.setAttribute('stroke', '#3dd6e4');
-    line.setAttribute('stroke-width', '4');
-    line.setAttribute('opacity', '0.8');
-    line.setAttribute('stroke-linecap', 'round');
-    svg.appendChild(line);
+    const s = centers[from], t = centers[to];
+    if (!s || !t) return;
+
+    const dx = t.x - s.x;
+    const d = `M${s.x},${s.y} C${s.x+dx/3},${s.y} ${t.x-dx/3},${t.y} ${t.x},${t.y}`;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', d);
+    path.setAttribute('stroke', '#3dd6e4');
+    path.setAttribute('stroke-width', '4');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('opacity', '0.8');
+    svg.appendChild(path);
   });
 }
-// (Removed duplicate/broken drawLinks code)
+
 window.addEventListener('resize', drawLinks);
+

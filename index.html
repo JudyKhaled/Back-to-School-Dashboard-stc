@@ -137,33 +137,36 @@
         <div class="right-container">
         </div>
 
-        <!-- E2E PATH BELOW RIGHT CONTAINER -->
-        <div class="e2e-path-wrapper">
-            
-            <svg id="e2eLinks"></svg>
-            <div class="e2e-path-container" id="e2ePath">
-                <div class="e2e-node" id="IGW">
-                    <i class="fas fa-cloud"></i>
-                    <span>IGW</span>
+            <div class="e2e-path-wrapper">
+                <div class="e2e-title">Network E2E Logical Events</div>
+                <div class="e2e-content">
+                    <svg id="e2eLinks"></svg>
+                    <div class="e2e-path-container" id="e2ePath">
+                    <div class="e2e-node" id="IGW">
+                        <i class="fas fa-cloud"></i>
+                        <span>IGW</span>
+                    </div>
+                    <div class="e2e-node" id="BRAS">
+                        <i class="fas fa-network-wired"></i>
+                        <span>BRAS</span>
+                    </div>
+                    <div class="e2e-node" id="MPLS">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>MPLS</span>
+                    </div>
+                    <div class="e2e-node" id="OLT">
+                        <i class="fas fa-server"></i>
+                        <span>OLT</span>
+                    </div>
+                    <div class="e2e-node" id="NNI">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>NNI</span>
+                    </div>
+                    </div>
                 </div>
-                <div class="e2e-node" id="BRAS">
-                    <i class="fas fa-network-wired"></i>
-                    <span>BRAS</span>
                 </div>
-                <div class="e2e-node" id="MPLS">
-                    <i class="fas fa-project-diagram"></i>
-                    <span>MPLS</span>
-                </div>
-                <div class="e2e-node" id="OLT">
-                    <i class="fas fa-server"></i>
-                    <span>OLT</span>
-                </div>
-                <div class="e2e-node" id="NNI">
-                    <i class="fas fa-exchange-alt"></i>
-                    <span>NNI</span>
-                </div>
-            </div>
-        </div>
+
+
         <div class="apps-status-container" id="appsContainer"></div>
         </div></body>
     <script src="script.js"></script>
