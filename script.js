@@ -632,6 +632,7 @@ fetch('e2e.json')
   })
   .catch(err => console.error('Error loading e2e data', err));
 
+
 function drawLinks() {
   const svg = document.getElementById('e2eLinks');
   svg.innerHTML = '';
@@ -639,16 +640,20 @@ function drawLinks() {
   const container = document.getElementById('e2ePath');
   const containerRect = container.getBoundingClientRect();
 
-  const getPos = id => {
+  // Get all nodes
+  const nodeIds = ['IGW', 'BRAS', 'MPLS', 'OLT', 'NNI'];
+  const nodeCenters = {};
+  nodeIds.forEach(id => {
     const el = document.getElementById(id);
-    if (!el) return { x: 0, y: 0 };
+    if (!el) return;
     const rect = el.getBoundingClientRect();
-    return {
-      x: rect.left - containerRect.left + rect.width / 2,
-      y: rect.top - containerRect.top + rect.height / 2
+    nodeCenters[id] = {
+      x: rect.left + rect.width / 2 - containerRect.left,
+      y: rect.top + rect.height / 2 - containerRect.top
     };
-  };
+  });
 
+  // Define the E2E links (adjust as needed)
   const links = [
     ['IGW', 'BRAS'],
     ['BRAS', 'MPLS'],
@@ -656,33 +661,24 @@ function drawLinks() {
     ['MPLS', 'NNI']
   ];
 
-  links.forEach(([srcId, tgtId]) => {
-    const p1 = getPos(srcId);
-    const p2 = getPos(tgtId);
+  // Set SVG size to match container
+  svg.setAttribute('width', container.offsetWidth);
+  svg.setAttribute('height', container.offsetHeight);
 
-    // Use different control points for branch links
-    const controlX = (p1.x + p2.x) / 2;
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-
-    // If branching (MPLS → OLT or NNI), add curvature vertically
-    if (srcId === 'MPLS' && (tgtId === 'OLT' || tgtId === 'NNI')) {
-      path.setAttribute(
-        'd',
-        `M${p1.x},${p1.y} C${p1.x + 50},${p1.y} ${p2.x - 50},${p2.y} ${p2.x},${p2.y}`
-      );
-    } else {
-      // Straight line with slight curve
-      path.setAttribute(
-        'd',
-        `M${p1.x},${p1.y} C${controlX},${p1.y} ${controlX},${p2.y} ${p2.x},${p2.y}`
-      );
-    }
-
-    path.setAttribute('stroke', '#44c1f7');
-    path.setAttribute('stroke-width', 3);
-    path.setAttribute('fill', 'none');
-    svg.appendChild(path);
+  // Draw links
+  links.forEach(([from, to]) => {
+    if (!nodeCenters[from] || !nodeCenters[to]) return;
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', nodeCenters[from].x);
+    line.setAttribute('y1', nodeCenters[from].y);
+    line.setAttribute('x2', nodeCenters[to].x);
+    line.setAttribute('y2', nodeCenters[to].y);
+    line.setAttribute('stroke', '#3dd6e4');
+    line.setAttribute('stroke-width', '4');
+    line.setAttribute('opacity', '0.8');
+    line.setAttribute('stroke-linecap', 'round');
+    svg.appendChild(line);
   });
 }
-
+// (Removed duplicate/broken drawLinks code)
 window.addEventListener('resize', drawLinks);

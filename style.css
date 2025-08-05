@@ -942,8 +942,9 @@ body {
   width: 100%;
   height: 12%;
   display: flex;               /* enable flex */
-  justify-content: center;     /* center horizontally */
-  align-items: center;         /* center vertically */
+  flex-direction: column;      /* stack title and content vertically */
+  justify-content: flex-start; /* align content to top */
+  padding-top: 1vh;
   background: linear-gradient(
     180deg,
     rgba(13, 23, 42, 0.6) 0%,
@@ -988,12 +989,13 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
+  margin-top: 8px;
 }
 
 /* Node size relative to wrapper height */
 .e2e-node {
-  width: 13%;
-  height: 35%;
+  width: 12%;
+  height: 50%;
   border-radius: 50%;
   background: #011c3f;
   border: 3px solid #00ff00;
@@ -1006,7 +1008,7 @@ body {
   box-shadow: 0 3px 6px rgba(0,0,0,0.5);
   transition: transform 0.2s ease-in-out;
   position: absolute;
-  top: 30%;
+  top: 25%;
   z-index: 2;
 }
 
