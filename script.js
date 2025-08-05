@@ -437,10 +437,10 @@ fetch('apps_status.json')
         const scale = Math.min(1, containerWidth / 800); // adjust "900" if needed
 
         const cardWidth = 155 * scale;
-        const cardHeight = 120 * scale;
-        const specialHeight = cardHeight * 5.5; // Equal height for Filtration and IVRF
+        const cardHeight = 80 * scale;
+        const specialHeight = cardHeight * 6.7; // Equal height for Filtration and IVRF
         const colGap = cardWidth * 1.6;
-        const rowGap = 20 * scale;
+        const rowGap = 40 * scale;
 
         // Columns: dynamically generated
         const col1 = [normalizeId('Filtration')];
@@ -583,7 +583,7 @@ fetch('apps_status.json')
           if (bottom > maxBottom) maxBottom = bottom;
         });
 
-        journeyContainer.style.height = (maxBottom + 20) + 'px';
+        journeyContainer.style.height = (maxBottom - 70) + 'px';
       }
 
       window.addEventListener('resize', render);
