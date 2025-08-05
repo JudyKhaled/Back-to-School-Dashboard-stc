@@ -395,201 +395,201 @@ fetch('apps_status.json')
 
 
 
-  // journey
-  fetch('task_referral_dashboard_data.json')
-    .then(res => res.json())
-    .then(data => {
-      const normalizeId = id => id.replace(/\s*-\s*/g, '-').replace(/\s+/g, ' ').trim();
+// journey
+fetch('task_referral_dashboard_data.json')
+  .then(res => res.json())
+  .then(data => {
+    const normalizeId = id => id.replace(/\s*-\s*/g, '-').replace(/\s+/g, ' ').trim();
 
-      // Normalize team IDs
-      const nodes = data.teams.map(team => ({
-        ...team,
-        id: normalizeId(team.id)
-      }));
+    // Normalize team IDs
+    const nodes = data.teams.map(team => ({
+      ...team,
+      id: normalizeId(team.id)
+    }));
 
-      // Normalize link endpoints
-      const links = data.referral_links.map(link => ({
-        ...link,
-        source: normalizeId(link.source),
-        target: normalizeId(link.target)
-      }));
+    // Normalize link endpoints
+    const links = data.referral_links.map(link => ({
+      ...link,
+      source: normalizeId(link.source),
+      target: normalizeId(link.target)
+    }));
 
-      const container = document.getElementById('journey-nodes');
-      const svg = document.getElementById('journey-svg');
+    const container = document.getElementById('journey-nodes');
+    const svg = document.getElementById('journey-svg');
 
-      function drawSmoothCurve(src, tgt) {
-        const dx = tgt.x - src.x;
-        const dy = tgt.y - src.y;
-        const offset = dx * 0.4;
-        const controlX1 = src.x + offset;
-        const controlY1 = src.y;
-        const controlX2 = tgt.x - offset;
-        const controlY2 = tgt.y;
-        return `M${src.x},${src.y} C${controlX1},${controlY1} ${controlX2},${controlY2} ${tgt.x},${tgt.y}`;
-      }
+    function drawSmoothCurve(src, tgt) {
+      const dx = tgt.x - src.x;
+      const dy = tgt.y - src.y;
+      const offset = dx * 0.4;
+      const controlX1 = src.x + offset;
+      const controlY1 = src.y;
+      const controlX2 = tgt.x - offset;
+      const controlY2 = tgt.y;
+      return `M${src.x},${src.y} C${controlX1},${controlY1} ${controlX2},${controlY2} ${tgt.x},${tgt.y}`;
+    }
 
-      function render() {
-        container.innerHTML = '';
-        svg.innerHTML = '';
+    function render() {
+      container.innerHTML = '';
+      svg.innerHTML = '';
 
-        // --- Dynamic scaling based on container width ---
-        const containerWidth = document.querySelector('.journey-container').clientWidth;
-        const scale = Math.min(1, containerWidth / 800); // adjust "900" if needed
+      // --- Dynamic scaling based on container width ---
+      const containerWidth = document.querySelector('.journey-container').clientWidth;
+      const scale = Math.min(1, containerWidth / 800);
 
-        const cardWidth = 155 * scale;
-        const cardHeight = 80 * scale;
-        const specialHeight = cardHeight * 6.7; // Equal height for Filtration and IVRF
-        const colGap = cardWidth * 1.6;
-        const rowGap = 40 * scale;
+      const cardWidth = 155 * scale;
+      const cardHeight = 80 * scale;
+      const specialHeight = cardHeight * 6.66; // Equal height for Filtration and IVRF
+      const colGap = cardWidth * 1.6;
+      const rowGap = 40 * scale;
 
-        // Columns: dynamically generated
-        const col1 = [normalizeId('Filtration')];
-        const col2 = [];
-        const col3 = [];
+      // Columns: dynamically generated
+      const col1 = [normalizeId('Filtration')];
+      const col2 = [];
+      const col3 = [];
 
-        // Find all direct Filtration targets
-        links.forEach(link => {
-          if (link.source === normalizeId('Filtration') && !col2.includes(link.target)) {
-            col2.push(link.target);
+      // Find all direct Filtration targets
+      links.forEach(link => {
+        if (link.source === normalizeId('Filtration') && !col2.includes(link.target)) {
+          col2.push(link.target);
+        }
+      });
+
+      // Targets of col2 nodes
+      links.forEach(link => {
+        if (col2.includes(link.source) && !col3.includes(link.target) && !col1.includes(link.target)) {
+          col3.push(link.target);
+        }
+      });
+
+      // Any remaining nodes go to col3
+      nodes.forEach(node => {
+        if (![...col1, ...col2, ...col3].includes(node.id)) {
+          col3.push(node.id);
+        }
+      });
+
+      const columns = [col1, col2, col3];
+      const nodePositions = {};
+
+      // Calculate overall height
+      let allHeights = 0;
+      columns.forEach(col => {
+        const colHeight = col.reduce((sum, nodeId) =>
+          sum + ((nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) ? specialHeight : cardHeight) + rowGap, -rowGap
+        );
+        allHeights = Math.max(allHeights, colHeight);
+      });
+
+      const totalWidth = (columns.length - 1) * colGap + cardWidth;
+      const xOffset = (containerWidth - totalWidth) / 2;
+      const globalStartY = 10; // reduced top space
+
+      // Render cards
+      columns.forEach((col, colIndex) => {
+        const colHeight = col.reduce((sum, nodeId) =>
+          sum + ((nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) ? specialHeight : cardHeight) + rowGap, -rowGap
+        );
+        const startY = globalStartY + (allHeights - colHeight) / 2;
+        const x = colIndex * colGap + xOffset;
+
+        col.forEach((nodeId, rowIndex) => {
+          const node = nodes.find(n => n.id === nodeId);
+          if (!node) return;
+
+          const nodeHeight = (nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF'))
+            ? specialHeight
+            : cardHeight;
+
+          // --- Small offset so links connect properly ---
+          let y = startY + rowIndex * (cardHeight + rowGap);
+          if (nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) {
+            y += (specialHeight - cardHeight) / 9; // much smaller push
           }
-        });
 
-        // Targets of col2 nodes
-        links.forEach(link => {
-          if (col2.includes(link.source) && !col3.includes(link.target) && !col1.includes(link.target)) {
-            col3.push(link.target);
-          }
-        });
+          nodePositions[nodeId] = { x: x + cardWidth / 2, y: y + nodeHeight / 2 };
 
-        // Any remaining nodes go to col3
-        nodes.forEach(node => {
-          if (![...col1, ...col2, ...col3].includes(node.id)) {
-            col3.push(node.id);
-          }
-        });
-
-        const columns = [col1, col2, col3];
-        const nodePositions = {};
-
-        // Calculate overall height
-        let allHeights = 0;
-        columns.forEach(col => {
-          const colHeight = col.reduce((sum, nodeId) =>
-            sum + ((nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) ? specialHeight : cardHeight) + rowGap, -rowGap
-          );
-          allHeights = Math.max(allHeights, colHeight);
-        });
-
-        const totalWidth = (columns.length - 1) * colGap + cardWidth;
-        const xOffset = (containerWidth - totalWidth) / 2;
-        const globalStartY = 50;
-
-        // Render cards
-        columns.forEach((col, colIndex) => {
-          const colHeight = col.reduce((sum, nodeId) =>
-            sum + ((nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) ? specialHeight : cardHeight) + rowGap, -rowGap
-          );
-          const startY = globalStartY + (allHeights - colHeight) / 2;
-          const x = colIndex * colGap + xOffset;
-
-          col.forEach((nodeId, rowIndex) => {
-            const node = nodes.find(n => n.id === nodeId);
-            if (!node) return;
-
-            const nodeHeight = (nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) 
-              ? specialHeight 
-              : cardHeight;
-
-            // --- Add margin offset for special height nodes so links connect at center ---
-            let y = startY + rowIndex * (cardHeight + rowGap);
-            if (nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) {
-              y += (specialHeight - cardHeight) / 9;  // push it down half of extra height
-            }
-
-            nodePositions[nodeId] = { x: x + cardWidth / 2, y: y + nodeHeight / 2 };
-
-            const card = document.createElement('div');
-            card.className = `journey-card ${node.efficiency_status_hour}`;
-            card.style.width = `${cardWidth}px`;
-            card.style.height = `${nodeHeight}px`;
-            card.style.left = `${x}px`;
-            card.style.top = `${y}px`;
-            card.style.transform = `scale(${scale})`;
-            card.style.transformOrigin = "top left";
-            card.innerHTML = `
-              <div class="title">${node.name}</div>
-              <div class="metrics">
-                <div class="circle-number">
-                  <i class="fas fa-external-link-alt"></i>
-                  ${node.referral_count}
-                </div>
-                <div class="circle-number">
-                  <i class="fas fa-share-alt"></i>
-                  ${node.active_referrals}
-                </div>
+          const card = document.createElement('div');
+          card.className = `journey-card ${node.efficiency_status_hour}`;
+          card.style.width = `${cardWidth}px`;
+          card.style.height = `${nodeHeight}px`;
+          card.style.left = `${x}px`;
+          card.style.top = `${y}px`;
+          card.style.transform = `scale(${scale})`;
+          card.style.transformOrigin = "top left";
+          card.innerHTML = `
+            <div class="title">${node.name}</div>
+            <div class="metrics">
+              <div class="circle-number">
+                <i class="fas fa-external-link-alt"></i>
+                ${node.referral_count}
               </div>
-            `;
-            container.appendChild(card);
-          });
+              <div class="circle-number">
+                <i class="fas fa-share-alt"></i>
+                ${node.active_referrals}
+              </div>
+            </div>
+          `;
+          container.appendChild(card);
         });
+      });
 
-        // Gradient for links
-        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-        const grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
-        grad.id = 'linkGradient';
-        grad.setAttribute('x1', '0%');
-        grad.setAttribute('y1', '0%');
-        grad.setAttribute('x2', '100%');
-        grad.setAttribute('y2', '0%');
+      // Gradient for links
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+      grad.id = 'linkGradient';
+      grad.setAttribute('x1', '0%');
+      grad.setAttribute('y1', '0%');
+      grad.setAttribute('x2', '100%');
+      grad.setAttribute('y2', '0%');
 
-        const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-        stop1.setAttribute('offset', '0%');
-        stop1.setAttribute('stop-color', '#00BCEB');
-        const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-        stop2.setAttribute('offset', '100%');
-        stop2.setAttribute('stop-color', '#3dd6e4');
+      const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop1.setAttribute('offset', '0%');
+      stop1.setAttribute('stop-color', '#00BCEB');
+      const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop2.setAttribute('offset', '100%');
+      stop2.setAttribute('stop-color', '#3dd6e4');
 
-        grad.appendChild(stop1);
-        grad.appendChild(stop2);
-        defs.appendChild(grad);
-        svg.appendChild(defs);
+      grad.appendChild(stop1);
+      grad.appendChild(stop2);
+      defs.appendChild(grad);
+      svg.appendChild(defs);
 
-        // Draw all links
-        links.forEach(link => {
-          const src = nodePositions[link.source];
-          const tgt = nodePositions[link.target];
-          if (!src || !tgt) return;
+      // Draw all links
+      links.forEach(link => {
+        const src = nodePositions[link.source];
+        const tgt = nodePositions[link.target];
+        if (!src || !tgt) return;
 
-          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          path.setAttribute('d', drawSmoothCurve(src, tgt));
-          path.setAttribute('stroke', 'url(#linkGradient)');
-          path.setAttribute('stroke-width', Math.max(2, (link.referrals / 10) * scale));
-          path.setAttribute('fill', 'none');
-          path.classList.add('link-path');
-          svg.appendChild(path);
-        });
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', drawSmoothCurve(src, tgt));
+        path.setAttribute('stroke', 'url(#linkGradient)');
+        path.setAttribute('stroke-width', Math.max(2, (link.referrals / 10) * scale));
+        path.setAttribute('fill', 'none');
+        path.classList.add('link-path');
+        svg.appendChild(path);
+      });
 
-        adjustJourneyHeight();
-      }
+      adjustJourneyHeight();
+    }
 
-      function adjustJourneyHeight() {
-        const journeyContainer = document.querySelector('.journey-container');
-        const cards = document.querySelectorAll('#journey-nodes .journey-card');
-        if (cards.length === 0) return;
+    function adjustJourneyHeight() {
+      const journeyContainer = document.querySelector('.journey-container');
+      const cards = document.querySelectorAll('#journey-nodes .journey-card');
+      if (cards.length === 0) return;
 
-        let maxBottom = 0;
-        cards.forEach(card => {
-          const bottom = card.offsetTop + card.offsetHeight;
-          if (bottom > maxBottom) maxBottom = bottom;
-        });
+      let maxBottom = 0;
+      cards.forEach(card => {
+        const bottom = card.offsetTop + card.offsetHeight;
+        if (bottom > maxBottom) maxBottom = bottom;
+      });
 
-        journeyContainer.style.height = (maxBottom - 70) + 'px';
-      }
+      journeyContainer.style.height = (maxBottom - 55) + 'px'; // small buffer only
+    }
 
-      window.addEventListener('resize', render);
-      render();
-    })
-    .catch(err => console.error('Error loading journey data', err));
+    window.addEventListener('resize', render);
+    render();
+  })
+  .catch(err => console.error('Error loading journey data', err));
 
 
   // ===== E2E Path from JSON =====
