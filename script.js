@@ -395,7 +395,6 @@ fetch('apps_status.json')
 
 
 
-// journey
 fetch('task_referral_dashboard_data.json')
   .then(res => res.json())
   .then(data => {
@@ -428,34 +427,56 @@ fetch('task_referral_dashboard_data.json')
       return `M${src.x},${src.y} C${controlX1},${controlY1} ${controlX2},${controlY2} ${tgt.x},${tgt.y}`;
     }
 
+    // Responsive sizing function
+    function getResponsiveSizes() {
+      const containerWidth = document.querySelector('.journey-container').clientWidth;
+      const viewport = window.innerWidth;
+      
+      // Define breakpoints and scaling factors
+      let scale = 1;
+      
+      if (viewport < 768) { // Mobile
+        scale = 0.7;
+      } else if (viewport < 1024) { // Tablet
+        scale = 0.85;
+      } else if (viewport > 1600) { // Large screens
+        scale = 1.2;
+      }
+      
+      // Calculate sizes based on container width and scale
+      const availableWidth = containerWidth * 0.9; // Use 90% of container
+      const numColumns = 3;
+      const baseGapPercent = 0.08; // 8% of container width for gaps
+      
+      return {
+        cardWidth: Math.max(120, Math.min(200, (availableWidth / numColumns) * 0.7 * scale)),
+        specialWidth: Math.max(120, Math.min(200, (availableWidth / numColumns) * 0.7 * scale)),
+        cardHeight: Math.max(60, 80 * scale),
+        specialHeight: Math.max(300, 560 * scale),
+        baseColGap: Math.max(40, containerWidth * baseGapPercent),
+        rowGap: Math.max(20, 40 * scale),
+        scale: scale
+      };
+    }
+
     function render() {
       container.innerHTML = '';
       svg.innerHTML = '';
 
-      // --- Dynamic scaling based on container width ---
-      const containerWidth = document.querySelector('.journey-container').clientWidth;
-      const scale = Math.min(1, containerWidth / 800);
-
-      const cardWidth = 155 * scale;
-      const specialWidth = cardWidth * 1.25; // Wider width for Filtration and IVRF
-      const cardHeight = 80 * scale;
-      const specialHeight = cardHeight * 6.66; // Equal height for Filtration and IVRF
-      const baseColGap = cardWidth * 0.5;
-      // Adjust gaps based on whether special width cards are present
-      const colGaps = [
-        baseColGap + (specialWidth - cardWidth*1.3) , // Gap between col1 and col2 (accounts for Filtration's wider width)
-        baseColGap // Gap between col2 and col3 (standard gap)
-      ];
-      const rowGap = 40 * scale;
+      // Get responsive sizes
+      const sizes = getResponsiveSizes();
+      const { cardWidth, specialWidth, cardHeight, specialHeight, baseColGap, rowGap, scale } = sizes;
+      
+      const colGaps = [baseColGap, baseColGap];
 
       // Columns: dynamically generated
-      const col1 = [normalizeId('Filtration')];
-      const col2 = [];
+      const col1 = [normalizeId('FILTRATION')];
+      const col2 = [normalizeId('QUALITY')];
       const col3 = [];
 
       // Find all direct Filtration targets
       links.forEach(link => {
-        if (link.source === normalizeId('Filtration') && !col2.includes(link.target)) {
+        if (link.source === normalizeId('FILTRATION') && !col2.includes(link.target) && link.target !== normalizeId('QUALITY')) {
           col2.push(link.target);
         }
       });
@@ -477,35 +498,24 @@ fetch('task_referral_dashboard_data.json')
       const columns = [col1, col2, col3];
       const nodePositions = {};
 
-      // Calculate overall height
-      let allHeights = 0;
-      columns.forEach(col => {
-        const colHeight = col.reduce((sum, nodeId) =>
-          sum + ((nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) ? specialHeight : cardHeight) + rowGap, -rowGap
-        );
-        allHeights = Math.max(allHeights, colHeight);
-      });
-
       // Calculate width of each column considering special widths
       const colWidths = columns.map(col => {
-        return col.some(id => id === normalizeId('Filtration') || id === normalizeId('IVRF')) 
+        return col.some(id => id === normalizeId('FILTRATION') || id === normalizeId('IVRF')) 
           ? specialWidth 
           : cardWidth;
       });
       
       // Calculate total width including gaps
       const totalWidth = colWidths.reduce((sum, width) => sum + width, 0) + colGaps.reduce((sum, gap) => sum + gap, 0);
-      // Ensure equal spacing on both sides by adding extra space to account for special widths
-      const extraSpace = (specialWidth - cardWidth) / 2; // Add half of the difference to each side
-      const xOffset = ((containerWidth - totalWidth) / 2.2) + extraSpace;
-      const globalStartY = 10; // reduced top space
+      
+      // Dynamic container width calculation
+      const containerWidth = document.querySelector('.journey-container').clientWidth;
+      const xOffset = Math.max(20, (containerWidth - totalWidth) / 2);
+      const globalStartY = 10;
 
       // Render cards
       columns.forEach((col, colIndex) => {
-        const colHeight = col.reduce((sum, nodeId) =>
-          sum + ((nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) ? specialHeight : cardHeight) + rowGap, -rowGap
-        );
-        const startY = globalStartY + (allHeights - colHeight) / 2;
+        const startY = globalStartY;
         
         // Calculate x position based on previous columns' widths and gaps
         let x = xOffset;
@@ -513,44 +523,44 @@ fetch('task_referral_dashboard_data.json')
           x += colWidths[i] + colGaps[i];
         }
 
+        let currentY = startY;
         col.forEach((nodeId, rowIndex) => {
           const node = nodes.find(n => n.id === nodeId);
           if (!node) return;
 
-          const nodeHeight = (nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF'))
-            ? specialHeight
-            : cardHeight;
-
-          // --- Small offset so links connect properly ---
-          let y = startY + rowIndex * (cardHeight + rowGap);
-          if (nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) {
-            y += (specialHeight - cardHeight) / 9; // much smaller push
-          }
-
-          nodePositions[nodeId] = { x: x + cardWidth / 2, y: y + nodeHeight / 2 };
+          const actualWidth = (nodeId === normalizeId('FILTRATION') || nodeId === normalizeId('IVRF')) ? specialWidth : cardWidth;
+          const actualHeight = (nodeId === normalizeId('FILTRATION') || nodeId === normalizeId('IVRF')) ? specialHeight : cardHeight;
+          
+          nodePositions[nodeId] = { x: x + actualWidth / 2, y: currentY + actualHeight / 2 };
 
           const card = document.createElement('div');
-          card.className = `journey-card ${node.efficiency_status_hour}`;
-          card.style.width = `${(nodeId === normalizeId('Filtration') || nodeId === normalizeId('IVRF')) ? specialWidth : cardWidth}px`;
-          card.style.height = `${nodeHeight}px`;
+          card.className = `journey-card ${node.efficiency_status_hour || 'normal'}`;
+          card.style.width = `${actualWidth}px`;
+          card.style.height = `${actualHeight}px`;
           card.style.left = `${x}px`;
-          card.style.top = `${y}px`;
-          card.style.transform = `scale(${scale})`;
-          card.style.transformOrigin = "top left";
+          card.style.top = `${currentY}px`;
+          
+          // Responsive font sizes
+          const titleFontSize = Math.max(10, 11 * scale);
+          const metricsFontSize = Math.max(8, 12 * scale);
+          
           card.innerHTML = `
-            <div class="title">${node.name}</div>
+            <div class="title" style="font-size: ${titleFontSize}px;">${node.name}</div>
             <div class="metrics">
-              <div class="circle-number">
+              <div class="circle-number" style="font-size: ${metricsFontSize}px;">
                 <i class="fas fa-external-link-alt"></i>
                 ${node.referral_count}
               </div>
-              <div class="circle-number">
+              <div class="circle-number" style="font-size: ${metricsFontSize}px;">
                 <i class="fas fa-share-alt"></i>
                 ${node.active_referrals}
               </div>
             </div>
           `;
           container.appendChild(card);
+
+          // Update currentY for next card in this column
+          currentY += actualHeight + rowGap;
         });
       });
 
@@ -568,14 +578,14 @@ fetch('task_referral_dashboard_data.json')
       stop1.setAttribute('stop-color', '#00BCEB');
       const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
       stop2.setAttribute('offset', '100%');
-      stop2.setAttribute('stop-color', '#3dd6e4');
+      stop2.setAttribute('stop2', '#3dd6e4');
 
       grad.appendChild(stop1);
       grad.appendChild(stop2);
       defs.appendChild(grad);
       svg.appendChild(defs);
 
-      // Draw all links
+      // Draw all links with responsive stroke width
       links.forEach(link => {
         const src = nodePositions[link.source];
         const tgt = nodePositions[link.target];
@@ -584,7 +594,7 @@ fetch('task_referral_dashboard_data.json')
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', drawSmoothCurve(src, tgt));
         path.setAttribute('stroke', 'url(#linkGradient)');
-        path.setAttribute('stroke-width', Math.max(2, (link.referrals / 10) * scale));
+        path.setAttribute('stroke-width', Math.max(1, (link.referrals / 10) * scale));
         path.setAttribute('fill', 'none');
         path.classList.add('link-path');
         svg.appendChild(path);
@@ -596,22 +606,40 @@ fetch('task_referral_dashboard_data.json')
     function adjustJourneyHeight() {
       const journeyContainer = document.querySelector('.journey-container');
       const cards = document.querySelectorAll('#journey-nodes .journey-card');
+      const svg = document.getElementById('journey-svg');
       if (cards.length === 0) return;
 
       let maxBottom = 0;
+      let maxRight = 0;
+
       cards.forEach(card => {
         const bottom = card.offsetTop + card.offsetHeight;
+        const right = card.offsetLeft + card.offsetWidth;
         if (bottom > maxBottom) maxBottom = bottom;
+        if (right > maxRight) maxRight = right;
       });
 
-      journeyContainer.style.height = (maxBottom - 55) + 'px'; // small buffer only
+      // Add responsive padding
+      const padding = Math.max(20, window.innerWidth * 0.02);
+      journeyContainer.style.height = (maxBottom + padding) + 'px';
+      journeyContainer.style.width = (maxRight + padding) + 'px';
+
+      // Update SVG dimensions to match
+      svg.setAttribute('width', maxRight + padding);
+      svg.setAttribute('height', maxBottom + padding);
     }
 
-    window.addEventListener('resize', render);
+    // Debounced resize handler to prevent excessive re-renders
+    let resizeTimeout;
+    function debouncedRender() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(render, 250);
+    }
+
+    window.addEventListener('resize', debouncedRender);
     render();
   })
   .catch(err => console.error('Error loading journey data', err));
-
 
 fetch('e2e.json')
   .then(res => res.json())

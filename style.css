@@ -4,8 +4,6 @@
   font-weight: bold;
   font-style: oblique;
 }
-
-
 body {
   font-family: Arial, sans-serif;
   /* background: linear-gradient(180deg, #0d172a 0%, #111b3b 50%, #182448 100%); */
@@ -15,6 +13,7 @@ body {
   background-position: center;
   background-attachment: fixed;
   margin: 0;
+  height: 1080px;
 }
 
 .dashboard {
@@ -551,8 +550,6 @@ body {
 
 /* Right column (Journey container) */
 .journey-container {
-  flex: 1; /* fill remaining horizontal space */
-  /* take full height of parent */
   position: relative;
   border-radius: 12px;
   border: 1px solid rgba(0, 188, 235, 0.2);
@@ -560,6 +557,9 @@ body {
   box-shadow: 0 0 6px rgba(0, 188, 235, 0.3);
   overflow: visible;
   margin-top: 44px;
+  width: 100%;
+  min-height: 600px;
+  height: auto;
 }
 
 #journey-svg,
@@ -579,13 +579,14 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  min-width: 120px;
+  min-height: 80px;
   padding: 2vh 1.5vh;
-  gap: 2vh;
-  transition: transform 0.2s ease-in-out;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.journey-card.good {
+.journey-card.normal {
   border: 1px solid rgba(60, 130, 74, 0.7);
   animation: pulseGreen 4s ease-in-out infinite;
 }
@@ -595,7 +596,7 @@ body {
   animation: pulseYellow 4s ease-in-out infinite;
 }
 
-.journey-card.bad {
+.journey-card.critical {
   border: 1px solid rgba(157, 47, 41, 0.7);
   animation: pulseRed 4s ease-in-out infinite;
 }
@@ -619,15 +620,17 @@ body {
 }
 
 .journey-card .title {
-  font-size: 2.2vh;
+  font-size: 1.5vh;
   font-weight: bold;
   font-family: 'HelveticaOblique', sans-serif;
+  margin-bottom: 10px;
 }
 
 .journey-card .metrics {
   display: flex;
-  justify-content: center;
-  gap: 2vh;
+  justify-content: space-around;
+  width: 100%;
+  gap: 10px;
 }
 
 .journey-card .circle-number {
@@ -635,14 +638,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: none;
-  width: auto;
-  height: auto;
-  box-shadow: none;
-  background: transparent;
-  font-size: 2vh;
+  padding: 5px;
+  font-size: 13px;
   font-weight: bold;
   color: #00BCEB;
+  min-width: 40px;
 }
 
 .journey-card .circle-number i {
