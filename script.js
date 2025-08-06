@@ -555,10 +555,15 @@ fetch('task_referral_dashboard_data.json')
                 <i class="fas fa-share-alt"></i>
                 ${node.active_referrals}
               </div>
+              
+              <div class="circle-number" style="font-size: ${metricsFontSize}px;">
+                <i class="fas fa-share-alt"></i>
+                0
+              </div>
             </div>
           `;
           container.appendChild(card);
-
+          // change hereeee (icon)
           // Update currentY for next card in this column
           currentY += actualHeight + rowGap;
         });

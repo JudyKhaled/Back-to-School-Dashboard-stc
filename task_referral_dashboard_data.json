@@ -29,7 +29,7 @@
           "avg_handled_per_day": 144.5,
           "today_handled_tasks": 496,
           "avg_handled_per_hour": 144.5,
-          "efficiency_status_day": "normal",
+          "efficiency_status_day": "normal", 
           "actual_processing_time": 341.5,
           "efficiency_status_hour": 0,
           "processing_time_status": "normal",
